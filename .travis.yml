@@ -4,7 +4,8 @@ language: r
 r:
   - release
 os:
-  -windows
+  - linux
+  - osx
 cache: packages
 warnings_are_errors: true
 sudo: required
