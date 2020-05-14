@@ -18,4 +18,5 @@ Imports:
     curl (>= 4.3)
 RoxygenNote: 7.1.0
 Suggests: 
-    testthat
+    testthat,
+    covr
