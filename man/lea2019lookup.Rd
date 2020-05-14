@@ -3,7 +3,7 @@
 \docType{data}
 \name{lea2019lookup}
 \alias{lea2019lookup}
-\title{LEA Lookup.}
+\title{LEA Lookup}
 \format{
 A data frame with 3 variables:
 \code{UTLA19CD},
@@ -14,6 +14,6 @@ A data frame with 3 variables:
 lea2019lookup
 }
 \description{
-LEAs have different codes to ONS UTLAs.
+LEAs have 3-digit codes that map to 9-digit ONS UTLA codes.
 }
 \keyword{datasets}
