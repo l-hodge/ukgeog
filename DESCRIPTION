@@ -15,8 +15,13 @@ Imports:
     dplyr (>= 0.8.5),
     sf (>= 0.9-3),
     stringr (>= 1.4.0),
-    curl (>= 4.3)
+    curl (>= 4.3),
+    lifecycle
 RoxygenNote: 7.1.0
 Suggests: 
     testthat,
-    covr
+    covr,
+    knitr,
+    rmarkdown
+RdMacros: lifecycle
+VignetteBuilder: knitr

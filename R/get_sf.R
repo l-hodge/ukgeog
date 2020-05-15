@@ -1,15 +1,3 @@
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Install Package:           'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
-
-##########################################
-
 #' Get UK Shape Files
 #'
 #' \code{get_sf} fetches shape files from ONS Open Geography Portal.
@@ -26,9 +14,9 @@
 #' @return Output is...
 #' @examples
 #' get_sf("NAT")
-#' get_sf("UTLA", nations = c("E","W"))
 #'
 #' \dontrun{
+#' get_sf("UTLA", nations = c("E","W"))
 #' }
 #' @import dplyr
 #' @import sf

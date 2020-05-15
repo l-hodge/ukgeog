@@ -1,0 +1,64 @@
+---
+title: "The 'get_sf' function"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{get_sf}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+`get_sf` is a simple API wrapper for the ONS Open Geography Portal, facilitating easy use of shapefiles and making drawing maps of the UK a dream.
+
+It is easy to 'get' shapefiles for many different UK geographies including:
+
+* Countries
+
+* Regions
+
+* Upper Tier Local Authorities
+
+* Local Authority Districts
+
+For example this fetches a shape file of the countries that make up the UK:
+```{r getsf, eval = FALSE}
+library(ukgeog)
+
+sf <- get_sf("NAT")
+```
+
+## Drawing maps with your shapefile
+
+If ` crs = 4326 ` (the default) it is easy to map your shapefile using base R as well as popular packages such as ` ggplot2 ` and `leaflet`
+
+### -plot-
+
+```{r plotexample, eval = FALSE}
+plot(sf$geometry)
+```
+
+### -ggplot2-
+
+```{r ggplotexample, eval = FALSE}
+library(ggplot2)
+
+ggplot(sf) + 
+  geom_sf() +
+  theme_void()
+```
+
+### -leaflet-
+
+```{r leafletexample, eval = FALSE}
+library(leaflet)
+
+leaflet(sf) %>% 
+  addTiles() %>% 
+  addPolygons()
+```

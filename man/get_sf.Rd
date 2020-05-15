@@ -34,8 +34,8 @@ This function...
 }
 \examples{
 get_sf("NAT")
-get_sf("UTLA", nations = c("E","W"))
 
 \dontrun{
+get_sf("UTLA", nations = c("E","W"))
 }
 }

@@ -13,3 +13,7 @@ test_that("Bounds of lat/long", {
   expect_lt(min(x$lat), 60.87)
   expect_lt(min(x$long), 1.77)
 })
+
+test_that("Test error messaging", {
+  expect_error(get_sf("NAT", year = 2017), "'year' must be either 2018 or 2019")
+})
