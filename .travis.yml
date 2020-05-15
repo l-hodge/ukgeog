@@ -3,8 +3,11 @@
 language: r
 r:
   - release
+  - devel
 os:
   - osx
+dist:
+  - xenial
 cache: packages
 warnings_are_errors: true
 branches:
