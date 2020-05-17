@@ -6,9 +6,6 @@ r:
   - 3.6
   - release
 os:
-  - linux
-  dist:
-    - bionic
   - osx
 cache: packages
 warnings_are_errors: true
