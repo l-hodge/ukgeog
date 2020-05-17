@@ -2,12 +2,14 @@
 
 language: r
 r:
+  - 3.5
+  - 3.6
   - release
-  - devel
 os:
+  - linux
+  dist:
+    - bionic
   - osx
-dist:
-  - xenial
 cache: packages
 warnings_are_errors: true
 branches:
