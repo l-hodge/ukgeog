@@ -104,7 +104,20 @@ get_sf <- function(geog,
   sf <- sf %>%
         dplyr::mutate_if(is.factor, as.character) %>%
         dplyr::mutate(country = substr(.data$cd, 1, 1)) %>%
-        dplyr::filter(.data$country %in% nations)
+        dplyr::filter(.data$country %in% nations) %>%
+        dplyr::mutate(country = dplyr::case_when(country == "E" ~ "England",
+                                                 country == "S" ~ "Scotland",
+                                                 country == "W" ~ "Wales",
+                                                 country == "N" ~ "Northern Ireland"))
+
+  if (geog == "UTLA" & year == 2019) {
+    sf <- sf %>%
+          dplyr::left_join(., lea2019lookup, by = c("cd" = "UTLA19CD", "nm" = "UTLA19NM"))
+  }
+
+  # Ensure geometry is in the last column
+  sf <- sf %>%
+        dplyr::select(dplyr::everything(), geometry)
 
   return(sf)
 

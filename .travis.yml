@@ -2,11 +2,11 @@
 
 language: r
 r:
-  - 3.5
   - 3.6
   - release
 os:
   - osx
+  - linux
 cache: packages
 warnings_are_errors: true
 branches:
