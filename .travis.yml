@@ -7,7 +7,6 @@ r:
 os:
   - osx
   - linux
-  - windows
 cache: packages
 warnings_are_errors: true
 
@@ -20,3 +19,6 @@ addons:
 branches:
   only:
    - master
+
+after_success:
+- Rscript -e 'covr::codecov()'
