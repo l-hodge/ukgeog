@@ -9,6 +9,16 @@ os:
   - linux
 cache: packages
 warnings_are_errors: true
+
+addons:
+  apt:
+    packages:
+      - libudunits2-dev
+      - libgdal-dev
+      
 branches:
   only:
    - master
+
+after_success:
+- Rscript -e 'covr::codecov()'
