@@ -111,13 +111,14 @@ get_sf <- function(geog,
                                                  country == "N" ~ "Northern Ireland"))
 
   if (geog == "UTLA" & year == 2019) {
+    data("lea2019lookup", envir=environment())
     sf <- sf %>%
-          dplyr::left_join(., lea2019lookup, by = c("cd" = "UTLA19CD", "nm" = "UTLA19NM"))
+          dplyr::left_join(lea2019lookup, by = c("cd" = "UTLA19CD", "nm" = "UTLA19NM"))
   }
 
   # Ensure geometry is in the last column
   sf <- sf %>%
-        dplyr::select(dplyr::everything(), geometry)
+        dplyr::select(dplyr::everything(), .data$geometry)
 
   return(sf)
 
