@@ -9,6 +9,12 @@ os:
   - linux
 cache: packages
 warnings_are_errors: true
+
+addons:
+  apt:
+    packages:
+      - libudunits2-dev
+      
 branches:
   only:
    - master
