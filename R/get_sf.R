@@ -23,9 +23,12 @@
 #' @import stringr
 #' @importFrom curl has_internet
 #' @importFrom utils askYesNo
+#' @importFrom utils data
 #' @export
 
 ##########################################
+
+globalVariables("lea2019lookup")
 
 get_sf <- function(geog,
                    year = 2019,
