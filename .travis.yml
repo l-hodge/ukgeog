@@ -4,6 +4,7 @@ language: r
 r:
   - 3.6
   - release
+  - devel
 os:
   - osx
   - linux
@@ -15,7 +16,7 @@ addons:
     packages:
       - libudunits2-dev
       - libgdal-dev
-      
+
 branches:
   only:
    - master
