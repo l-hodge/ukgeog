@@ -7,6 +7,7 @@ Maintainer: Louis Hodge <louishodge@hotmail.co.uk>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: MIT + file LICENSE
+URL: https://l-hodge.github.io/uk-geog/, https://github.com/l-hodge/uk-geog
 Encoding: UTF-8
 LazyData: true
 Depends:
