@@ -1,5 +1,5 @@
 ---
-title: "The 'get_sf' function"
+title: "The 'get_admin_sf' function"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{get_sf}
@@ -14,13 +14,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-`get_sf` is a simple API wrapper for the ONS Open Geography Portal, facilitating easy use of shapefiles and making drawing maps of the UK a dream.
+`get_admin_sf` is a simple API wrapper for the ONS Open Geography Portal, facilitating easy use of shapefiles and making drawing maps of the UK administrative boundaries a dream.
 
-It is easy to 'get' shapefiles for many different UK geographies including:
+It is easy to 'get' shapefiles for several UK administrative geographies:
 
 * Countries
 
-* Regions
+* Regions (ENGLAND ONLY)
 
 * Upper Tier Local Authorities
 
@@ -30,7 +30,7 @@ For example this fetches a shape file of the countries that make up the UK:
 ```{r getsf, eval = FALSE}
 library(ukgeog)
 
-sf <- get_sf("NAT")
+sf <- get_admin_sf("NAT")
 ```
 
 ## Drawing maps with your shapefile

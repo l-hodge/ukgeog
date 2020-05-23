@@ -4,7 +4,6 @@ language: r
 r:
   - 3.6
   - release
-  - devel
 os:
   - osx
   - linux
