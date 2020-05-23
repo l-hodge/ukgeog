@@ -18,10 +18,12 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'devel'}
-          - {os: macOS-latest,   r: '4.0'}
-          - {os: windows-latest, r: 'devel'}
           - {os: windows-latest, r: '4.0'}
+          - {os: windows-latest, r: '3.6'}
+          - {os: windows-latest, r: '3.5'}
+          - {os: macOS-latest,   r: '4.0'}
+          - {os: macOS-latest,   r: '3.6'}
+          - {os: macOS-latest,   r: '3.5'}
 
     steps:
       - uses: actions/checkout@v2
@@ -29,6 +31,8 @@ jobs:
       - uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
+
+      - uses: r-lib/actions/setup-pandoc@master
 
 
       - name: Install dependencies
