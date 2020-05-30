@@ -369,7 +369,7 @@ read_elec <- function(geog,
 #'
 #' @param geog NUTS 1, 2 or 3
 #' @param year Year (\code{2015} or \code{2018})
-#' @param nations For Which UK nations (\code{c("E","W","S","N")})
+#' @param nations For which UK nations (\code{c("E","W","S","N")})
 #' @param type Boundary Clipping
 #' @param crs Coordinate Reference System (ESPG). It is recommend to use 4326 (World Geodetic System) or potentially 27700 (UK OS British National Grid)
 #'

@@ -25,6 +25,10 @@ Suggests:
     testthat,
     covr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ggplot2,
+    tmap,
+    leaflet,
+    mapview
 RdMacros: lifecycle
 VignetteBuilder: knitr

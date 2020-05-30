@@ -1,0 +1,74 @@
+---
+title: "Using `ukgeog` to draw maps"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{get_sf}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+`ukgeog` provides several `read` functions to provide the ability to easily download official spatial data sets of the UK as simple feature (`sf`) objects. A full list of the geographies available is provided [here](https://l-hodge.github.io/uk-geog/). Here we demonstrate how this makes it easy to make choropleth maps with base R, as well as with popular packages such as `ggplot2`, `tmap` and `leaflet.`
+
+First we need to read in a spatial dataset as a simple feature (`sf`), here we choose to make use of `read_admin` to read in the countries that make up the UK:
+```{r getsf, eval = TRUE}
+library(ukgeog)
+
+sf <- read_admin("NAT")
+```
+
+Note: ` crs = 4326 ` (the default) provides the most capatibility with other functions
+
+## Drawing maps with your simple feature
+
+### -plot-
+
+```{r plotexample, eval = TRUE}
+plot(sf$geometry)
+```
+
+### -ggplot2-
+
+```{r ggplotexample, eval = TRUE}
+library(ggplot2)
+
+ggplot(sf) + 
+  geom_sf() +
+  theme_void()
+```
+
+### -tmap-
+
+```{r tmapexample, eval = TRUE}
+library(tmap)
+
+qtm(sf)
+```
+
+### -leaflet-
+
+```{r leafletexample, eval = FALSE}
+library(leaflet)
+
+leaflet(sf) %>% 
+  addPolygons()
+```
+
+```{r saveleafletexample, eval = TRUE, include = FALSE}
+library(leaflet)
+library(mapview)
+
+mapshot(leaflet(sf) %>% addPolygons(), 
+        file = './leaflet.png')
+
+```
+
+![](leaflet.png){width=400px}
+
+

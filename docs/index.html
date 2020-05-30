@@ -79,13 +79,101 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="uk-geog" class="section level1">
+<div id="ukgeog-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#uk-geog" class="anchor"></a>uk-geog</h1></div>
+<a href="#ukgeog-" class="anchor"></a>ukgeog <a href="https://l-hodge.github.io/uk-geog/"><img src="reference/figures/ukgeog_logo.png" align="right" height="139"></a>
+</h1></div>
 <!-- badges: start -->
 
-<p>Need to write front page here…</p>
-<p><a href="https://l-hodge.github.io/uk-geog/" class="uri">https://l-hodge.github.io/uk-geog/</a></p>
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
+<p><code>ukgeog</code> is a simple package to facilitate the easy download of official spatial data sets of the UK. It includes a wide range of geospatial data, provided as <a href="https://r-spatial.github.io/sf/articles/sf1.html">simple feature <code>sf</code> objects</a> (like shapefiles but better). Making it easy to make <a href="https://en.wikipedia.org/wiki/Choropleth_map">Choropleth Maps</a> with <code>base R</code>, as well as with popular packages such as <a href="https://ggplot2.tidyverse.org/"><code>ggplot2</code></a> and <a href="https://rstudio.github.io/leaflet/"><code>leaflet</code></a>.</p>
+</div>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># install.packages("remotes")</span>
+<span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"l-hodge/uk-geog"</span>)</pre></div>
+</div>
+<div id="basic-usage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#basic-usage" class="anchor"></a>Basic Usage</h2>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ukgeog</span>)
+
+<span class="co"># Read in simple feature data frame of the countries that make up the UK </span>
+<span class="no">sf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/read_admin.html">read_admin</a></span>(<span class="st">"NAT"</span>)</pre></div>
+</div>
+<div id="available-datasets" class="section level2">
+<h2 class="hasAnchor">
+<a href="#available-datasets" class="anchor"></a>Available datasets</h2>
+<div id="read-in-sf" class="section level3">
+<h3 class="hasAnchor">
+<a href="#read-in-sf" class="anchor"></a>Read in sf</h3>
+<table class="table">
+<colgroup>
+<col width="11%">
+<col width="76%">
+<col width="12%">
+</colgroup>
+<thead><tr class="header">
+<th>Function</th>
+<th>Geographies available</th>
+<th>Years available</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>read_census</code></td>
+<td>Countries, Regions (England Only), Upper Tier Local Authorities, Local Authority Districts</td>
+<td>2018, 2019</td>
+</tr>
+<tr class="even">
+<td><code>read_admin</code></td>
+<td>Output Area (OA), Lower Super Output Area (LSOA), Middle Super Output Area (MSOA)</td>
+<td>2001, 2011</td>
+</tr>
+<tr class="odd">
+<td><code>read_elec</code></td>
+<td>Westminster Constituencies, European Electoral Regions</td>
+<td>2018, 2019</td>
+</tr>
+<tr class="even">
+<td><code>read_nuts</code></td>
+<td>Eurostat NUTS1, NUTS2, NUTS3</td>
+<td>2015, 2018</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="other-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#other-functions" class="anchor"></a>Other functions</h3>
+<table class="table">
+<thead><tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Years available</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>lea2019lookup</code></td>
+<td>Upper Tier Local Authorities</td>
+<td>2019</td>
+</tr>
+<tr class="even">
+<td><code>convert_lnglat</code></td>
+<td>Convert Eastings/Northings to Latitude/Longitude</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="credits" class="section level2">
+<h2 class="hasAnchor">
+<a href="#credits" class="anchor"></a>Credits</h2>
+<p>Original shapefiles are created by the Office for National Statistics (ONS) and are available from their <a href="http://geoportal.statistics.gov.uk/">Open Geography Portal</a></p>
+</div>
 </div>
   </div>
 

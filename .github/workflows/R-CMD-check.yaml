@@ -18,9 +18,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: windows-latest, r: 'devel'}
+          - {os: windows-latest, r: 'devel'}
           - {os: windows-latest, r: 'release'}
-          - {os: macOS-latest,   r: 'devel'}
           - {os: macOS-latest,   r: 'release'}
 
     steps:
@@ -48,8 +47,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages(c("remotes", "rcmdcheck"))
           remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
       - name: Check
