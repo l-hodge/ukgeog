@@ -4,27 +4,49 @@
 \alias{read_nuts}
 \title{Get UK Eurostat NUTS Boundaries}
 \usage{
-read_nuts(geog, year = 2018, nations = c("E", "W"), type = "BGC", crs = 4326)
+read_nuts(
+  geog,
+  year = 2018,
+  nations = c("E", "W", "S", "N"),
+  type = "BGC",
+  crs = 4326
+)
 }
 \arguments{
-\item{geog}{NUTS 1, 2 or 3}
+\item{geog}{NUTS Level 1, 2 or 3}
 
 \item{year}{Year (\code{2015} or \code{2018})}
 
-\item{nations}{For Which UK nations (\code{c("E","W","S","N")})}
+\item{nations}{For which UK nations (\code{c("E","W","S","N")})}
 
-\item{type}{Boundary Clipping}
+\item{type}{Boundary Clipping
 
-\item{crs}{Coordinate Reference System (ESPG). It is recommend to use 4326 (World Geodetic System) or potentially 27700 (UK OS British National Grid)}
+- \code{"BFE"}: Full Resolution Extent of the Realm (Low Tide)
+
+- \code{"BFC"}: Full Resolution Clipped (High Tide)
+
+- \code{"BGC"}: Generalised (20m) Clipped (High Tide)
+
+- \code{"BUC"}: Ultra Generalised (500m) Clipped (High Tide)}
+
+\item{crs}{Coordinate Reference System (ESPG).
+
+It is recommend to use \code{4326} (World Geodetic System) or potentially \code{27700} (UK OS British National Grid)}
 }
 \value{
-Output is...
+Output is a simple feature object containing the relevant boundaries.
 }
 \description{
-\code{read_nuts} fetches Eurostat NUTS Boundaries from the ONS Open Geography Portal.
+\code{read_nuts} downloads Eurostat NUTS Boundaries from the ONS Open Geography Portal.
 }
 \details{
-This function...
+Boundaries include:
+
+- NUTS Level 1 (\code{NUTS1})
+
+- NUTS Level 2 (\code{NUTS2})
+
+- NUTS Level 3 (\code{NUTS3})
 }
 \examples{
 read_nuts("NUTS1")
@@ -32,4 +54,5 @@ read_nuts("NUTS1")
 \dontrun{
 read_nuts("NUTS2", nations = c("E"))
 }
+
 }

@@ -95,9 +95,12 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/get_admin_sf.html">The 'get_admin_sf' function</a>
+      <a href="../articles/maps.html">Using `ukgeog` to draw maps</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -136,7 +139,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>df</th>
-      <td><p>A dataframe</p></td>
+      <td><p>A dataframe with at least 2 columns</p></td>
     </tr>
     <tr>
       <th>easting</th>
@@ -150,10 +153,10 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Output is...</p>
+    <p>Output is a dataframe identical to the input dataframe with two additional columns, 'Long' and 'Lat'.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function...</p>
+    <p>This function takes a dataframe with columns containing Eastings and Northings and adds columns containing Longitudes and Latitudes.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>

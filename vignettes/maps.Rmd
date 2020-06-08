@@ -60,15 +60,15 @@ leaflet(sf) %>%
   addPolygons()
 ```
 
-```{r saveleafletexample, eval = TRUE, include = FALSE}
+```{r saveleafletexample, eval = FALSE, include = FALSE}
 library(leaflet)
 library(mapview)
 
 mapshot(leaflet(sf) %>% addPolygons(), 
         file = './leaflet.png')
 
-```
+#![](leaflet.png){width=400px}
 
-![](leaflet.png){width=400px}
+```
 
 

@@ -28,7 +28,6 @@ Suggests:
     rmarkdown,
     ggplot2,
     tmap,
-    leaflet,
-    mapview
+    leaflet
 RdMacros: lifecycle
 VignetteBuilder: knitr

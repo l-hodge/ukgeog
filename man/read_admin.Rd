@@ -13,24 +13,42 @@ read_admin(
 )
 }
 \arguments{
-\item{geog}{Type of administrative boundaries}
+\item{geog}{Type of administrative boundaries (\code{"NAT", "GOR", "UTLA" or "LAD"})}
 
 \item{year}{Year (\code{2018} or \code{2019})}
 
 \item{nations}{For Which UK nations (\code{c("E","W","S","N")})}
 
-\item{type}{Boundary Clipping (\code{"BGC", "BFC", "BFE" or "BUC"})}
+\item{type}{Boundary Clipping
 
-\item{crs}{Coordinate Reference System (ESPG). It is recommend to use 4326 (World Geodetic System) or potentially 27700 (UK OS British National Grid)}
+- \code{"BFE"}: Full Resolution Extent of the Realm (Low Tide)
+
+- \code{"BFC"}: Full Resolution Clipped (High Tide)
+
+- \code{"BGC"}: Generalised (20m) Clipped (High Tide)
+
+- \code{"BUC"}: Ultra Generalised (500m) Clipped (High Tide)}
+
+\item{crs}{Coordinate Reference System (ESPG).
+
+It is recommend to use \code{4326} (World Geodetic System) or potentially \code{27700} (UK OS British National Grid)}
 }
 \value{
-Output is...
+Output is a simple feature object containing the relevant boundaries.
 }
 \description{
-\code{read_admin} fetches Administrative Boundaries from the ONS Open Geography Portal.
+\code{read_admin} downloads Administrative Boundaries from the ONS Open Geography Portal.
 }
 \details{
-This function...
+Boundaries included:
+
+- Countries/Nations (\code{"NAT"})
+
+- Regions (England ONLY) (\code{"GOR"})
+
+- Upper Tier Local Authorities (\code{"UTLA"})
+
+- Lower Tier Local Authorities (\code{"LAD"})
 }
 \examples{
 read_admin("NAT")
@@ -38,4 +56,5 @@ read_admin("NAT")
 \dontrun{
 read_admin("UTLA", nations = c("E","W"))
 }
+
 }

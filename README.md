@@ -47,12 +47,12 @@ sf <- read_admin("NAT")
 
 ### Read in sf
 
-| Function      | Geographies available                                                                      | Years available |
-| ------------- | ------------------------------------------------------------------------------------------ | --------------- |
-| `read_census` | Countries, Regions (England Only), Upper Tier Local Authorities, Local Authority Districts | 2018, 2019      |
-| `read_admin`  | Output Area (OA), Lower Super Output Area (LSOA), Middle Super Output Area (MSOA)          | 2001, 2011      |
-| `read_elec`   | Westminster Constituencies, European Electoral Regions                                     | 2018, 2019      |
-| `read_nuts`   | Eurostat NUTS1, NUTS2, NUTS3                                                               | 2015, 2018      |
+| Function      | Geographies available                                                                                                           | Years available |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| `read_census` | Countries, Regions (England Only), Upper Tier Local Authorities, Local Authority Districts                                      | 2018, 2019      |
+| `read_admin`  | Output Area (OA), Lower Super Output Area (LSOA), Middle Super Output Area (MSOA)                                               | 2001, 2011      |
+| `read_elec`   | Westminster parliamentary Constituencies, European Electoral Regions, Welsh Parliament Constituencies, Welsh Parliament Regions | 2018            |
+| `read_nuts`   | Eurostat NUTS Levels 1, 2 & 3                                                                                                   | 2015, 2018      |
 
 ### Other functions
 
@@ -64,5 +64,5 @@ sf <- read_admin("NAT")
 ## Credits
 
 Original shapefiles are created by the Office for National Statistics
-(ONS) and are available from their [Open Geography
+(ONS) and are available from the [Open Geography
 Portal](http://geoportal.statistics.gov.uk/)

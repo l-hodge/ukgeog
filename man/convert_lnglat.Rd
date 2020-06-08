@@ -7,24 +7,25 @@
 convert_lnglat(df, easting, northing)
 }
 \arguments{
-\item{df}{A dataframe}
+\item{df}{A dataframe with at least 2 columns}
 
 \item{easting}{Column containing Easting}
 
 \item{northing}{Column containing Northing}
 }
 \value{
-Output is...
+Output is a dataframe identical to the input dataframe with two additional columns, 'Long' and 'Lat'.
 }
 \description{
 \code{convert_lnglat} converts columns containing Eastings and Northings in a dataframe to columns containing Longitude and Latitude
 }
 \details{
-This function...
+This function takes a dataframe with columns containing Eastings and Northings and adds columns containing Longitudes and Latitudes.
 }
 \examples{
 
 \dontrun{
 convert_lnglat(df, "eastings", "northings")
 }
+
 }

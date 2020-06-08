@@ -1,30 +1,51 @@
 #' Get UK Administrative Boundaries
 #'
-#' \code{read_admin} fetches Administrative Boundaries from the ONS Open Geography Portal.
+#' \code{read_admin} downloads Administrative Boundaries from the ONS Open Geography Portal.
 #'
-#' This function...
+#' Boundaries included:
 #'
-#' @param geog Type of administrative boundaries
+#' - Countries/Nations (\code{"NAT"})
+#'
+#' - Regions (England ONLY) (\code{"GOR"})
+#'
+#' - Upper Tier Local Authorities (\code{"UTLA"})
+#'
+#' - Lower Tier Local Authorities (\code{"LAD"})
+#'
+#' @param geog Type of administrative boundaries (\code{"NAT", "GOR", "UTLA" or "LAD"})
 #' @param year Year (\code{2018} or \code{2019})
 #' @param nations For Which UK nations (\code{c("E","W","S","N")})
-#' @param type Boundary Clipping (\code{"BGC", "BFC", "BFE" or "BUC"})
-#' @param crs Coordinate Reference System (ESPG). It is recommend to use 4326 (World Geodetic System) or potentially 27700 (UK OS British National Grid)
+#' @param type Boundary Clipping
 #'
+#' - \code{"BFE"}: Full Resolution Extent of the Realm (Low Tide)
 #'
-#' @return Output is...
+#' - \code{"BFC"}: Full Resolution Clipped (High Tide)
+#'
+#' - \code{"BGC"}: Generalised (20m) Clipped (High Tide)
+#'
+#' - \code{"BUC"}: Ultra Generalised (500m) Clipped (High Tide)
+#'
+#' @param crs Coordinate Reference System (ESPG).
+#'
+#' It is recommend to use \code{4326} (World Geodetic System) or potentially \code{27700} (UK OS British National Grid)
+#'
+#' @return Output is a simple feature object containing the relevant boundaries.
+#'
 #' @examples
 #' read_admin("NAT")
 #'
 #' \dontrun{
 #' read_admin("UTLA", nations = c("E","W"))
 #' }
+#'
 #' @import lifecycle
 #' @import dplyr
-#' @import sf
-#' @import stringr
+#' @importFrom sf st_read
+#' @importFrom stringr str_sub
 #' @importFrom curl has_internet
 #' @importFrom utils askYesNo
 #' @importFrom utils data
+#'
 #' @export
 
 ##########################################
@@ -37,7 +58,7 @@ read_admin <- function(geog,
 ){
 
   # Stop if not internet connection
-  if (curl::has_internet() == FALSE) stop("Are you connected to the internet?")
+  if (has_internet() == FALSE) stop("Are you connected to the internet?")
 
   # Define Coordinate Reference System
   if (crs != 4326 & crs != 27700){
@@ -94,66 +115,82 @@ read_admin <- function(geog,
 
   # Read in shapefile
   suppressWarnings({
-    sf <- sf::st_read(url, quiet = TRUE)
+    sf <- st_read(url, quiet = TRUE)
   })
 
   # Renaming
   names(sf) <- c(names(sf)[1:1],
-                 stringr::str_sub(names(sf)[2:3], start= -2),
+                 str_sub(names(sf)[2:3], start= -2),
                  names(sf)[4:length(names(sf))])
 
   # Apply country filtering
   sf <- sf %>%
-    dplyr::mutate_if(is.factor, as.character) %>%
-    dplyr::mutate(country = substr(.data$cd, 1, 1)) %>%
-    dplyr::filter(.data$country %in% nations) %>%
-    dplyr::mutate(country = dplyr::case_when(country == "E" ~ "England",
-                                             country == "S" ~ "Scotland",
-                                             country == "W" ~ "Wales",
-                                             country == "N" ~ "Northern Ireland"))
+        mutate_if(is.factor, as.character) %>%
+        mutate(country = substr(.data$cd, 1, 1)) %>%
+        filter(.data$country %in% nations) %>%
+        mutate(country = case_when(country == "E" ~ "England",
+                                   country == "S" ~ "Scotland",
+                                   country == "W" ~ "Wales",
+                                   country == "N" ~ "Northern Ireland"))
 
   if (geog == "UTLA" & year == 2019) {
     sf <- sf %>%
-      dplyr::left_join(ukgeog::lea2019lookup, by = c("cd" = "UTLA19CD", "nm" = "UTLA19NM"))
+          left_join(ukgeog::lea2019lookup, by = c("cd" = "UTLA19CD", "nm" = "UTLA19NM"))
   }
 
   # Ensure geometry is in the last column
   sf <- sf %>%
-    dplyr::select(dplyr::everything(), .data$geometry)
+        select(everything(), .data$geometry)
 
   return(sf)
 
 }
 
-
-
 #' Get England and Wales Census Boundaries
 #'
-#' \code{read_census} fetches Census Boundaries from the ONS Open Geography Portal.
+#' \code{read_census} downloads Census Boundaries from the ONS Open Geography Portal.
 #'
-#' This function...England and Wales ONLY
+#' Note: This function is _only_ relevant to England and Wales.
 #'
-#' @param geog Type of census boundaries
+#' Boundaries included:
+#'
+#' - Output Area (\code{"OA"})
+#'
+#' - Lower Super Output Area (\code{"LSOA"})
+#'
+#' - Middle Super Output Area (\code{"MSOA"})
+#'
+#' @param geog Type of census boundaries (\code{"OA", "LSOA", "MSOA"})
 #' @param year Year (\code{2001} or \code{2011})
 #' @param nations For Which UK nations (\code{c("E","W")})
 #' @param type Boundary Clipping
-#' @param crs Coordinate Reference System (ESPG). It is recommend to use 4326 (World Geodetic System) or potentially 27700 (UK OS British National Grid)
 #'
+#' - \code{"BFE"}: Full Resolution Extent of the Realm (Low Tide)
 #'
-#' @return Output is...
+#' - \code{"BFC"}: Full Resolution Clipped (High Tide)
+#'
+#' - \code{"BGC"}: Generalised (20m) Clipped (High Tide)
+#'
+#' @param crs Coordinate Reference System (ESPG).
+#'
+#' It is recommend to use \code{4326} (World Geodetic System) or potentially \code{27700} (UK OS British National Grid)
+#'
+#' @return Output is a simple feature object containing the relevant boundaries.
+#'
 #' @examples
 #' read_census("MSOA")
 #'
 #' \dontrun{
 #' read_census("OA", nations = c("E"))
 #' }
+#'
 #' @import lifecycle
 #' @import dplyr
-#' @import sf
-#' @import stringr
+#' @importFrom sf st_read
+#' @importFrom stringr str_sub
 #' @importFrom curl has_internet
 #' @importFrom utils askYesNo
-#' @importFrom utils data
+#'
 #' @export
 
 ##########################################
@@ -166,7 +203,7 @@ read_census <- function(geog,
 ){
 
   # Stop if not internet connection
-  if (curl::has_internet() == FALSE) stop("Are you connected to the internet?")
+  if (has_internet() == FALSE) stop("Are you connected to the internet?")
 
   # Define Coordinate Reference System
   if (crs != 4326 & crs != 27700){
@@ -218,58 +255,77 @@ read_census <- function(geog,
 
   # Read in shapefile
   suppressWarnings({
-    sf <- sf::st_read(url, quiet = TRUE)
+    sf <- st_read(url, quiet = TRUE)
   })
 
   # Renaming
   names(sf) <- c(names(sf)[1:1],
-                 stringr::str_sub(names(sf)[2:3], start= -2),
+                 str_sub(names(sf)[2:3], start= -2),
                  names(sf)[4:length(names(sf))])
 
   # Apply country filtering
   sf <- sf %>%
-    dplyr::mutate_if(is.factor, as.character) %>%
-    dplyr::mutate(country = substr(.data$cd, 1, 1)) %>%
-    dplyr::filter(.data$country %in% nations) %>%
-    dplyr::mutate(country = dplyr::case_when(country == "E" ~ "England",
-                                             country == "W" ~ "Wales"))
+        mutate_if(is.factor, as.character) %>%
+        mutate(country = substr(.data$cd, 1, 1)) %>%
+        filter(.data$country %in% nations) %>%
+        mutate(country = case_when(country == "E" ~ "England",
+                                   country == "W" ~ "Wales"))
 
   # Ensure geometry is in the last column
   sf <- sf %>%
-    dplyr::select(dplyr::everything(), .data$geometry)
+        select(everything(), .data$geometry)
 
   return(sf)
 
 }
 
-
 #' Get UK Electoral Boundaries
 #'
-#' \code{read_elec} fetches Electoral Boundaries from the ONS Open Geography Portal.
+#' \code{read_elec} downloads Electoral Boundaries from the ONS Open Geography Portal.
 #'
-#' This function...
+#' Boundaries included:
 #'
-#' @param geog Type of electoral boundaries
-#' @param year Year (\code{2018} or \code{2019})
-#' @param nations For which UK nations (\code{c("E","W", "S", "N")})
+#' - Westminster Parliamentary Constituencies (\code{"WM"})
+#'
+#' - European Union Parliamentary Constituencies (\code{"EU"})
+#'
+#' - Welsh Parliament Constituencies (\code{"WPC"})
+#'
+#' - Welsh Parliament Regions (\code{"WPR"})
+#'
+#' @param geog Type of electoral boundaries (\code{"WM", "EU", "WPC" or "WPR"})
+#' @param year Year (\code{2018} ONLY)
+#' @param nations For which UK nations (\code{c("E", "W", "S", "N")})
 #' @param type Boundary Clipping
-#' @param crs Coordinate Reference System (ESPG). It is recommend to use 4326 (World Geodetic System) or potentially 27700 (UK OS British National Grid)
 #'
+#' - \code{"BFE"}: Full Resolution Extent of the Realm (Low Tide)
 #'
-#' @return Output is...
+#' - \code{"BFC"}: Full Resolution Clipped (High Tide)
+#'
+#' - \code{"BGC"}: Generalised (20m) Clipped (High Tide)
+#'
+#' - \code{"BUC"}: Ultra Generalised (500m) Clipped (High Tide)
+#'
+#' @param crs Coordinate Reference System (ESPG).
+#'
+#' It is recommend to use \code{4326} (World Geodetic System) or potentially \code{27700} (UK OS British National Grid)
+#'
+#' @return Output is a simple feature object containing the relevant boundaries.
+#'
 #' @examples
 #' read_elec("EU")
 #'
 #' \dontrun{
 #' read_elec("WM")
 #' }
+#'
 #' @import lifecycle
 #' @import dplyr
-#' @import sf
-#' @import stringr
+#' @importFrom sf st_read
+#' @importFrom stringr str_sub
 #' @importFrom curl has_internet
 #' @importFrom utils askYesNo
-#' @importFrom utils data
+#'
 #' @export
 
 ##########################################
@@ -282,7 +338,7 @@ read_elec <- function(geog,
 ){
 
   # Stop if not internet connection
-  if (curl::has_internet() == FALSE) stop("Are you connected to the internet?")
+  if (has_internet() == FALSE) stop("Are you connected to the internet?")
 
   # Define Coordinate Reference System
   if (crs != 4326 & crs != 27700){
@@ -297,14 +353,14 @@ read_elec <- function(geog,
   crs <- crs
 
   # Define Year
-  if (year != 2019 & year != 2018) stop("'year' must be 2018 or 2019")
+  if (year != 2018) stop("'year' must be 2018")
   year <- year
 
   # Define boundary clipping
   if (type %in% c("BGC", "BFC", "BFE", "BUC")){
     type <- type
   } else{
-    stop("'type' must be one of BGC, BFC, BFE or BUC, see help(get_sf) for definitions")
+    stop("'type' must be one of BGC, BFC, BFE or BUC, see help(read_elec) for definitions")
   }
 
   if (geog == "WM") {
@@ -313,8 +369,13 @@ read_elec <- function(geog,
   } else if (geog == "EU"){
     bound <- "European_Electoral_Regions"
     tag <- "UK"
+  } else if (geog == "WPC"){
+    bound <- "National_Assembly_for_Wales_Constituencies"
+    tag <-  "WA"
+  } else if (geog == "WPR"){
+    bound <- "National_Assembly_for_Wales_Electoral_Regions"
   } else{
-    stop("Incorrect specification of argument 'geog', 'geog' accepts 'WM' or 'EU'")
+    stop("Incorrect specification of argument 'geog', 'geog' accepts 'WM', 'EU' or 'WA'")
   }
 
   # Construct URL for API call
@@ -334,27 +395,27 @@ read_elec <- function(geog,
 
   # Read in shapefile
   suppressWarnings({
-    sf <- sf::st_read(url, quiet = TRUE)
+    sf <- st_read(url, quiet = TRUE)
   })
 
   # Renaming
   names(sf) <- c(names(sf)[1:1],
-                 stringr::str_sub(names(sf)[2:3], start= -2),
+                 str_sub(names(sf)[2:3], start= -2),
                  names(sf)[4:length(names(sf))])
 
   # Apply country filtering
   sf <- sf %>%
-    dplyr::mutate_if(is.factor, as.character) %>%
-    dplyr::mutate(country = substr(.data$cd, 1, 1)) %>%
-    dplyr::filter(.data$country %in% nations) %>%
-    dplyr::mutate(country = dplyr::case_when(country == "E" ~ "England",
-                                             country == "S" ~ "Scotland",
-                                             country == "W" ~ "Wales",
-                                             country == "N" ~ "Northern Ireland"))
+        mutate_if(is.factor, as.character) %>%
+        mutate(country = substr(.data$cd, 1, 1)) %>%
+        filter(.data$country %in% nations) %>%
+        mutate(country = case_when(country == "E" ~ "England",
+                                   country == "S" ~ "Scotland",
+                                   country == "W" ~ "Wales",
+                                   country == "N" ~ "Northern Ireland"))
 
   # Ensure geometry is in the last column
   sf <- sf %>%
-    dplyr::select(dplyr::everything(), .data$geometry)
+        select(everything(), .data$geometry)
 
   return(sf)
 
@@ -363,44 +424,62 @@ read_elec <- function(geog,
 
 #' Get UK Eurostat NUTS Boundaries
 #'
-#' \code{read_nuts} fetches Eurostat NUTS Boundaries from the ONS Open Geography Portal.
+#' \code{read_nuts} downloads Eurostat NUTS Boundaries from the ONS Open Geography Portal.
 #'
-#' This function...
+#' Boundaries include:
 #'
-#' @param geog NUTS 1, 2 or 3
+#' - NUTS Level 1 (\code{NUTS1})
+#'
+#' - NUTS Level 2 (\code{NUTS2})
+#'
+#' - NUTS Level 3 (\code{NUTS3})
+#'
+#' @param geog NUTS Level 1, 2 or 3
 #' @param year Year (\code{2015} or \code{2018})
 #' @param nations For which UK nations (\code{c("E","W","S","N")})
 #' @param type Boundary Clipping
-#' @param crs Coordinate Reference System (ESPG). It is recommend to use 4326 (World Geodetic System) or potentially 27700 (UK OS British National Grid)
 #'
+#' - \code{"BFE"}: Full Resolution Extent of the Realm (Low Tide)
 #'
-#' @return Output is...
+#' - \code{"BFC"}: Full Resolution Clipped (High Tide)
+#'
+#' - \code{"BGC"}: Generalised (20m) Clipped (High Tide)
+#'
+#' - \code{"BUC"}: Ultra Generalised (500m) Clipped (High Tide)
+#'
+#' @param crs Coordinate Reference System (ESPG).
+#'
+#' It is recommend to use \code{4326} (World Geodetic System) or potentially \code{27700} (UK OS British National Grid)
+#'
+#' @return Output is a simple feature object containing the relevant boundaries.
+#'
 #' @examples
 #' read_nuts("NUTS1")
 #'
 #' \dontrun{
 #' read_nuts("NUTS2", nations = c("E"))
 #' }
+#'
 #' @import lifecycle
 #' @import dplyr
-#' @import sf
-#' @import stringr
+#' @importFrom sf st_read
+#' @importFrom stringr str_sub
 #' @importFrom curl has_internet
 #' @importFrom utils askYesNo
-#' @importFrom utils data
+#'
 #' @export
 
 ##########################################
 
 read_nuts <- function(geog,
                       year = 2018,
-                      nations = c("E", "W"),
+                      nations = c("E", "W", "S", "N"),
                       type = "BGC",
                       crs = 4326
 ){
 
   # Stop if not internet connection
-  if (curl::has_internet() == FALSE) stop("Are you connected to the internet?")
+  if (has_internet() == FALSE) stop("Are you connected to the internet?")
 
   # Define Coordinate Reference System
   if (crs != 4326 & crs != 27700){
@@ -453,27 +532,31 @@ read_nuts <- function(geog,
 
   # Read in shapefile
   suppressWarnings({
-    sf <- sf::st_read(url, quiet = TRUE)
+    sf <- st_read(url, quiet = TRUE)
   })
 
   # Renaming
   names(sf) <- c(names(sf)[1:1],
-                 stringr::str_sub(names(sf)[2:3], start= -2),
+                 str_sub(names(sf)[2:3], start= -2),
                  names(sf)[4:length(names(sf))])
 
   # Apply country filtering
   sf <- sf %>%
-    dplyr::mutate_if(is.factor, as.character) %>%
-    dplyr::mutate(country = substr(.data$cd, 1, 1)) %>%
-    dplyr::filter(.data$country %in% nations) %>%
-    dplyr::mutate(country = dplyr::case_when(country == "E" ~ "England",
-                                             country == "S" ~ "Scotland",
-                                             country == "W" ~ "Wales",
-                                             country == "N" ~ "Northern Ireland"))
+        mutate_if(is.factor, as.character) %>%
+        mutate(country = substr(.data$cd, 3, 4)) %>%
+        mutate(country = ifelse(country == "M", "S", # Scotland
+                         ifelse(country == "L", "W", # Wales
+                         ifelse(country == "N", "N", # NI
+                                "E")))) %>% # Rest are England
+        filter(.data$country %in% nations) %>%
+        mutate(country = case_when(country == "E" ~ "England",
+                                   country == "S" ~ "Scotland",
+                                   country == "W" ~ "Wales",
+                                   country == "N" ~ "Northern Ireland"))
 
   # Ensure geometry is in the last column
   sf <- sf %>%
-    dplyr::select(dplyr::everything(), .data$geometry)
+        select(everything(), .data$geometry)
 
   return(sf)
 

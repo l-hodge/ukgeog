@@ -13,24 +13,42 @@ read_elec(
 )
 }
 \arguments{
-\item{geog}{Type of electoral boundaries}
+\item{geog}{Type of electoral boundaries (\code{"WM", "EU", "WPC" or "WPR"})}
 
-\item{year}{Year (\code{2018} or \code{2019})}
+\item{year}{Year (\code{2018} ONLY)}
 
-\item{nations}{For which UK nations (\code{c("E","W", "S", "N")})}
+\item{nations}{For which UK nations (\code{c("E", "W", "S", "N")})}
 
-\item{type}{Boundary Clipping}
+\item{type}{Boundary Clipping
 
-\item{crs}{Coordinate Reference System (ESPG). It is recommend to use 4326 (World Geodetic System) or potentially 27700 (UK OS British National Grid)}
+- \code{"BFE"}: Full Resolution Extent of the Realm (Low Tide)
+
+- \code{"BFC"}: Full Resolution Clipped (High Tide)
+
+- \code{"BGC"}: Generalised (20m) Clipped (High Tide)
+
+- \code{"BUC"}: Ultra Generalised (500m) Clipped (High Tide)}
+
+\item{crs}{Coordinate Reference System (ESPG).
+
+It is recommend to use \code{4326} (World Geodetic System) or potentially \code{27700} (UK OS British National Grid)}
 }
 \value{
-Output is...
+Output is a simple feature object containing the relevant boundaries.
 }
 \description{
-\code{read_elec} fetches Electoral Boundaries from the ONS Open Geography Portal.
+\code{read_elec} downloads Electoral Boundaries from the ONS Open Geography Portal.
 }
 \details{
-This function...
+Boundaries included:
+
+- Westminster Parliamentary Constituencies (\code{"WM"})
+
+- European Union Parliamentary Constituencies (\code{"EU"})
+
+- Welsh Parliament Constituencies (\code{"WPC"})
+
+- Welsh Parliament Regions (\code{"WPR"})
 }
 \examples{
 read_elec("EU")
@@ -38,4 +56,5 @@ read_elec("EU")
 \dontrun{
 read_elec("WM")
 }
+
 }

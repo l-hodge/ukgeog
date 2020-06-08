@@ -7,24 +7,40 @@
 read_census(geog, year = 2011, nations = c("E", "W"), type = "BGC", crs = 4326)
 }
 \arguments{
-\item{geog}{Type of census boundaries}
+\item{geog}{Type of census boundaries (\code{"OA", "LSOA", "MSOA"})}
 
 \item{year}{Year (\code{2001} or \code{2011})}
 
 \item{nations}{For Which UK nations (\code{c("E","W")})}
 
-\item{type}{Boundary Clipping}
+\item{type}{Boundary Clipping
 
-\item{crs}{Coordinate Reference System (ESPG). It is recommend to use 4326 (World Geodetic System) or potentially 27700 (UK OS British National Grid)}
+- \code{"BFE"}: Full Resolution Extent of the Realm (Low Tide)
+
+- \code{"BFC"}: Full Resolution Clipped (High Tide)
+
+- \code{"BGC"}: Generalised (20m) Clipped (High Tide)}
+
+\item{crs}{Coordinate Reference System (ESPG).
+
+It is recommend to use \code{4326} (World Geodetic System) or potentially \code{27700} (UK OS British National Grid)}
 }
 \value{
-Output is...
+Output is a simple feature object containing the relevant boundaries.
 }
 \description{
-\code{read_census} fetches Census Boundaries from the ONS Open Geography Portal.
+\code{read_census} downloads Census Boundaries from the ONS Open Geography Portal.
 }
 \details{
-This function...England and Wales ONLY
+Note: This function is _only_ relevant to England and Wales.
+
+Boundaries included:
+
+- Output Area (\code{"OA"})
+
+- Lower Super Output Area (\code{"LSOA"})
+
+- Middle Super Output Area (\code{"MSOA"})
 }
 \examples{
 read_census("MSOA")
@@ -32,4 +48,5 @@ read_census("MSOA")
 \dontrun{
 read_census("OA", nations = c("E"))
 }
+
 }
