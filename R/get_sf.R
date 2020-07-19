@@ -92,7 +92,7 @@ read_admin <- function(geog,
   } else if (geog == "GOR"){
     bound <- "Regions"
     tag <- "EN"
-    warning("Regions only exist for England")
+    message("Note: Regions only exist for England")
   } else if (geog == "NAT"){
     bound <- "Countries"
     tag <- "UK"
@@ -100,47 +100,63 @@ read_admin <- function(geog,
     stop("Incorrect specification of argument 'geog', 'geog' accepts 'UTLA', 'LAD', 'GOR' or 'NAT'")
   }
 
-  # Construct URL for API call
-  url <- paste0("https://ons-inspire.esriuk.com/arcgis/rest/services/Administrative_Boundaries/",
-                bound,
-                "_December_",
-                year,
-                "_Boundaries_",
-                tag,
-                "_",
-                type,
-                "/MapServer/0/query?where=1%3D1&outFields=*&outSR=",
-                crs,
-                "&f=json")
+  # Create shapefiles dir if doesn't already exist
+  if (!dir.exists("shapefiles")) dir.create("shapefiles")
 
-  # Read in shapefile
-  suppressWarnings({
+  # Construct file name
+  savename <- paste0("shapefiles/", paste(bound, paste(nations, collapse = ""), year, tag, type, crs, sep = "_"), ".shp")
+
+  # Check file doesn't already exist
+  if (file.exists(savename)){
+    sf <- st_read(savename, stringsAsFactors = FALSE, quiet = TRUE)
+  } else{
+    message("Downloading from ONS...")
+
+    # Construct URL for API call
+    url <- paste0("https://ons-inspire.esriuk.com/arcgis/rest/services/Administrative_Boundaries/",
+                  bound,
+                  "_December_",
+                  year,
+                  "_Boundaries_",
+                  tag,
+                  "_",
+                  type,
+                  "/MapServer/0/query?where=1%3D1&outFields=*&outSR=",
+                  crs,
+                  "&f=json")
+
+    # Read in shapefile
     sf <- st_read(url, quiet = TRUE)
-  })
 
-  # Renaming
-  names(sf) <- c(names(sf)[1:1],
-                 str_sub(names(sf)[2:3], start= -2),
-                 names(sf)[4:length(names(sf))])
+    # Renaming
+    names(sf) <- c(names(sf)[1:1],
+                   str_sub(names(sf)[2:3], start= -2),
+                   names(sf)[4:length(names(sf))])
 
-  # Apply country filtering
-  sf <- sf %>%
-        mutate_if(is.factor, as.character) %>%
-        mutate(country = substr(.data$cd, 1, 1)) %>%
-        filter(.data$country %in% nations) %>%
-        mutate(country = case_when(country == "E" ~ "England",
-                                   country == "S" ~ "Scotland",
-                                   country == "W" ~ "Wales",
-                                   country == "N" ~ "Northern Ireland"))
-
-  if (geog == "UTLA" & year == 2019) {
+    # Apply country filtering
     sf <- sf %>%
-          left_join(ukgeog::lea2019lookup, by = c("cd" = "UTLA19CD", "nm" = "UTLA19NM"))
-  }
+          mutate_if(is.factor, as.character) %>%
+          mutate(country = substr(.data$cd, 1, 1)) %>%
+          filter(.data$country %in% nations) %>%
+          mutate(country = case_when(country == "E" ~ "England",
+                                     country == "S" ~ "Scotland",
+                                     country == "W" ~ "Wales",
+                                     country == "N" ~ "Northern Ireland"))
 
-  # Ensure geometry is in the last column
-  sf <- sf %>%
-        select(everything(), .data$geometry)
+    if (geog == "UTLA" & year == 2019) {
+      sf <- sf %>%
+            left_join(ukgeog::lea2019lookup, by = c("cd" = "UTLA19CD", "nm" = "UTLA19NM"))
+    }
+
+    # Ensure geometry is in the last column
+    sf <- sf %>%
+          select(everything(), .data$geometry)
+
+    # Save sf
+    suppressWarnings({
+      st_write(sf, savename, quiet = TRUE)
+    })
+  }
 
   return(sf)
 
