@@ -1,0 +1,54 @@
+---
+title: "LA Boundary Changes"
+vignette: >
+  %\VignetteIndexEntry{plus_year-func}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+LA codes, names and boundaries have changed over time. `ukgeog` ships with internal datasets that map all changes since 2011. These mini lookups can be accessed directly as shown below. Or the function `create_lookup` can be used to generate multi-year lookups. 
+
+
+# 2012
+
+ In April 2012 the local authority codes for `St Albans` and `Welwyn Hatfield` were changed.	
+
+```{r, echo=FALSE}
+knitr::kable(ukgeog::LAD_1112)
+```
+
+Source: [ONS](https://www.ons.gov.uk/file?uri=%2Fpeoplepopulationandcommunity%2Fpopulationandmigration%2Fmigrationwithintheuk%2Fdatasets%2Fuserinformationenglandandwaleslocalauthoritytoregionlookup%2Fjune2012/laregionlookup2012_tcm77-368555.xls)
+
+# 2013
+
+```{r, echo=FALSE}
+knitr::kable(ukgeog::LAD_1213)
+```
+
+Source: [ONS](https://www.ons.gov.uk/file?uri=%2Fpeoplepopulationandcommunity%2Fpopulationandmigration%2Fmigrationwithintheuk%2Fdatasets%2Fuserinformationenglandandwaleslocalauthoritytoregionlookup%2Fjune2013/laregionlookup2013_tcm77-368312.xls)
+
+# 2018
+
+In April 2018 the local authority district of `Shepway` was renamed `Folkstone and Hyde`.
+
+```{r, echo=FALSE}
+knitr::kable(ukgeog::LAD_1718)
+```
+
+# 2019
+
+```{r, echo=FALSE}
+knitr::kable(ukgeog::LAD_1819)
+```
+
+# 2020
+
+In April 2020, the County of Buckinghamshire and its lower tier districts became one unitary authority.
+
+```{r, echo=FALSE}
+knitr::kable(ukgeog::LAD_1920)
+```

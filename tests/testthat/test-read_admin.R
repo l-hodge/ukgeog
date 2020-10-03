@@ -8,10 +8,10 @@ test_that("England is nine regions", {
 
 test_that("Bounds of lat/long", {
   x <- read_admin("NAT")
-  expect_gt(min(x$lat), 49.85)
-  expect_gt(min(x$long), -8.64)
-  expect_lt(min(x$lat), 60.87)
-  expect_lt(min(x$long), 1.77)
+  expect_gt(sf::st_bbox(x)$ymin, 49.8)
+  expect_gt(sf::st_bbox(x)$xmin, -8.7)
+  expect_lt(sf::st_bbox(x)$ymax, 60.9)
+  expect_lt(sf::st_bbox(x)$xmax, 1.8)
 })
 
 test_that("Test error messaging", {

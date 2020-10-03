@@ -19,6 +19,7 @@ Imports:
     rgdal (>= 1.4-8),
     stringr (>= 1.4.0),
     curl (>= 4.3),
+    rlang,
     lifecycle
 RoxygenNote: 7.1.0
 Suggests: 

@@ -40,7 +40,7 @@
 #'
 #' @import lifecycle
 #' @import dplyr
-#' @importFrom sf st_read
+#' @importFrom sf st_read st_write
 #' @importFrom stringr str_sub
 #' @importFrom curl has_internet
 #' @importFrom utils askYesNo
@@ -154,7 +154,7 @@ read_admin <- function(geog,
 
     # Save sf
     suppressWarnings({
-      st_write(sf, savename, quiet = TRUE)
+      sf::st_write(sf, savename, quiet = TRUE)
     })
   }
 
@@ -560,9 +560,9 @@ read_nuts <- function(geog,
   sf <- sf %>%
         mutate_if(is.factor, as.character) %>%
         mutate(country = substr(.data$cd, 3, 4)) %>%
-        mutate(country = ifelse(country == "M", "S", # Scotland
-                         ifelse(country == "L", "W", # Wales
-                         ifelse(country == "N", "N", # NI
+        mutate(country = ifelse(.data$country == "M", "S", # Scotland
+                         ifelse(.data$country == "L", "W", # Wales
+                         ifelse(.data$country == "N", "N", # NI
                                 "E")))) %>% # Rest are England
         filter(.data$country %in% nations) %>%
         mutate(country = case_when(country == "E" ~ "England",

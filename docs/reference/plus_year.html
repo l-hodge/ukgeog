@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get UK Administrative Boundaries — read_admin • ukgeog</title>
+<title>Move to the next year — plus_year • ukgeog</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Get UK Administrative Boundaries — read_admin" />
-<meta property="og:description" content="read_admin downloads Administrative Boundaries from the ONS Open Geography Portal." />
+<meta property="og:title" content="Move to the next year — plus_year" />
+<meta property="og:description" content="Move to the next year" />
 
 
 
@@ -126,69 +126,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get UK Administrative Boundaries</h1>
-    <small class="dont-index">Source: <a href='https://github.com/l-hodge/uk-geog/blob/master/R/get_sf.R'><code>R/get_sf.R</code></a></small>
-    <div class="hidden name"><code>read_admin.Rd</code></div>
+    <h1>Move to the next year</h1>
+    <small class="dont-index">Source: <a href='https://github.com/l-hodge/uk-geog/blob/master/R/plus_year-func.R'><code>R/plus_year-func.R</code></a></small>
+    <div class="hidden name"><code>plus_year.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>read_admin</code> downloads Administrative Boundaries from the ONS Open Geography Portal.</p>
+    <p>Move to the next year</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read_admin</span>(
-  <span class='no'>geog</span>,
-  <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2019</span>,
-  <span class='kw'>nations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"E"</span>, <span class='st'>"S"</span>, <span class='st'>"W"</span>, <span class='st'>"N"</span>),
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"BGC"</span>,
-  <span class='kw'>crs</span> <span class='kw'>=</span> <span class='fl'>4326</span>
-)</pre>
+    <pre class="usage"><span class='fu'>plus_year</span>(<span class='no'>df</span>, <span class='no'>geog</span>, <span class='no'>year</span>)</pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>geog</th>
-      <td><p>Type of administrative boundaries (<code>"NAT", "GOR", "UTLA" or "LAD"</code>)</p></td>
-    </tr>
-    <tr>
-      <th>year</th>
-      <td><p>Year (<code>2018</code> or <code>2019</code>)</p></td>
-    </tr>
-    <tr>
-      <th>nations</th>
-      <td><p>For Which UK nations (<code><a href='https://rdrr.io/r/base/c.html'>c("E","W","S","N")</a></code>)</p></td>
-    </tr>
-    <tr>
-      <th>type</th>
-      <td><p>Boundary Clipping</p>
-<p>- <code>"BFE"</code>: Full Resolution Extent of the Realm (Low Tide)</p>
-<p>- <code>"BFC"</code>: Full Resolution Clipped (High Tide)</p>
-<p>- <code>"BGC"</code>: Generalised (20m) Clipped (High Tide)</p>
-<p>- <code>"BUC"</code>: Ultra Generalised (500m) Clipped (High Tide)</p></td>
-    </tr>
-    <tr>
-      <th>crs</th>
-      <td><p>Coordinate Reference System (ESPG).</p>
-<p>It is recommend to use <code>4326</code> (World Geodetic System) or potentially <code>27700</code> (UK OS British National Grid)</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Output is a simple feature object containing the relevant boundaries.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Boundaries included:</p>
-<p>- Countries/Nations (<code>"NAT"</code>)</p>
-<p>- Regions (England ONLY) (<code>"GOR"</code>)</p>
-<p>- Upper Tier Local Authorities (<code>"UTLA"</code>)</p>
-<p>- Lower Tier Local Authorities (<code>"LAD"</code>)</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>read_admin</span>(<span class='st'>"NAT"</span>)</div><div class='output co'>#&gt; <span class='message'>Downloading from ONS...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: GDAL Message 1: organizePolygons() received a polygon with more than 100 parts.  The processing may be really slow.  You can skip the processing by setting METHOD=SKIP.</span></div><div class='output co'>#&gt; <span class='error'>Error in st_write(sf, savename, quiet = TRUE): could not find function "st_write"</span></div><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>read_admin</span>(<span class='st'>"UTLA"</span>, <span class='kw'>nations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"E"</span>,<span class='st'>"W"</span>))
-}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
