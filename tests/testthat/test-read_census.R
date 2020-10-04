@@ -18,13 +18,13 @@ test_that("LSOA", {
   expect_lt(sf::st_bbox(y)$xmax, 1.8)
 })
 
-test_that("OA", {
-  z <- read_census("OA")
-  expect_equal(nrow(z), 181408)
-
-  expect_gt(sf::st_bbox(z)$ymin, 49.8)
-  expect_gt(sf::st_bbox(z)$xmin, -8.7)
-  expect_lt(sf::st_bbox(z)$ymax, 60.9)
-  expect_lt(sf::st_bbox(z)$xmax, 1.8)
-})
+# test_that("OA", {
+#   z <- read_census("OA")
+#   expect_equal(nrow(z), 181408)
+#
+#   expect_gt(sf::st_bbox(z)$ymin, 49.8)
+#   expect_gt(sf::st_bbox(z)$xmin, -8.7)
+#   expect_lt(sf::st_bbox(z)$ymax, 60.9)
+#   expect_lt(sf::st_bbox(z)$xmax, 1.8)
+# })
 
