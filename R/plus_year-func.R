@@ -61,7 +61,7 @@ plus_year <- function(df, geog, year){
 # plus_year(df_2011, "LAD", 2012)
 
 
-#' Create a lookup
+#' Create a lookup across years
 #' Wrapper for `plus_year`
 #'
 #' @param year1 Start year
@@ -80,22 +80,34 @@ create_lookup <- function(year1, year2, geog, full = TRUE){
 
   # Loop until end year
   for(yr in 2012:year2){
-    df <- plus_year(df = df, geog = geog, year = yr)
+    df <- suppressMessages(ukgeog::plus_year(df = df, geog = geog, year = yr))
   }
 
   # Whether to retain in-between years or not
   if(full != TRUE){
     df <- df %>%
-          dplyr::select(contains(substr(c(year1, year2), 3, 4)))
+          select(contains(substr(c(year1, year2), 3, 4)))
   } else {
     df <- df %>%
-          dplyr::select(contains(substr(year1:year2, 3, 4)))
+          select(contains(substr(year1:year2, 3, 4)))
   }
 
   # Remove any full row duplicates
-  df <- df %>% dplyr::distinct()
+  df <- df %>%
+        distinct()
 
   return(df)
 }
 
+#' Create a within year lookup
+#' Simple wrapper for `create_lookup`
+#'
+#' @param year Year
+#'
+#' @export
 
+within_yr_lookup <- function(year){
+
+  return(ukgeog::create_lookup(year1 = year, year2 = year, geog = c("LAD", "UTLA")))
+
+}
