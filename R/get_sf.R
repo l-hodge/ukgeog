@@ -126,7 +126,9 @@ read_admin <- function(geog,
                   "&f=json")
 
     # Read in shapefile
-    sf <- st_read(url, quiet = TRUE)
+    suppressWarnings({
+      sf <- st_read(url, quiet = TRUE)
+    })
 
     # Renaming
     names(sf) <- c(names(sf)[1:1],
@@ -257,39 +259,57 @@ read_census <- function(geog,
     stop("Incorrect specification of argument 'geog', 'geog' accepts 'OA', 'LSOA' or 'MSOA'")
   }
 
-  # Construct URL for API call
-  url <- paste0("https://ons-inspire.esriuk.com/arcgis/rest/services/Census_Boundaries/",
-                bound,
-                "_December_",
-                year,
-                "_Boundaries",
-                "/MapServer/",
-                type,
-                "/query?where=1%3D1&outFields=*&outSR=",
-                crs,
-                "&f=json")
+  # Create shapefiles dir if doesn't already exist
+  if (!dir.exists("shapefiles")) dir.create("shapefiles")
 
-  # Read in shapefile
-  suppressWarnings({
-    sf <- st_read(url, quiet = TRUE)
-  })
+  # Construct file name
+  savename <- paste0("shapefiles/", paste(bound, paste(nations, collapse = ""), year, "EW", type, crs, sep = "_"), ".shp")
 
-  # Renaming
-  names(sf) <- c(names(sf)[1:1],
-                 str_sub(names(sf)[2:3], start= -2),
-                 names(sf)[4:length(names(sf))])
+  # Check file doesn't already exist
+  if (file.exists(savename)){
+    sf <- st_read(savename, stringsAsFactors = FALSE, quiet = TRUE)
+  } else{
+    message("Downloading from ONS...")
 
-  # Apply country filtering
-  sf <- sf %>%
-        mutate_if(is.factor, as.character) %>%
-        mutate(country = substr(.data$cd, 1, 1)) %>%
-        filter(.data$country %in% nations) %>%
-        mutate(country = case_when(country == "E" ~ "England",
-                                   country == "W" ~ "Wales"))
+    # Construct URL for API call
+    url <- paste0("https://ons-inspire.esriuk.com/arcgis/rest/services/Census_Boundaries/",
+                  bound,
+                  "_December_",
+                  year,
+                  "_Boundaries",
+                  "/MapServer/",
+                  type,
+                  "/query?where=1%3D1&outFields=*&outSR=",
+                  crs,
+                  "&f=json")
 
-  # Ensure geometry is in the last column
-  sf <- sf %>%
-        select(everything(), .data$geometry)
+    # Read in shapefile
+    suppressWarnings({
+      sf <- st_read(url, quiet = TRUE)
+    })
+
+    # Renaming
+    names(sf) <- c(names(sf)[1:1],
+                   str_sub(names(sf)[2:3], start= -2),
+                   names(sf)[4:length(names(sf))])
+
+    # Apply country filtering
+    sf <- sf %>%
+          mutate_if(is.factor, as.character) %>%
+          mutate(country = substr(.data$cd, 1, 1)) %>%
+          filter(.data$country %in% nations) %>%
+          mutate(country = case_when(country == "E" ~ "England",
+                                     country == "W" ~ "Wales"))
+
+    # Ensure geometry is in the last column
+    sf <- sf %>%
+          select(everything(), .data$geometry)
+
+    # Save sf
+    suppressWarnings({
+      sf::st_write(sf, savename, quiet = TRUE)
+    })
+  }
 
   return(sf)
 
@@ -305,9 +325,9 @@ read_census <- function(geog,
 #'
 #' - European Union Parliamentary Constituencies (\code{"EU"})
 #'
-#' - Welsh Parliament Constituencies (\code{"WPC"})
+#' - Welsh Assembly Constituencies (\code{"WAC"})
 #'
-#' - Welsh Parliament Regions (\code{"WPR"})
+#' - Welsh Assembly Regions (\code{"WAR"})
 #'
 #' @param geog Type of electoral boundaries (\code{"WM", "EU", "WPC" or "WPR"})
 #' @param year Year (\code{2018} ONLY)
@@ -368,10 +388,6 @@ read_elec <- function(geog,
 
   crs <- crs
 
-  # Define Year
-  if (year != 2018) stop("'year' must be 2018")
-  year <- year
-
   # Define boundary clipping
   if (type %in% c("BGC", "BFC", "BFE", "BUC")){
     type <- type
@@ -382,16 +398,27 @@ read_elec <- function(geog,
   if (geog == "WM") {
     bound <- "Westminster_Parliamentary_Constituencies"
     tag <- "UK"
+    # Define Year
+    if (year != 2018 & year != 2019) stop("'year' must be 2018 or 2019")
+    year <- year
+    if (year == 2018){boundary <- "_"}else{boundary <- "_Boundaries_"}
   } else if (geog == "EU"){
     bound <- "European_Electoral_Regions"
     tag <- "UK"
-  } else if (geog == "WPC"){
+    boundary <- "_Boundaries_"
+    if (year != 2018) stop("Only available for 2018")
+  } else if (geog == "WAC"){
     bound <- "National_Assembly_for_Wales_Constituencies"
     tag <-  "WA"
-  } else if (geog == "WPR"){
+    boundary <- "_"
+    if (year != 2018) stop("Only available for 2018")
+  } else if (geog == "WAR"){
     bound <- "National_Assembly_for_Wales_Electoral_Regions"
+    boundary <- "_Boundaries_"
+    tag <-  "WA"
+    if (year != 2018) stop("Only available for 2018")
   } else{
-    stop("Incorrect specification of argument 'geog', 'geog' accepts 'WM', 'EU' or 'WA'")
+    stop("Incorrect specification of argument 'geog', 'geog' only accepts 'WM', 'EU', 'WAC' or 'WAR'")
   }
 
   # Construct URL for API call
@@ -399,7 +426,7 @@ read_elec <- function(geog,
                 bound,
                 "_December_",
                 year,
-                "_Boundaries_",
+                boundary,
                 tag,
                 "_",
                 type,
@@ -411,7 +438,7 @@ read_elec <- function(geog,
 
   # Read in shapefile
   suppressWarnings({
-    sf <- st_read(url, quiet = TRUE)
+    sf <- st_read(url, quiet = TRUE) %>% select(.data$objectid, everything())
   })
 
   # Renaming
@@ -436,7 +463,6 @@ read_elec <- function(geog,
   return(sf)
 
 }
-
 
 #' Get UK Eurostat NUTS Boundaries
 #'

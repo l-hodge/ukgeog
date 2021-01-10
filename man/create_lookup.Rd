@@ -2,10 +2,10 @@
 % Please edit documentation in R/plus_year-func.R
 \name{create_lookup}
 \alias{create_lookup}
-\title{Create a lookup
+\title{Create a lookup across years
 Wrapper for `plus_year`}
 \usage{
-create_lookup(year1, year2, geog, full = TRUE)
+create_lookup(year1, year2, geog, between = TRUE, changes_only = FALSE)
 }
 \arguments{
 \item{year1}{Start year}
@@ -14,9 +14,11 @@ create_lookup(year1, year2, geog, full = TRUE)
 
 \item{geog}{Geographic location identifier, can be mutiple}
 
-\item{full}{If `TRUE` (default) then includes years between `year1` and `year2`, else if `FALSE` then just keep `year1` and `year2`}
+\item{between}{If `TRUE` (default) then includes years between `year1` and `year2`, else if `FALSE` then just keep `year1` and `year2`}
+
+\item{changes_only}{Just keep changes}
 }
 \description{
-Create a lookup
+Create a lookup across years
 Wrapper for `plus_year`
 }

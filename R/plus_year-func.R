@@ -67,13 +67,14 @@ plus_year <- function(df, geog, year){
 #' @param year1 Start year
 #' @param year2 End year
 #' @param geog Geographic location identifier, can be mutiple
-#' @param full If `TRUE` (default) then includes years between `year1` and `year2`, else if `FALSE` then just keep `year1` and `year2`
+#' @param between If `TRUE` (default) then includes years between `year1` and `year2`, else if `FALSE` then just keep `year1` and `year2`
+#' @param changes_only Just keep changes
 #'
 #' @import dplyr
 #'
 #' @export
 
-create_lookup <- function(year1, year2, geog, full = TRUE){
+create_lookup <- function(year1, year2, geog, between = TRUE, changes_only = FALSE){
 
   # Start with 2011 data
   df <- ukgeog::BASE_2011
@@ -84,12 +85,23 @@ create_lookup <- function(year1, year2, geog, full = TRUE){
   }
 
   # Whether to retain in-between years or not
-  if(full != TRUE){
+  if(between != TRUE){
     df <- df %>%
           select(contains(substr(c(year1, year2), 3, 4)))
   } else {
     df <- df %>%
           select(contains(substr(year1:year2, 3, 4)))
+  }
+
+  # Only keep rows where changes in codes or names have occurred
+  if(changes_only == TRUE){
+    keep <- apply(df %>% select(ends_with("CD")), 1, function(x) length(unique(x[!is.na(x)])) != 1)
+    code_changes <- df[keep,]
+
+    keep <- apply(df %>% select(ends_with("NM")), 1, function(x) length(unique(x[!is.na(x)])) != 1)
+    name_changes <- df[keep,]
+
+    df <- full_join(code_changes, name_changes, by = names(df))
   }
 
   # Remove any full row duplicates

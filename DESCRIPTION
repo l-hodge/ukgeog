@@ -8,7 +8,7 @@ Description: Fetch UK geogrphical boundaries from the ONS Open Geography portal.
     Create useful lookups across geogrphical levels and across years.
     Some disparate functions.
 License: MIT + file LICENSE
-URL: https://l-hodge.github.io/uk-geog/, https://github.com/l-hodge/uk-geog
+URL: https://l-hodge.github.io/ukgeog/, https://github.com/l-hodge/ukgeog
 Encoding: UTF-8
 LazyData: true
 Depends:
@@ -22,7 +22,7 @@ Imports:
     curl (>= 4.3),
     rlang,
     lifecycle
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Suggests: 
     testthat,
     covr,

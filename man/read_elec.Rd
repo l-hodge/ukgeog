@@ -46,9 +46,9 @@ Boundaries included:
 
 - European Union Parliamentary Constituencies (\code{"EU"})
 
-- Welsh Parliament Constituencies (\code{"WPC"})
+- Welsh Assembly Constituencies (\code{"WAC"})
 
-- Welsh Parliament Regions (\code{"WPR"})
+- Welsh Assembly Regions (\code{"WAR"})
 }
 \examples{
 read_elec("EU")
