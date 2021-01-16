@@ -108,7 +108,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/l-hodge/uk-geog/">
+  <a href="https://github.com/l-hodge/ukgeog/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -127,7 +127,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get England and Wales Census Boundaries</h1>
-    <small class="dont-index">Source: <a href='https://github.com/l-hodge/uk-geog/blob/master/R/get_sf.R'><code>R/get_sf.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/l-hodge/ukgeog/blob/master/R/get_sf.R'><code>R/get_sf.R</code></a></small>
     <div class="hidden name"><code>read_census.Rd</code></div>
     </div>
 
@@ -135,7 +135,7 @@
     <p><code>read_census</code> downloads Census Boundaries from the ONS Open Geography Portal.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read_census</span>(<span class='no'>geog</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2011</span>, <span class='kw'>nations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"E"</span>, <span class='st'>"W"</span>), <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"BGC"</span>, <span class='kw'>crs</span> <span class='kw'>=</span> <span class='fl'>4326</span>)</pre>
+    <pre class="usage"><span class='fu'>read_census</span><span class='op'>(</span><span class='va'>geog</span>, year <span class='op'>=</span> <span class='fl'>2011</span>, nations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"E"</span>, <span class='st'>"W"</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"BGC"</span>, crs <span class='op'>=</span> <span class='fl'>4326</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,37 +178,40 @@
 <p>- Middle Super Output Area (<code>"MSOA"</code>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>read_census</span>(<span class='st'>"MSOA"</span>)</div><div class='output co'>#&gt; Simple feature collection with 7201 features and 7 fields
+    <pre class="examples"><div class='input'><span class='fu'>read_census</span><span class='op'>(</span><span class='st'>"MSOA"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Simple feature collection with 7201 features and 7 fields
 #&gt; geometry type:  MULTIPOLYGON
 #&gt; dimension:      XY
 #&gt; bbox:           xmin: -6.418524 ymin: 49.86474 xmax: 1.762942 ymax: 55.81107
 #&gt; geographic CRS: WGS 84
 #&gt; First 10 features:
-#&gt;    objectid        cd                       nm                msoa11nmw
-#&gt; 1         1 E02000001       City of London 001       City of London 001
-#&gt; 2         2 E02000002 Barking and Dagenham 001 Barking and Dagenham 001
-#&gt; 3         3 E02000003 Barking and Dagenham 002 Barking and Dagenham 002
-#&gt; 4         4 E02000004 Barking and Dagenham 003 Barking and Dagenham 003
-#&gt; 5         5 E02000005 Barking and Dagenham 004 Barking and Dagenham 004
-#&gt; 6         6 E02000007 Barking and Dagenham 006 Barking and Dagenham 006
-#&gt; 7         7 E02000008 Barking and Dagenham 007 Barking and Dagenham 007
-#&gt; 8         8 E02000009 Barking and Dagenham 008 Barking and Dagenham 008
-#&gt; 9         9 E02000010 Barking and Dagenham 009 Barking and Dagenham 009
-#&gt; 10       10 E02000011 Barking and Dagenham 010 Barking and Dagenham 010
-#&gt;    st_area.shape. st_length.shape. country                       geometry
-#&gt; 1         2905399         9024.060 England MULTIPOLYGON (((-0.09675966...
-#&gt; 2         2165634         8152.698 England MULTIPOLYGON (((0.1481122 5...
-#&gt; 3         2143565         9118.449 England MULTIPOLYGON (((0.150653 51...
-#&gt; 4         2490215         8207.610 England MULTIPOLYGON (((0.1851074 5...
-#&gt; 5         1186180         6964.962 England MULTIPOLYGON (((0.1499051 5...
-#&gt; 6         1733916         6773.957 England MULTIPOLYGON (((0.1600451 5...
-#&gt; 7         1419309         8427.797 England MULTIPOLYGON (((0.136055 51...
-#&gt; 8          965622         5958.160 England MULTIPOLYGON (((0.1169839 5...
-#&gt; 9         1120326         7651.809 England MULTIPOLYGON (((0.156482 51...
-#&gt; 10        1602157         7770.863 England MULTIPOLYGON (((0.1656968 5...</div><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>read_census</span>(<span class='st'>"OA"</span>, <span class='kw'>nations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"E"</span>))
-}</div></pre>
+#&gt;    objectd        cd                       nm                  ms11nmw st_r_s_
+#&gt; 1        1 E02000001       City of London 001       City of London 001 2905399
+#&gt; 2        2 E02000002 Barking and Dagenham 001 Barking and Dagenham 001 2165634
+#&gt; 3        3 E02000003 Barking and Dagenham 002 Barking and Dagenham 002 2143565
+#&gt; 4        4 E02000004 Barking and Dagenham 003 Barking and Dagenham 003 2490215
+#&gt; 5        5 E02000005 Barking and Dagenham 004 Barking and Dagenham 004 1186180
+#&gt; 6        6 E02000007 Barking and Dagenham 006 Barking and Dagenham 006 1733916
+#&gt; 7        7 E02000008 Barking and Dagenham 007 Barking and Dagenham 007 1419309
+#&gt; 8        8 E02000009 Barking and Dagenham 008 Barking and Dagenham 008  965622
+#&gt; 9        9 E02000010 Barking and Dagenham 009 Barking and Dagenham 009 1120326
+#&gt; 10      10 E02000011 Barking and Dagenham 010 Barking and Dagenham 010 1602157
+#&gt;     st_ln__ country                       geometry
+#&gt; 1  9024.060 England MULTIPOLYGON (((-0.09675966...
+#&gt; 2  8152.698 England MULTIPOLYGON (((0.1481122 5...
+#&gt; 3  9118.449 England MULTIPOLYGON (((0.150653 51...
+#&gt; 4  8207.610 England MULTIPOLYGON (((0.1851074 5...
+#&gt; 5  6964.962 England MULTIPOLYGON (((0.1499051 5...
+#&gt; 6  6773.957 England MULTIPOLYGON (((0.1600451 5...
+#&gt; 7  8427.797 England MULTIPOLYGON (((0.136055 51...
+#&gt; 8  5958.160 England MULTIPOLYGON (((0.1169839 5...
+#&gt; 9  7651.809 England MULTIPOLYGON (((0.156482 51...
+#&gt; 10 7770.863 England MULTIPOLYGON (((0.1656968 5...</div><div class='input'>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>read_census</span><span class='op'>(</span><span class='st'>"OA"</span>, nations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"E"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -224,7 +227,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -67,7 +67,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/l-hodge/uk-geog/">
+  <a href="https://github.com/l-hodge/ukgeog/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -82,178 +82,104 @@
 
       
 
-      </header><script src="boundary-changes_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
+      </header><script src="boundary-changes_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="boundary-changes_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="boundary-changes_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>LA Boundary Changes</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/l-hodge/uk-geog/blob/master/vignettes/boundary-changes.Rmd"><code>vignettes/boundary-changes.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/l-hodge/ukgeog/blob/master/vignettes/boundary-changes.Rmd"><code>vignettes/boundary-changes.Rmd</code></a></small>
       <div class="hidden name"><code>boundary-changes.Rmd</code></div>
 
     </div>
 
     
     
+<p>LA codes, names and boundaries have changed over time. <code>ukgeog</code> ships with internal datasets that map all changes since 2011. These mini lookups can be accessed directly as shown below. Or the function <code>create_lookup</code> can be used to generate multi-year lookups and <code>within_yr_lookup</code> can be used to generate within year LAD to UTLA lookups.</p>
 <div id="section" class="section level1">
 <h1 class="hasAnchor">
 <a href="#section" class="anchor"></a>2012</h1>
+<p>In April 2012 the local authority codes for <code>St Albans</code> and <code>Welwyn Hatfield</code> were changed.</p>
 <table class="table">
-<thead><tr>
-<th style="text-align:left;">
-LAD11CD
-</th>
-<th style="text-align:left;">
-LAD11NM
-</th>
-<th style="text-align:left;">
-LAD12CD
-</th>
-<th style="text-align:left;">
-LAD12NM
-</th>
+<thead><tr class="header">
+<th align="left">LAD11CD</th>
+<th align="left">LAD11NM</th>
+<th align="left">LAD12CD</th>
+<th align="left">LAD12NM</th>
 </tr></thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-E07000100
-</td>
-<td style="text-align:left;">
-St Albans
-</td>
-<td style="text-align:left;">
-E07000240
-</td>
-<td style="text-align:left;">
-St Albans
-</td>
+<tr class="odd">
+<td align="left">E07000100</td>
+<td align="left">St Albans</td>
+<td align="left">E07000240</td>
+<td align="left">St Albans</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000104
-</td>
-<td style="text-align:left;">
-Welwyn Hatfield
-</td>
-<td style="text-align:left;">
-E07000241
-</td>
-<td style="text-align:left;">
-Welwyn Hatfield
-</td>
+<tr class="even">
+<td align="left">E07000104</td>
+<td align="left">Welwyn Hatfield</td>
+<td align="left">E07000241</td>
+<td align="left">Welwyn Hatfield</td>
 </tr>
 </tbody>
 </table>
+<p>Source: <a href="https://www.ons.gov.uk/file?uri=%2Fpeoplepopulationandcommunity%2Fpopulationandmigration%2Fmigrationwithintheuk%2Fdatasets%2Fuserinformationenglandandwaleslocalauthoritytoregionlookup%2Fjune2012/laregionlookup2012_tcm77-368555.xls">ONS</a></p>
 </div>
 <div id="section-1" class="section level1">
 <h1 class="hasAnchor">
 <a href="#section-1" class="anchor"></a>2013</h1>
 <table class="table">
-<thead><tr>
-<th style="text-align:left;">
-LAD12CD
-</th>
-<th style="text-align:left;">
-LAD12NM
-</th>
-<th style="text-align:left;">
-LAD13CD
-</th>
-<th style="text-align:left;">
-LAD13NM
-</th>
+<thead><tr class="header">
+<th align="left">LAD12CD</th>
+<th align="left">LAD12NM</th>
+<th align="left">LAD13CD</th>
+<th align="left">LAD13NM</th>
 </tr></thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-E06000048
-</td>
-<td style="text-align:left;">
-Northumberland
-</td>
-<td style="text-align:left;">
-E06000057
-</td>
-<td style="text-align:left;">
-Northumberland
-</td>
+<tr class="odd">
+<td align="left">E06000048</td>
+<td align="left">Northumberland</td>
+<td align="left">E06000057</td>
+<td align="left">Northumberland</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000097
-</td>
-<td style="text-align:left;">
-East Hertfordshire
-</td>
-<td style="text-align:left;">
-E07000242
-</td>
-<td style="text-align:left;">
-East Hertfordshire
-</td>
+<tr class="even">
+<td align="left">E07000097</td>
+<td align="left">East Hertfordshire</td>
+<td align="left">E07000242</td>
+<td align="left">East Hertfordshire</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000101
-</td>
-<td style="text-align:left;">
-Stevenage
-</td>
-<td style="text-align:left;">
-E07000243
-</td>
-<td style="text-align:left;">
-Stevenage
-</td>
+<tr class="odd">
+<td align="left">E07000101</td>
+<td align="left">Stevenage</td>
+<td align="left">E07000243</td>
+<td align="left">Stevenage</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E08000020
-</td>
-<td style="text-align:left;">
-Gateshead
-</td>
-<td style="text-align:left;">
-E08000037
-</td>
-<td style="text-align:left;">
-Gateshead
-</td>
+<tr class="even">
+<td align="left">E08000020</td>
+<td align="left">Gateshead</td>
+<td align="left">E08000037</td>
+<td align="left">Gateshead</td>
 </tr>
 </tbody>
 </table>
+<p>Source: <a href="https://www.ons.gov.uk/file?uri=%2Fpeoplepopulationandcommunity%2Fpopulationandmigration%2Fmigrationwithintheuk%2Fdatasets%2Fuserinformationenglandandwaleslocalauthoritytoregionlookup%2Fjune2013/laregionlookup2013_tcm77-368312.xls">ONS</a></p>
 </div>
 <div id="section-2" class="section level1">
 <h1 class="hasAnchor">
 <a href="#section-2" class="anchor"></a>2018</h1>
+<p>In April 2018 the local authority district of <code>Shepway</code> was renamed <code>Folkstone and Hyde</code>.</p>
 <table class="table">
-<thead><tr>
-<th style="text-align:left;">
-LAD17CD
-</th>
-<th style="text-align:left;">
-LAD17NM
-</th>
-<th style="text-align:left;">
-LAD18CD
-</th>
-<th style="text-align:left;">
-LAD18NM
-</th>
+<thead><tr class="header">
+<th align="left">LAD17CD</th>
+<th align="left">LAD17NM</th>
+<th align="left">LAD18CD</th>
+<th align="left">LAD18NM</th>
 </tr></thead>
-<tbody><tr>
-<td style="text-align:left;">
-E07000112
-</td>
-<td style="text-align:left;">
-Shepway
-</td>
-<td style="text-align:left;">
-E07000112
-</td>
-<td style="text-align:left;">
-Folkestone and Hythe
-</td>
+<tbody><tr class="odd">
+<td align="left">E07000112</td>
+<td align="left">Shepway</td>
+<td align="left">E07000112</td>
+<td align="left">Folkestone and Hythe</td>
 </tr></tbody>
 </table>
 </div>
@@ -261,188 +187,84 @@ Folkestone and Hythe
 <h1 class="hasAnchor">
 <a href="#section-3" class="anchor"></a>2019</h1>
 <table class="table">
-<thead><tr>
-<th style="text-align:left;">
-LAD18CD
-</th>
-<th style="text-align:left;">
-LAD18NM
-</th>
-<th style="text-align:left;">
-LAD19CD
-</th>
-<th style="text-align:left;">
-LAD19NM
-</th>
+<thead><tr class="header">
+<th align="left">LAD18CD</th>
+<th align="left">LAD18NM</th>
+<th align="left">LAD19CD</th>
+<th align="left">LAD19NM</th>
 </tr></thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-E07000201
-</td>
-<td style="text-align:left;">
-Forest Heath
-</td>
-<td style="text-align:left;">
-E07000245
-</td>
-<td style="text-align:left;">
-West Suffolk
-</td>
+<tr class="odd">
+<td align="left">E07000201</td>
+<td align="left">Forest Heath</td>
+<td align="left">E07000245</td>
+<td align="left">West Suffolk</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000204
-</td>
-<td style="text-align:left;">
-St Edmundsbury
-</td>
-<td style="text-align:left;">
-E07000245
-</td>
-<td style="text-align:left;">
-West Suffolk
-</td>
+<tr class="even">
+<td align="left">E07000204</td>
+<td align="left">St Edmundsbury</td>
+<td align="left">E07000245</td>
+<td align="left">West Suffolk</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000205
-</td>
-<td style="text-align:left;">
-Suffolk Coastal
-</td>
-<td style="text-align:left;">
-E07000244
-</td>
-<td style="text-align:left;">
-East Suffolk
-</td>
+<tr class="odd">
+<td align="left">E07000205</td>
+<td align="left">Suffolk Coastal</td>
+<td align="left">E07000244</td>
+<td align="left">East Suffolk</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000206
-</td>
-<td style="text-align:left;">
-Waveney
-</td>
-<td style="text-align:left;">
-E07000244
-</td>
-<td style="text-align:left;">
-East Suffolk
-</td>
+<tr class="even">
+<td align="left">E07000206</td>
+<td align="left">Waveney</td>
+<td align="left">E07000244</td>
+<td align="left">East Suffolk</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E06000028
-</td>
-<td style="text-align:left;">
-Bournemouth
-</td>
-<td style="text-align:left;">
-E06000058
-</td>
-<td style="text-align:left;">
-Bournemouth, Christchurch and Poole
-</td>
+<tr class="odd">
+<td align="left">E06000028</td>
+<td align="left">Bournemouth</td>
+<td align="left">E06000058</td>
+<td align="left">Bournemouth, Christchurch and Poole</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E06000029
-</td>
-<td style="text-align:left;">
-Poole
-</td>
-<td style="text-align:left;">
-E06000058
-</td>
-<td style="text-align:left;">
-Bournemouth, Christchurch and Poole
-</td>
+<tr class="even">
+<td align="left">E06000029</td>
+<td align="left">Poole</td>
+<td align="left">E06000058</td>
+<td align="left">Bournemouth, Christchurch and Poole</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000048
-</td>
-<td style="text-align:left;">
-Christchurch
-</td>
-<td style="text-align:left;">
-E06000058
-</td>
-<td style="text-align:left;">
-Bournemouth, Christchurch and Poole
-</td>
+<tr class="odd">
+<td align="left">E07000048</td>
+<td align="left">Christchurch</td>
+<td align="left">E06000058</td>
+<td align="left">Bournemouth, Christchurch and Poole</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000049
-</td>
-<td style="text-align:left;">
-East Dorset
-</td>
-<td style="text-align:left;">
-E06000059
-</td>
-<td style="text-align:left;">
-Dorset
-</td>
+<tr class="even">
+<td align="left">E07000049</td>
+<td align="left">East Dorset</td>
+<td align="left">E06000059</td>
+<td align="left">Dorset</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000050
-</td>
-<td style="text-align:left;">
-North Dorset
-</td>
-<td style="text-align:left;">
-E06000059
-</td>
-<td style="text-align:left;">
-Dorset
-</td>
+<tr class="odd">
+<td align="left">E07000050</td>
+<td align="left">North Dorset</td>
+<td align="left">E06000059</td>
+<td align="left">Dorset</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000051
-</td>
-<td style="text-align:left;">
-Purbeck
-</td>
-<td style="text-align:left;">
-E06000059
-</td>
-<td style="text-align:left;">
-Dorset
-</td>
+<tr class="even">
+<td align="left">E07000051</td>
+<td align="left">Purbeck</td>
+<td align="left">E06000059</td>
+<td align="left">Dorset</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000052
-</td>
-<td style="text-align:left;">
-West Dorset
-</td>
-<td style="text-align:left;">
-E06000059
-</td>
-<td style="text-align:left;">
-Dorset
-</td>
+<tr class="odd">
+<td align="left">E07000052</td>
+<td align="left">West Dorset</td>
+<td align="left">E06000059</td>
+<td align="left">Dorset</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000053
-</td>
-<td style="text-align:left;">
-Weymouth and Portland
-</td>
-<td style="text-align:left;">
-E06000059
-</td>
-<td style="text-align:left;">
-Dorset
-</td>
+<tr class="even">
+<td align="left">E07000053</td>
+<td align="left">Weymouth and Portland</td>
+<td align="left">E06000059</td>
+<td align="left">Dorset</td>
 </tr>
 </tbody>
 </table>
@@ -450,77 +272,38 @@ Dorset
 <div id="section-4" class="section level1">
 <h1 class="hasAnchor">
 <a href="#section-4" class="anchor"></a>2020</h1>
+<p>In April 2020, the County of Buckinghamshire and its lower tier districts became one unitary authority.</p>
 <table class="table">
-<thead><tr>
-<th style="text-align:left;">
-LAD19CD
-</th>
-<th style="text-align:left;">
-LAD19NM
-</th>
-<th style="text-align:left;">
-LAD20CD
-</th>
-<th style="text-align:left;">
-LAD20NM
-</th>
+<thead><tr class="header">
+<th align="left">LAD19CD</th>
+<th align="left">LAD19NM</th>
+<th align="left">LAD20CD</th>
+<th align="left">LAD20NM</th>
 </tr></thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-E07000004
-</td>
-<td style="text-align:left;">
-Aylesbury Vale
-</td>
-<td style="text-align:left;">
-E06000060
-</td>
-<td style="text-align:left;">
-Buckinghamshire
-</td>
+<tr class="odd">
+<td align="left">E07000004</td>
+<td align="left">Aylesbury Vale</td>
+<td align="left">E06000060</td>
+<td align="left">Buckinghamshire</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000005
-</td>
-<td style="text-align:left;">
-Chiltern
-</td>
-<td style="text-align:left;">
-E06000060
-</td>
-<td style="text-align:left;">
-Buckinghamshire
-</td>
+<tr class="even">
+<td align="left">E07000005</td>
+<td align="left">Chiltern</td>
+<td align="left">E06000060</td>
+<td align="left">Buckinghamshire</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000006
-</td>
-<td style="text-align:left;">
-South Bucks
-</td>
-<td style="text-align:left;">
-E06000060
-</td>
-<td style="text-align:left;">
-Buckinghamshire
-</td>
+<tr class="odd">
+<td align="left">E07000006</td>
+<td align="left">South Bucks</td>
+<td align="left">E06000060</td>
+<td align="left">Buckinghamshire</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-E07000007
-</td>
-<td style="text-align:left;">
-Wycombe
-</td>
-<td style="text-align:left;">
-E06000060
-</td>
-<td style="text-align:left;">
-Buckinghamshire
-</td>
+<tr class="even">
+<td align="left">E07000007</td>
+<td align="left">Wycombe</td>
+<td align="left">E06000060</td>
+<td align="left">Buckinghamshire</td>
 </tr>
 </tbody>
 </table>
@@ -542,7 +325,7 @@ Buckinghamshire
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

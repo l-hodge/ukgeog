@@ -10,7 +10,7 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-LA codes, names and boundaries have changed over time. `ukgeog` ships with internal datasets that map all changes since 2011. These mini lookups can be accessed directly as shown below. Or the function `create_lookup` can be used to generate multi-year lookups. 
+LA codes, names and boundaries have changed over time. `ukgeog` ships with internal datasets that map all changes since 2011. These mini lookups can be accessed directly as shown below. Or the function `create_lookup` can be used to generate multi-year lookups and `within_yr_lookup` can be used to generate within year LAD to UTLA lookups.
 
 
 # 2012

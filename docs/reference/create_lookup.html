@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a lookup
+<title>Create a lookup across years
 Wrapper for `plus_year` — create_lookup • ukgeog</title>
 
 
@@ -40,9 +40,9 @@ Wrapper for `plus_year` — create_lookup • ukgeog</title>
 
 
 
-<meta property="og:title" content="Create a lookup
+<meta property="og:title" content="Create a lookup across years
 Wrapper for `plus_year` — create_lookup" />
-<meta property="og:description" content="Create a lookup
+<meta property="og:description" content="Create a lookup across years
 Wrapper for `plus_year`" />
 
 
@@ -111,7 +111,7 @@ Wrapper for `plus_year`" />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/l-hodge/uk-geog/">
+  <a href="https://github.com/l-hodge/ukgeog/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -129,18 +129,18 @@ Wrapper for `plus_year`" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a lookup
+    <h1>Create a lookup across years
 Wrapper for `plus_year`</h1>
-    <small class="dont-index">Source: <a href='https://github.com/l-hodge/uk-geog/blob/master/R/plus_year-func.R'><code>R/plus_year-func.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/l-hodge/ukgeog/blob/master/R/plus_year-func.R'><code>R/plus_year-func.R</code></a></small>
     <div class="hidden name"><code>create_lookup.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create a lookup
+    <p>Create a lookup across years
 Wrapper for `plus_year`</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_lookup</span>(<span class='no'>year1</span>, <span class='no'>year2</span>, <span class='no'>geog</span>, <span class='kw'>full</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>create_lookup</span><span class='op'>(</span><span class='va'>year1</span>, <span class='va'>year2</span>, <span class='va'>geog</span>, between <span class='op'>=</span> <span class='cn'>TRUE</span>, changes_only <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,8 +158,12 @@ Wrapper for `plus_year`</p>
       <td><p>Geographic location identifier, can be mutiple</p></td>
     </tr>
     <tr>
-      <th>full</th>
+      <th>between</th>
       <td><p>If `TRUE` (default) then includes years between `year1` and `year2`, else if `FALSE` then just keep `year1` and `year2`</p></td>
+    </tr>
+    <tr>
+      <th>changes_only</th>
+      <td><p>Just keep changes</p></td>
     </tr>
     </table>
 
@@ -179,7 +183,7 @@ Wrapper for `plus_year`</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

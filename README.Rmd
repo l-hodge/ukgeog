@@ -51,6 +51,13 @@ sf <- read_admin("NAT")
 |-----|-----|-----|
 |`lea2019lookup`| Upper Tier Local Authorities| 2019 |
 |`convert_lnglat`| Convert Eastings/Northings to Latitude/Longitude| - |
+|`create_lookup`| Create geographical lookup across years| 2011-2019 |
+|`within_yr_lookup`| Create a within year lookup between LAD's and UTLA's| 2011-2019 |
+
+## Vignettes
+
+- [Creating Choropleth Maps with `ukgeog`](https://l-hodge.github.io/ukgeog/articles/maps.html)
+- [Local Authority Boundary Changes](https://l-hodge.github.io/ukgeog/articles/boundary-changes.html)
 
 ## Credits
 

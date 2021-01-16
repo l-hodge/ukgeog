@@ -45,22 +45,6 @@ plus_year <- function(df, geog, year){
   return(df)
 }
 
-# ----
-
-# # If there isn't a lookup
-# df_2011 <- data.frame(LAD11CD = c(1:5), LAD11NM = c("a", "b", "c", "d", "e"),
-#                       UTLA11CD = rep(1,5), UTLA11NM = c("z"),
-#                       stringsAsFactors = FALSE)
-# plus_year(df_2011, "LAD", 2012)
-#
-# # If there is a lookup
-# LAD_1112 <- data.frame(LAD11CD = c(3,5), LAD11NM = c("c", "e"), LAD12CD = c(6,7), LAD12NM = c("f", "g"), stringsAsFactors = FALSE)
-# LAD_1213 <- data.frame(LAD12CD = c(1), LAD12NM = c("a"), LAD13CD = c(8), LAD13NM = c("h"), stringsAsFactors = FALSE)
-# LAD_1314 <- data.frame(LAD13CD = c(6), LAD13NM = c("f"), LAD14CD = c(9), LAD14NM = c("i"), stringsAsFactors = FALSE)
-#
-# plus_year(df_2011, "LAD", 2012)
-
-
 #' Create a lookup across years
 #' Wrapper for `plus_year`
 #'
