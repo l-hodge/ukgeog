@@ -1,0 +1,17 @@
+---
+title: "ONS Hierarchy of UK Statistical Geographies"
+vignette: >
+  %\VignetteIndexEntry{hierarchyposter}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r pdf, out.height = "600px", out.width='1040px'}
+knitr::include_graphics("./hierarchy_poster.png")
+```
+
+Source: [ONS](https://geoportal.statistics.gov.uk/search?collection=Document&sort=name&tags=all(DOC_HRSG%2CDEC_2020))

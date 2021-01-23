@@ -40,10 +40,10 @@ sf <- read_admin("NAT")
 
 |Function|Geographies available|Years available|
 |-----|-----|-----|
-|`read_census`| Countries, Regions (England Only), Upper Tier Local Authorities, Local Authority Districts | 2018, 2019 |
-|`read_admin`| Output Area (OA), Lower Super Output Area (LSOA), Middle Super Output Area (MSOA) | 2001, 2011 |
+|`read_census`| Countries, Regions (England Only), Upper Tier Local Authorities, Local Authority Districts | 2018, 2019 (& 2020 for LADs ONLY) |
+|`read_admin`| Output Area (OA), Lower Super Output Area (LSOA), Middle Super Output Area (MSOA) | 2001 & 2011 |
 |`read_elec`| Westminster parliamentary Constituencies, European Electoral Regions, Welsh Parliament Constituencies, Welsh Parliament Regions | 2018 |
-|`read_nuts`| Eurostat NUTS Levels 1, 2 & 3 | 2015, 2018 |
+|`read_nuts`| Eurostat NUTS Levels 1, 2 & 3 | 2015 & 2018 |
 
 ### Other functions
 
@@ -58,6 +58,7 @@ sf <- read_admin("NAT")
 
 - [Creating Choropleth Maps with `ukgeog`](https://l-hodge.github.io/ukgeog/articles/maps.html)
 - [Local Authority Boundary Changes](https://l-hodge.github.io/ukgeog/articles/boundary-changes.html)
+- [ONS Hierarchy of UK Statistical Geographies](https://l-hodge.github.io/ukgeog/articles/ons-hierarchy.html)
 
 ## Credits
 

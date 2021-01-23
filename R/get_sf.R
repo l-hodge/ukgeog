@@ -73,7 +73,8 @@ read_admin <- function(geog,
   crs <- crs
 
   # Define Year
-  if (year < 2018 | year > 2019) stop("'year' must be either 2018 or 2019")
+  if (geog != "LAD" & (year < 2018 | year > 2019)) stop("'year' must be either 2018 or 2019")
+  if (geog == "LAD" & (year < 2018 | year > 2020)) stop("'year' must be either 2018, 2019 or 2020")
   year <- year
 
   # Define boundary clipping
@@ -83,12 +84,17 @@ read_admin <- function(geog,
     stop("'type' must be one of BGC, BFC, BFE or BUC, see help(get_sf) for definitions")
   }
 
+  month <- "December"
+
   if (geog == "UTLA") {
     bound <- "Counties_and_Unitary_Authorities"
     tag <- "UK"
   } else if (geog == "LAD"){
     bound <-"Local_Authority_Districts"
     tag <- "UK"
+    if (year == 2020){
+      month <- "May"
+    }
   } else if (geog == "GOR"){
     bound <- "Regions"
     tag <- "EN"
@@ -115,7 +121,9 @@ read_admin <- function(geog,
     # Construct URL for API call
     url <- paste0("https://ons-inspire.esriuk.com/arcgis/rest/services/Administrative_Boundaries/",
                   bound,
-                  "_December_",
+                  "_",
+                  month,
+                  "_",
                   year,
                   "_Boundaries_",
                   tag,
