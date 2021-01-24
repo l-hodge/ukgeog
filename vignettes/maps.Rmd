@@ -1,5 +1,5 @@
 ---
-title: "Using `ukgeog` to draw maps"
+title: "Using `ukgeog` to draw choropleth maps"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{get_sf}
@@ -10,11 +10,14 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 7, 
+  fig.height = 5
 )
+library(dplyr)
 ```
 
-`ukgeog` provides several `read` functions to provide the ability to easily download official spatial data sets of the UK as simple feature (`sf`) objects. A full list of the geographies available is provided [here](https://l-hodge.github.io/uk-geog/). Here we demonstrate how this makes it easy to make choropleth maps with base R, as well as with popular packages such as `ggplot2`, `tmap` and `leaflet.`
+`ukgeog` provides several `read_*` functions to provide the ability to easily download official spatial data sets of the UK as simple feature (`sf`) objects. A full list of the geographies available is provided [here](https://l-hodge.github.io/uk-geog/). Here we demonstrate how this makes it easy to make choropleth maps with base R, as well as with popular packages such as `ggplot2`, `tmap` and `leaflet.`
 
 First we need to read in a spatial dataset as a simple feature (`sf`), here we choose to make use of `read_admin` to read in the countries that make up the UK:
 ```{r getsf, eval = TRUE}
@@ -23,35 +26,58 @@ library(ukgeog)
 sf <- read_admin("NAT")
 ```
 
-Note: ` crs = 4326 ` (the default) provides the most capatibility with other functions
+Note: ` crs = 4326 ` (the default) provides the most compatibility with other functions.
 
-## Drawing maps with your simple feature
+## Drawing a choropleth map with a simple feature
 
-### -plot-
+We first merge in mid-2019 population density estimates from the [ONS](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/bulletins/annualmidyearpopulationestimates/mid2019estimates#population-growth-in-england-wales-scotland-and-northern-ireland), so we have something to plot:
+```{r population}
+population <- data.frame(
+                country = c("England", "Wales", "Scotland", "Northern Ireland"),
+                `Population Density` = as.numeric(c("432", "152", "70", "137")),
+                check.names = FALSE
+              )
 
-```{r plotexample, eval = TRUE}
-plot(sf$geometry)
+sf <- dplyr::left_join(sf, population, by = "country")
+
 ```
 
-### -ggplot2-
+Now we plot some choropleth maps with both base R and some easier to use packages:
+
+### base R (`plot`)
+
+```{r plotexample, eval = TRUE}
+cols <- c("#EDF8E9", "#BAE4B3", "#74C476", "#31A354", "#006D2C")
+brks <- c(0, 100, 200, 300, 400, 500)
+col <- cols[findInterval(sf$`Population Density`, vec = brks)]
+
+plot(sf$geometry, col = col)
+legend("bottomleft", 
+       legend = levels(cut(sf$`Population Density`, brks)), 
+       fill = cols, 
+       title = "Population Density")
+```
+
+### `ggplot2`
 
 ```{r ggplotexample, eval = TRUE}
 library(ggplot2)
 
 ggplot(sf) + 
-  geom_sf() +
+  geom_sf(aes(fill = `Population Density`)) +
   theme_void()
 ```
 
-### -tmap-
+### `tmap`
 
 ```{r tmapexample, eval = TRUE}
 library(tmap)
 
-qtm(sf)
+qtm(sf, fill = "Population Density") +
+  tm_legend(legend.position = c("left", "top"))
 ```
 
-### -leaflet-
+### `leaflet`
 
 ```{r leafletexample, eval = FALSE}
 library(leaflet)
