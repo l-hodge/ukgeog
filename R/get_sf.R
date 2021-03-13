@@ -70,8 +70,6 @@ read_admin <- function(geog,
     }
   }
 
-  crs <- crs
-
   # Define Year
   if (geog != "LAD" & (year < 2018 | year > 2019)) stop("'year' must be either 2018 or 2019")
   if (geog == "LAD" & (year < 2018 | year > 2020)) stop("'year' must be either 2018, 2019 or 2020")
@@ -84,33 +82,11 @@ read_admin <- function(geog,
     stop("'type' must be one of BGC, BFC, BFE or BUC, see help(get_sf) for definitions")
   }
 
-  boundaries <- "_Boundaries_"
-
-  if (geog == "UTLA") {
-    bound <- "Counties_and_Unitary_Authorities"
-    tag <- "UK"
-  } else if (geog == "LAD"){
-    bound <-"Local_Authority_Districts"
-    tag <- "UK"
-    if (year == 2020){
-      boundaries <- "_"
-    }
-  } else if (geog == "GOR"){
-    bound <- "Regions"
-    tag <- "EN"
-    message("Note: Regions only exist for England")
-  } else if (geog == "NAT"){
-    bound <- "Countries"
-    tag <- "UK"
-  } else{
-    stop("Incorrect specification of argument 'geog', 'geog' accepts 'UTLA', 'LAD', 'GOR' or 'NAT'")
-  }
-
   # Create shapefiles dir if doesn't already exist
   if (!dir.exists("shapefiles")) dir.create("shapefiles")
 
   # Construct file name
-  savename <- paste0("shapefiles/", paste(bound, paste(nations, collapse = ""), year, tag, type, crs, sep = "_"), ".shp")
+  savename <- paste0("shapefiles/", paste(geog, paste(nations, collapse = ""), year, type, crs, sep = "_"), ".shp")
 
   # Check file doesn't already exist
   if (file.exists(savename)){
@@ -118,18 +94,18 @@ read_admin <- function(geog,
   } else{
     message("Downloading from ONS...")
 
-    # Construct URL for API call
-    url <- paste0("https://ons-inspire.esriuk.com/arcgis/rest/services/Administrative_Boundaries/",
-                  bound,
-                  "_December_",
-                  year,
-                  boundaries,
-                  tag,
-                  "_",
-                  type,
-                  "/MapServer/0/query?where=1%3D1&outFields=*&outSR=",
-                  crs,
-                  "&f=json")
+    if (geog == "UTLA") {
+      url <- select_url(year = year, geog = "Counties_and_Unitary_Authorities", type = type, crs = crs, tag = "UK")
+    } else if (geog == "LAD"){
+      url <- select_url(year = year, geog = "District", type = type, crs = crs, tag = "UK")
+    } else if (geog == "GOR"){
+      url <- select_url(year = year, geog = "Regions", type = type, crs = crs, tag = "EN")
+      message("Note: Regions only exist for England")
+    } else if (geog == "NAT"){
+      url <- select_url(year = year, geog = "Countries", type = type, crs = crs, tag = "UK")
+    } else{
+      stop("Incorrect specification of argument 'geog', 'geog' accepts 'UTLA', 'LAD', 'GOR' or 'NAT'")
+    }
 
     # Read in shapefile
     suppressWarnings({
