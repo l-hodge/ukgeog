@@ -84,7 +84,7 @@ read_admin <- function(geog,
     stop("'type' must be one of BGC, BFC, BFE or BUC, see help(get_sf) for definitions")
   }
 
-  month <- "December"
+  boundaries <- "_Boundaries_"
 
   if (geog == "UTLA") {
     bound <- "Counties_and_Unitary_Authorities"
@@ -93,7 +93,7 @@ read_admin <- function(geog,
     bound <-"Local_Authority_Districts"
     tag <- "UK"
     if (year == 2020){
-      month <- "May"
+      boundaries <- "_"
     }
   } else if (geog == "GOR"){
     bound <- "Regions"
@@ -121,11 +121,9 @@ read_admin <- function(geog,
     # Construct URL for API call
     url <- paste0("https://ons-inspire.esriuk.com/arcgis/rest/services/Administrative_Boundaries/",
                   bound,
-                  "_",
-                  month,
-                  "_",
+                  "_December_",
                   year,
-                  "_Boundaries_",
+                  boundaries,
                   tag,
                   "_",
                   type,
