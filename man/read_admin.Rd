@@ -15,8 +15,6 @@ read_admin(
 \arguments{
 \item{geog}{Type of administrative boundaries (\code{"NAT", "GOR", "UTLA" or "LAD"})}
 
-\item{year}{Year (\code{2018} or \code{2019})}
-
 \item{nations}{For Which UK nations (\code{c("E","W","S","N")})}
 
 \item{type}{Boundary Clipping
@@ -32,6 +30,8 @@ read_admin(
 \item{crs}{Coordinate Reference System (ESPG).
 
 It is recommend to use \code{4326} (World Geodetic System) or potentially \code{27700} (UK OS British National Grid)}
+
+\item{<-}{<- Year (\code{2018} or \code{2019})}
 }
 \value{
 Output is a simple feature object containing the relevant boundaries.

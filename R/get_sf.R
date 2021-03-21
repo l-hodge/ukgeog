@@ -13,7 +13,7 @@
 #' - Lower Tier Local Authorities (\code{"LAD"})
 #'
 #' @param geog Type of administrative boundaries (\code{"NAT", "GOR", "UTLA" or "LAD"})
-#' @param year Year (\code{2018} or \code{2019})
+#' @param <- <- Year (\code{2018} or \code{2019})
 #' @param nations For Which UK nations (\code{c("E","W","S","N")})
 #' @param type Boundary Clipping
 #'
@@ -73,14 +73,9 @@ read_admin <- function(geog,
   # Define Year
   if (geog != "LAD" & (year < 2018 | year > 2019)) stop("'year' must be either 2018 or 2019")
   if (geog == "LAD" & (year < 2018 | year > 2020)) stop("'year' must be either 2018, 2019 or 2020")
-  year <- year
 
   # Define boundary clipping
-  if (type %in% c("BGC", "BFC", "BFE", "BUC")){
-    type <- type
-  } else{
-    stop("'type' must be one of BGC, BFC, BFE or BUC, see help(get_sf) for definitions")
-  }
+  if (!(type %in% c("BGC", "BFC", "BFE", "BUC"))) stop("'type' must be one of BGC, BFC, BFE or BUC, see help(read_elec) for definitions")
 
   # Create shapefiles dir if doesn't already exist
   if (!dir.exists("shapefiles")) dir.create("shapefiles")
@@ -94,15 +89,17 @@ read_admin <- function(geog,
   } else{
     message("Downloading from ONS...")
 
+    boundary_type = "Administrative_Boundaries"
+
     if (geog == "UTLA") {
-      url <- select_url(year = year, geog = "Counties_and_Unitary_Authorities", type = type, crs = crs, tag = "UK")
+      url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "Counties_and_Unitary_Authorities", type = type, crs = crs, tag = "UK", num = 0)
     } else if (geog == "LAD"){
-      url <- select_url(year = year, geog = "District", type = type, crs = crs, tag = "UK")
+      url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "District", type = type, crs = crs, tag = "UK", num = 0)
     } else if (geog == "GOR"){
-      url <- select_url(year = year, geog = "Regions", type = type, crs = crs, tag = "EN")
+      url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "Regions", type = type, crs = crs, tag = "EN", num = 0)
       message("Note: Regions only exist for England")
     } else if (geog == "NAT"){
-      url <- select_url(year = year, geog = "Countries", type = type, crs = crs, tag = "UK")
+      url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "Countries", type = type, crs = crs, tag = "UK", num = 0)
     } else{
       stop("Incorrect specification of argument 'geog', 'geog' accepts 'UTLA', 'LAD', 'GOR' or 'NAT'")
     }
@@ -215,11 +212,8 @@ read_census <- function(geog,
     }
   }
 
-  crs <- crs
-
   # Define Year
   if (year != 2001 & year != 2011) stop("'year' must be either 2001 or 2011")
-  year <- year
 
   if (type == "BFC"){
     type <- 0
@@ -231,21 +225,11 @@ read_census <- function(geog,
     stop("'type' must be one of BGC, BFC or BFE, see help(get_census_sf) for definitions")
   }
 
-  if (geog == "OA") {
-    bound <- "Output_Area"
-  } else if (geog == "LSOA"){
-    bound <- "Lower_Super_Output_Areas"
-  } else if (geog == "MSOA"){
-    bound <- "Middle_Super_Output_Areas"
-  } else{
-    stop("Incorrect specification of argument 'geog', 'geog' accepts 'OA', 'LSOA' or 'MSOA'")
-  }
-
   # Create shapefiles dir if doesn't already exist
   if (!dir.exists("shapefiles")) dir.create("shapefiles")
 
   # Construct file name
-  savename <- paste0("shapefiles/", paste(bound, paste(nations, collapse = ""), year, "EW", type, crs, sep = "_"), ".shp")
+  savename <- paste0("shapefiles/", paste(geog, paste(nations, collapse = ""), year, type, crs, sep = "_"), ".shp")
 
   # Check file doesn't already exist
   if (file.exists(savename)){
@@ -253,17 +237,17 @@ read_census <- function(geog,
   } else{
     message("Downloading from ONS...")
 
-    # Construct URL for API call
-    url <- paste0("https://ons-inspire.esriuk.com/arcgis/rest/services/Census_Boundaries/",
-                  bound,
-                  "_December_",
-                  year,
-                  "_Boundaries",
-                  "/MapServer/",
-                  type,
-                  "/query?where=1%3D1&outFields=*&outSR=",
-                  crs,
-                  "&f=json")
+    boundary_type = "Census_Boundaries"
+
+    if (geog == "OA") {
+      url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "/Output_Area", type = "", crs = crs, tag = "", num = type)
+    } else if (geog == "LSOA"){
+      url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "/Lower_Super_Output_Areas", type = "", crs = crs, tag = "", num = type)
+    } else if (geog == "MSOA"){
+      url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "/Middle_Super_Output_Areas", type = "", crs = crs, tag = "", num = type)
+    } else{
+      stop("Incorrect specification of argument 'geog', 'geog' accepts 'OA', 'LSOA' or 'MSOA'")
+    }
 
     # Read in shapefile
     suppressWarnings({
@@ -368,79 +352,67 @@ read_elec <- function(geog,
     }
   }
 
-  crs <- crs
+  if (geog == "WM" & (year < 2018 | year > 2019)) stop("'year' must be 2018 or 2019")
+  if (geog != "WM" & (year != 2018)) stop("'year' must be 2018")
 
   # Define boundary clipping
-  if (type %in% c("BGC", "BFC", "BFE", "BUC")){
-    type <- type
+  if (!(type %in% c("BGC", "BFC", "BFE", "BUC"))) stop("'type' must be one of BGC, BFC, BFE or BUC, see help(read_elec) for definitions")
+
+  # Create shapefiles dir if doesn't already exist
+  if (!dir.exists("shapefiles")) dir.create("shapefiles")
+
+  # Construct file name
+  savename <- paste0("shapefiles/", paste(geog, paste(nations, collapse = ""), year, type, crs, sep = "_"), ".shp")
+
+  # Check file doesn't already exist
+  if (file.exists(savename)){
+    sf <- st_read(savename, stringsAsFactors = FALSE, quiet = TRUE)
   } else{
-    stop("'type' must be one of BGC, BFC, BFE or BUC, see help(read_elec) for definitions")
+    message("Downloading from ONS...")
+
+    boundary_type <- "Electoral_Boundaries"
+
+    if (geog == "WM") {
+      url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "Westminster_Parliamentary_Constituencies", type = type, crs = crs, tag = "UK", num = 0)
+    } else if (geog == "EU"){
+      url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "European_Electoral_Regions", type = type, crs = crs, tag = "UK", num = 0)
+    } else if (geog == "WAC"){
+      url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "National_Assembly_for_Wales_Constituencies", type = type, crs = crs, tag = "WA", num = 0)
+    } else if (geog == "WAR"){
+      url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "National_Assembly_for_Wales_Electoral_Regions", type = type, crs = crs, tag = "WA", num = 0)
+    } else{
+      stop("Incorrect specification of argument 'geog', 'geog' only accepts 'WM', 'EU', 'WAC' or 'WAR'")
+    }
+
+    # Read in shapefile
+    suppressWarnings({
+      sf <- st_read(url, quiet = TRUE) %>% select(.data$objectid, everything())
+    })
+
+    # Renaming
+    names(sf) <- c(names(sf)[1:1],
+                   str_sub(names(sf)[2:3], start= -2),
+                   names(sf)[4:length(names(sf))])
+
+    # Apply country filtering
+    sf <- sf %>%
+      mutate_if(is.factor, as.character) %>%
+      mutate(country = substr(.data$cd, 1, 1)) %>%
+      filter(.data$country %in% nations) %>%
+      mutate(country = case_when(country == "E" ~ "England",
+                                 country == "S" ~ "Scotland",
+                                 country == "W" ~ "Wales",
+                                 country == "N" ~ "Northern Ireland"))
+
+    # Ensure geometry is in the last column
+    sf <- sf %>%
+      select(everything(), .data$geometry)
+
+    # Save sf
+    suppressWarnings({
+      sf::st_write(sf, savename, quiet = TRUE)
+    })
   }
-
-  if (geog == "WM") {
-    bound <- "Westminster_Parliamentary_Constituencies"
-    tag <- "UK"
-    # Define Year
-    if (year != 2018 & year != 2019) stop("'year' must be 2018 or 2019")
-    year <- year
-    if (year == 2018){boundary <- "_"}else{boundary <- "_Boundaries_"}
-  } else if (geog == "EU"){
-    bound <- "European_Electoral_Regions"
-    tag <- "UK"
-    boundary <- "_Boundaries_"
-    if (year != 2018) stop("Only available for 2018")
-  } else if (geog == "WAC"){
-    bound <- "National_Assembly_for_Wales_Constituencies"
-    tag <-  "WA"
-    boundary <- "_"
-    if (year != 2018) stop("Only available for 2018")
-  } else if (geog == "WAR"){
-    bound <- "National_Assembly_for_Wales_Electoral_Regions"
-    boundary <- "_Boundaries_"
-    tag <-  "WA"
-    if (year != 2018) stop("Only available for 2018")
-  } else{
-    stop("Incorrect specification of argument 'geog', 'geog' only accepts 'WM', 'EU', 'WAC' or 'WAR'")
-  }
-
-  # Construct URL for API call
-  url <- paste0("https://ons-inspire.esriuk.com/arcgis/rest/services/Electoral_Boundaries/",
-                bound,
-                "_December_",
-                year,
-                boundary,
-                tag,
-                "_",
-                type,
-                "/MapServer/0",
-                "/query?where=1%3D1",
-                "&outFields=*",
-                "&outSR=", crs,
-                "&f=json")
-
-  # Read in shapefile
-  suppressWarnings({
-    sf <- st_read(url, quiet = TRUE) %>% select(.data$objectid, everything())
-  })
-
-  # Renaming
-  names(sf) <- c(names(sf)[1:1],
-                 str_sub(names(sf)[2:3], start= -2),
-                 names(sf)[4:length(names(sf))])
-
-  # Apply country filtering
-  sf <- sf %>%
-        mutate_if(is.factor, as.character) %>%
-        mutate(country = substr(.data$cd, 1, 1)) %>%
-        filter(.data$country %in% nations) %>%
-        mutate(country = case_when(country == "E" ~ "England",
-                                   country == "S" ~ "Scotland",
-                                   country == "W" ~ "Wales",
-                                   country == "N" ~ "Northern Ireland"))
-
-  # Ensure geometry is in the last column
-  sf <- sf %>%
-        select(everything(), .data$geometry)
 
   return(sf)
 
@@ -515,11 +487,8 @@ read_nuts <- function(geog,
     }
   }
 
-  crs <- crs
-
   # Define Year
   if (year != 2015 & year != 2018) stop("'year' must be either 2015 or 2018")
-  year <- year
 
   if (type == "BFC"){
     type <- 0
@@ -531,56 +500,63 @@ read_nuts <- function(geog,
     stop("'type' must be one of BGC, BFC or BFE, see help(get_census_sf) for definitions")
   }
 
-  if (geog == "NUTS1") {
-    bound <- "NUTS_Level_1"
-  } else if (geog == "NUTS2"){
-    bound <- "NUTS_Level_2"
-  } else if (geog == "NUTS3"){
-    bound <- "NUTS_Level_3"
+  # Create shapefiles dir if doesn't already exist
+  if (!dir.exists("shapefiles")) dir.create("shapefiles")
+
+  # Construct file name
+  savename <- paste0("shapefiles/", paste(geog, paste(nations, collapse = ""), year, type, crs, sep = "_"), ".shp")
+
+  # Check file doesn't already exist
+  if (file.exists(savename)){
+    sf <- st_read(savename, stringsAsFactors = FALSE, quiet = TRUE)
   } else{
-    stop("Incorrect specification of argument 'geog', 'geog' accepts 'NUTS1', 'NUTS2' or 'NUTS3'")
+    message("Downloading from ONS...")
+
+    boundary_type = "Eurostat_Boundaries"
+
+    if (geog == "NUTS1") {
+      url <- select_url(boundary_type = boundary_type, year = year, month = "January", geog = "NUTS_Level_1", type = "", crs = 4326, tag = "", num = type)
+    } else if (geog == "NUTS2"){
+      url <- select_url(boundary_type = boundary_type, year = year, month = "January", geog = "NUTS_Level_2", type = "", crs = 4326, tag = "", num = type)
+    } else if (geog == "NUTS3"){
+      url <- select_url(boundary_type = boundary_type, year = year, month = "January", geog = "NUTS_Level_3", type = "", crs = 4326, tag = "", num = type)
+    } else{
+      stop("Incorrect specification of argument 'geog', 'geog' accepts 'NUTS1', 'NUTS2' or 'NUTS3'")
+    }
+
+    # Read in shapefile
+    suppressWarnings({
+      sf <- st_read(url, quiet = TRUE)
+    })
+
+    # Renaming
+    names(sf) <- c(names(sf)[1:1],
+                   str_sub(names(sf)[2:3], start= -2),
+                   names(sf)[4:length(names(sf))])
+
+    # Apply country filtering
+    sf <- sf %>%
+      mutate_if(is.factor, as.character) %>%
+      mutate(country = substr(.data$cd, 3, 4)) %>%
+      mutate(country = ifelse(.data$country == "M", "S", # Scotland
+                              ifelse(.data$country == "L", "W", # Wales
+                                     ifelse(.data$country == "N", "N", # NI
+                                            "E")))) %>% # Rest are England
+      filter(.data$country %in% nations) %>%
+      mutate(country = case_when(country == "E" ~ "England",
+                                 country == "S" ~ "Scotland",
+                                 country == "W" ~ "Wales",
+                                 country == "N" ~ "Northern Ireland"))
+
+    # Ensure geometry is in the last column
+    sf <- sf %>%
+      select(everything(), .data$geometry)
+
+    # Save sf
+    suppressWarnings({
+      sf::st_write(sf, savename, quiet = TRUE)
+    })
   }
-
-  # Construct URL for API call
-  url <- paste0("https://ons-inspire.esriuk.com/arcgis/rest/services/Eurostat_Boundaries/",
-                bound,
-                "_January_",
-                year,
-                "_Boundaries",
-                "/MapServer/",
-                type,
-                "/query?where=1%3D1",
-                "&outFields=*",
-                "&outSR=", crs,
-                "&f=json")
-
-  # Read in shapefile
-  suppressWarnings({
-    sf <- st_read(url, quiet = TRUE)
-  })
-
-  # Renaming
-  names(sf) <- c(names(sf)[1:1],
-                 str_sub(names(sf)[2:3], start= -2),
-                 names(sf)[4:length(names(sf))])
-
-  # Apply country filtering
-  sf <- sf %>%
-        mutate_if(is.factor, as.character) %>%
-        mutate(country = substr(.data$cd, 3, 4)) %>%
-        mutate(country = ifelse(.data$country == "M", "S", # Scotland
-                         ifelse(.data$country == "L", "W", # Wales
-                         ifelse(.data$country == "N", "N", # NI
-                                "E")))) %>% # Rest are England
-        filter(.data$country %in% nations) %>%
-        mutate(country = case_when(country == "E" ~ "England",
-                                   country == "S" ~ "Scotland",
-                                   country == "W" ~ "Wales",
-                                   country == "N" ~ "Northern Ireland"))
-
-  # Ensure geometry is in the last column
-  sf <- sf %>%
-        select(everything(), .data$geometry)
 
   return(sf)
 
