@@ -40,7 +40,7 @@ sf <- read_admin("NAT")
 
 |Function|Geographies available|Years available|
 |-----|-----|-----|
-|`read_census`| Countries, Regions (England Only), Upper Tier Local Authorities, Local Authority Districts | 2018, 2019 (& 2020 for LADs ONLY) |
+|`read_census`| Countries, Regions (England Only), Upper Tier Local Authorities, Local Authority Districts | 2018-2021 |
 |`read_admin`| Output Area (OA), Lower Super Output Area (LSOA), Middle Super Output Area (MSOA) | 2001 & 2011 |
 |`read_elec`| Westminster parliamentary Constituencies, European Electoral Regions, Welsh Parliament Constituencies, Welsh Parliament Regions | 2018 |
 |`read_nuts`| Eurostat NUTS Levels 1, 2 & 3 | 2015 & 2018 |
@@ -49,10 +49,9 @@ sf <- read_admin("NAT")
 
 |Function|Description|Years available|
 |-----|-----|-----|
-|`lea2019lookup`| Upper Tier Local Authorities| 2019 |
 |`convert_lnglat`| Convert Eastings/Northings to Latitude/Longitude| - |
-|`create_lookup`| Create geographical lookup across years| 2011-2019 |
-|`within_yr_lookup`| Create a within year lookup between LAD's and UTLA's| 2011-2019 |
+|`across_yr_lookup`| Create geographical lookup across years| 2011-2021 |
+|`within_yr_lookup`| Create a within year lookup between LAD's and UTLA's| 2011-2021 |
 
 ## Vignettes
 

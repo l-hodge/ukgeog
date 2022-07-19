@@ -53,12 +53,10 @@ select_url <- function(boundary_type, geog, year, month, type, crs, tag, num){
                  grepl(type, .data$link),
                  grepl(tag, .data$link),
                  grepl("MapServer", .data$url)) %>%
-          select(.data$url) %>%
-          slice(1) %>%
-          as.character()
+          select(.data$url)
 
   url <- paste0("https://ons-inspire.esriuk.com",
-                text,
+                text$url,
                 "/",
                 num,
                 "/query?where=1%3D1&outFields=*&outSR=",

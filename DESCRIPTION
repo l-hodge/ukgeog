@@ -1,7 +1,7 @@
 Package: ukgeog
 Type: Package
 Title: Function To Aid Manipulating UK Geographies
-Version: 0.0.0.9000
+Version: 1.0.0
 Author: Louis Hodge
 Maintainer: Louis Hodge <louishodge@hotmail.co.uk>
 Description: Fetch UK geogrphical boundaries from the ONS Open Geography portal.
@@ -20,6 +20,7 @@ Imports:
     rgdal (>= 1.4-8),
     stringr (>= 1.4.0),
     curl (>= 4.3),
+    tidyselect,
     rvest,
     xml2,
     rlang,

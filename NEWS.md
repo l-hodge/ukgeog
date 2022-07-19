@@ -1,3 +1,3 @@
-# ukgeog (0.0.0.9999)
+# ukgeog (1.0.0)
 
-`ukgeog` is still in early development 
+First stable release of `ukgeog`. 

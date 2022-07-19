@@ -13,7 +13,7 @@
 #' - Lower Tier Local Authorities (\code{"LAD"})
 #'
 #' @param geog Type of administrative boundaries (\code{"NAT", "GOR", "UTLA" or "LAD"})
-#' @param <- <- Year (\code{2018} or \code{2019})
+#' @param year Year (\code{2018} or \code{2019})
 #' @param nations For Which UK nations (\code{c("E","W","S","N")})
 #' @param type Boundary Clipping
 #'
@@ -40,6 +40,7 @@
 #'
 #' @import lifecycle
 #' @import dplyr
+#' @importFrom tidyselect any_of
 #' @importFrom sf st_read st_write
 #' @importFrom stringr str_sub
 #' @importFrom curl has_internet
@@ -51,7 +52,7 @@
 ##########################################
 
 read_admin <- function(geog,
-                       year = 2019,
+                       year = 2021,
                        nations = c("E","S","W","N"),
                        type = "BGC",
                        crs = 4326
@@ -71,8 +72,7 @@ read_admin <- function(geog,
   }
 
   # Define Year
-  if (geog != "LAD" & (year < 2018 | year > 2019)) stop("'year' must be either 2018 or 2019")
-  if (geog == "LAD" & (year < 2018 | year > 2020)) stop("'year' must be either 2018, 2019 or 2020")
+  if (year < 2018 | year > 2021) stop("'year' must be either 2018, 2019, 2020 or 2021")
 
   # Define boundary clipping
   if (!(type %in% c("BGC", "BFC", "BFE", "BUC"))) stop("'type' must be one of BGC, BFC, BFE or BUC, see help(read_elec) for definitions")
@@ -106,13 +106,23 @@ read_admin <- function(geog,
 
     # Read in shapefile
     suppressWarnings({
-      sf <- st_read(url, quiet = TRUE)
+      for(i in 1:length(url)){
+        if (exists("sf") != TRUE){
+          try(
+            sf <- st_read(url[i], quiet = TRUE) %>%
+              select(-tidyselect::any_of(c("objectd"))),
+            silent = TRUE
+          )
+        }
+      }
+      if (exists("sf") != TRUE){
+        stop("The shapefile you have selected doesn't seem to exist, sorry!")
+      }
     })
 
     # Renaming
-    names(sf) <- c(names(sf)[1:1],
-                   str_sub(names(sf)[2:3], start= -2),
-                   names(sf)[4:length(names(sf))])
+    names(sf) <- c(str_sub(names(sf)[1:2], start= -2),
+                   names(sf)[3:length(names(sf))])
 
     # Apply country filtering
     sf <- sf %>%
@@ -124,10 +134,10 @@ read_admin <- function(geog,
                                      country == "W" ~ "Wales",
                                      country == "N" ~ "Northern Ireland"))
 
-    if (geog == "UTLA" & year == 2019) {
-      sf <- sf %>%
-            left_join(ukgeog::lea2019lookup, by = c("cd" = "UTLA19CD", "nm" = "UTLA19NM"))
-    }
+    # if (geog == "UTLA" & year == 2019) {
+    #   sf <- sf %>%
+    #         left_join(ukgeog::lea2019lookup, by = c("cd" = "UTLA19CD", "nm" = "UTLA19NM"))
+    # }
 
     # Ensure geometry is in the last column
     sf <- sf %>%
@@ -251,13 +261,23 @@ read_census <- function(geog,
 
     # Read in shapefile
     suppressWarnings({
-      sf <- st_read(url, quiet = TRUE)
+      for(i in 1:length(url)){
+        if (exists("sf") != TRUE){
+          try(
+            sf <- st_read(url[i], quiet = TRUE) %>%
+              select(-tidyselect::any_of(c("objectd"))),
+            silent = TRUE
+          )
+        }
+      }
+      if (exists("sf") != TRUE){
+        stop("The shapefile you have selected doesn't seem to exist, sorry!")
+      }
     })
 
     # Renaming
-    names(sf) <- c(names(sf)[1:1],
-                   str_sub(names(sf)[2:3], start= -2),
-                   names(sf)[4:length(names(sf))])
+    names(sf) <- c(str_sub(names(sf)[1:2], start= -2),
+                   names(sf)[3:length(names(sf))])
 
     # Apply country filtering
     sf <- sf %>%
@@ -352,7 +372,7 @@ read_elec <- function(geog,
     }
   }
 
-  if (geog == "WM" & (year < 2018 | year > 2019)) stop("'year' must be 2018 or 2019")
+  if (geog == "WM" & (year < 2018 | year > 2021)) stop("'year' must be 2018, 2019, 2020 or 2021")
   if (geog != "WM" & (year != 2018)) stop("'year' must be 2018")
 
   # Define boundary clipping
@@ -373,7 +393,7 @@ read_elec <- function(geog,
     boundary_type <- "Electoral_Boundaries"
 
     if (geog == "WM") {
-      url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "Westminster_Parliamentary_Constituencies", type = type, crs = crs, tag = "UK", num = 0)
+      url <- select_url(boundary_type = boundary_type, year = year, month = "D", geog = "Westminster_Parliamentary_Constituencies", type = type, crs = crs, tag = "UK", num = 0)
     } else if (geog == "EU"){
       url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "European_Electoral_Regions", type = type, crs = crs, tag = "UK", num = 0)
     } else if (geog == "WAC"){
@@ -386,13 +406,23 @@ read_elec <- function(geog,
 
     # Read in shapefile
     suppressWarnings({
-      sf <- st_read(url, quiet = TRUE) %>% select(.data$objectid, everything())
+      for(i in 1:length(url)){
+        if (exists("sf") != TRUE){
+          try(
+            sf <- st_read(url[i], quiet = TRUE) %>%
+              select(-tidyselect::any_of(c("objectd"))),
+            silent = TRUE
+          )
+        }
+      }
+      if (exists("sf") != TRUE){
+        stop("The shapefile you have selected doesn't seem to exist, sorry!")
+      }
     })
 
     # Renaming
-    names(sf) <- c(names(sf)[1:1],
-                   str_sub(names(sf)[2:3], start= -2),
-                   names(sf)[4:length(names(sf))])
+    names(sf) <- c(str_sub(names(sf)[1:2], start= -2),
+                   names(sf)[3:length(names(sf))])
 
     # Apply country filtering
     sf <- sf %>%
@@ -526,13 +556,23 @@ read_nuts <- function(geog,
 
     # Read in shapefile
     suppressWarnings({
-      sf <- st_read(url, quiet = TRUE)
+      for(i in 1:length(url)){
+        if (exists("sf") != TRUE){
+          try(
+            sf <- st_read(url[i], quiet = TRUE) %>%
+              select(-tidyselect::any_of(c("objectd"))),
+            silent = TRUE
+          )
+        }
+      }
+      if (exists("sf") != TRUE){
+        stop("The shapefile you have selected doesn't seem to exist, sorry!")
+      }
     })
 
     # Renaming
-    names(sf) <- c(names(sf)[1:1],
-                   str_sub(names(sf)[2:3], start= -2),
-                   names(sf)[4:length(names(sf))])
+    names(sf) <- c(str_sub(names(sf)[1:2], start= -2),
+                   names(sf)[3:length(names(sf))])
 
     # Apply country filtering
     sf <- sf %>%

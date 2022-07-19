@@ -15,40 +15,59 @@ LA codes, names and boundaries have changed over time. `ukgeog` ships with inter
 
 # 2012
 
- In April 2012 the local authority codes for `St Albans` and `Welwyn Hatfield` were changed.	
+In April 2012 the local authority codes for `St Albans` and `Welwyn Hatfield` were changed.	
 
 ```{r, echo=FALSE}
-knitr::kable(ukgeog::LAD_1112)
+knitr::kable(ukgeog::lookup_1112)
 ```
 
 Source: [ONS](https://www.ons.gov.uk/file?uri=%2Fpeoplepopulationandcommunity%2Fpopulationandmigration%2Fmigrationwithintheuk%2Fdatasets%2Fuserinformationenglandandwaleslocalauthoritytoregionlookup%2Fjune2012/laregionlookup2012_tcm77-368555.xls)
 
 # 2013
 
+In April 2013 the local authority codes for Northumberland, East Hertfordshire, Stevenage and Gateshead were changed.
+
 ```{r, echo=FALSE}
-knitr::kable(ukgeog::LAD_1213)
+knitr::kable(ukgeog::lookup_1213)
 ```
 
 Source: [ONS](https://www.ons.gov.uk/file?uri=%2Fpeoplepopulationandcommunity%2Fpopulationandmigration%2Fmigrationwithintheuk%2Fdatasets%2Fuserinformationenglandandwaleslocalauthoritytoregionlookup%2Fjune2013/laregionlookup2013_tcm77-368312.xls)
 
 # 2018
 
-In April 2018 the local authority district of `Shepway` was renamed `Folkstone and Hyde`.
+In April 2018 the local authority district of `Shepway` was renamed `Folkestone and Hyde`.
 
 ```{r, echo=FALSE}
-knitr::kable(ukgeog::LAD_1718)
+knitr::kable(ukgeog::lookup_1718)
 ```
 
 # 2019
 
+In April 2019, Suffolk and Bournemouth, Poole and Dorset....
+
 ```{r, echo=FALSE}
-knitr::kable(ukgeog::LAD_1819)
+knitr::kable(ukgeog::lookup_1819)
 ```
+
+For a pictorial representation see [this wikipedia entry](https://en.wikipedia.org/wiki/2019%E2%80%932023_structural_changes_to_local_government_in_England#Changes_in_2019)
 
 # 2020
 
 In April 2020, the County of Buckinghamshire and its lower tier districts became one unitary authority.
 
 ```{r, echo=FALSE}
-knitr::kable(ukgeog::LAD_1920)
+knitr::kable(ukgeog::lookup_1920)
 ```
+
+For a pictorial representation see [this wikipedia entry](https://en.wikipedia.org/wiki/2019%E2%80%932023_structural_changes_to_local_government_in_England#Changes_in_2020)
+
+# 2021
+
+In April 2021, the two-tier county of Northamptonshire, containing the districts of Corby, East Northamptonshire, Kettering, Wellingborough, Daventry, Northampton and South Northamptonshire was abolished and replaced by with two new unitary authorities - North and West Northamptonshire.
+
+
+```{r, echo=FALSE}
+knitr::kable(ukgeog::lookup_2021)
+```
+
+For a pictorial representation see [this wikipedia entry](https://en.wikipedia.org/wiki/2019%E2%80%932023_structural_changes_to_local_government_in_England#Changes_in_2021)

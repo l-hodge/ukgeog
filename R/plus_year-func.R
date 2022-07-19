@@ -1,7 +1,6 @@
 #' Move to the next year
 #'
 #' @param df A data.frame
-#' @param geog Geographic location identifier, can be mutiple
 #' @param year Year
 #'
 #' @import dplyr
@@ -9,39 +8,48 @@
 #'
 #' @export
 
-plus_year <- function(df, geog, year){
+plus_year <- function(df, year){
 
-  # Select only relevant geographies
-  df <- df %>%
-        dplyr::select(contains(geog))
+  # Start by assuming there are no changes
+    df2 <- df %>%
+      select(contains(substr(year-1, 3, 4)))
+    names(df2) <- sub(substr(year-1, 3, 4), substr(year, 3, 4),names(df2))
+    df <- cbind(df,df2)
 
-  # For each relevant geography
-  for(var in geog){
+  # Define relevant lookup name
+    lookup <- paste0("lookup_", substr(year-1, 3, 4), substr(year, 3, 4))
 
-    cd0 <- paste0(var, substr(year-1, 3, 4), "CD")
-    cd1 <- paste0(var, substr(year, 3, 4), "CD")
-    nm0 <- paste0(var, substr(year-1, 3, 4), "NM")
-    nm1 <- paste0(var, substr(year, 3, 4), "NM")
-
-    lookup <- paste0(var, "_", substr(year-1, 3, 4), substr(year, 3, 4))
-
+  # See if lookup exists
     if(exists(lookup)){
-      message(paste0("Implementing changes to ", var, "'s between ", year-1, " and ", year))
+      message(paste0("Implementing changes between ", year-1, " and ", year))
 
       lk <- get(lookup)
-
-      df <- dplyr::left_join(df, lk, by = c(paste0(cd0), paste0(nm0))) %>%
-            dplyr::mutate({{ cd1 }} := ifelse(is.na(get(cd1)), get(cd0), get(cd1)),
-                          {{ nm1 }} := ifelse(is.na(get(nm1)), get(nm0), get(nm1)))
-    } else {
-      message(paste0("No Changes to ", var, "'s between ", year-1, " and ", year))
-
+      # Remove columns that will change
       df <- df %>%
-            dplyr::mutate({{ cd1 }} := get(cd0),
-                          {{ nm1 }} := get(nm0))
+        select(-contains(names(lk %>% select(contains(substr(year, 3, 4))))))
+
+      # Join in new columns
+      df <- dplyr::left_join(df,
+                             lk,
+                             by = names(lk %>% select(contains(substr(year-1, 3, 4)))))
+
+    } else { # Do nothing
+      message(paste0("No changes between ", year-1, " and ", year))
     }
 
-  }
+  # For each geography fill in the unchanged rows
+    for(var in c("LAD", "UTLA", "LEA")){
+
+      cd0 <- paste0(var, substr(year-1, 3, 4), "CD")
+      cd1 <- paste0(var, substr(year, 3, 4), "CD")
+      nm0 <- paste0(var, substr(year-1, 3, 4), "NM")
+      nm1 <- paste0(var, substr(year, 3, 4), "NM")
+
+      df <- df %>%
+        dplyr::mutate({{ cd1 }} := ifelse(is.na(get(cd1)), get(cd0), get(cd1)),
+                      {{ nm1 }} := ifelse(is.na(get(nm1)), get(nm0), get(nm1)))
+    }
+
   return(df)
 }
 
@@ -50,7 +58,7 @@ plus_year <- function(df, geog, year){
 #'
 #' @param year1 Start year
 #' @param year2 End year
-#' @param geog Geographic location identifier, can be mutiple
+#' @param geog A geographic location identifier
 #' @param between If `TRUE` (default) then includes years between `year1` and `year2`, else if `FALSE` then just keep `year1` and `year2`
 #' @param changes_only Just keep changes
 #'
@@ -58,14 +66,14 @@ plus_year <- function(df, geog, year){
 #'
 #' @export
 
-create_lookup <- function(year1, year2, geog, between = TRUE, changes_only = FALSE){
+across_yr_lookup <- function(year1, year2, geog = c("LAD", "UTLA", "LEA"), between = TRUE, changes_only = FALSE){
 
   # Start with 2011 data
   df <- ukgeog::BASE_2011
 
   # Loop until end year
   for(yr in 2012:year2){
-    df <- suppressMessages(ukgeog::plus_year(df = df, geog = geog, year = yr))
+    df <- suppressMessages(ukgeog::plus_year(df = df, year = yr))
   }
 
   # Whether to retain in-between years or not
@@ -79,14 +87,18 @@ create_lookup <- function(year1, year2, geog, between = TRUE, changes_only = FAL
 
   # Only keep rows where changes in codes or names have occurred
   if(changes_only == TRUE){
-    keep <- apply(df %>% select(ends_with("CD")), 1, function(x) length(unique(x[!is.na(x)])) != 1)
+    keep <- apply(df %>% select(ends_with("CD") & starts_with(geog)), 1, function(x) length(unique(x[!is.na(x)])) != 1)
     code_changes <- df[keep,]
 
-    keep <- apply(df %>% select(ends_with("NM")), 1, function(x) length(unique(x[!is.na(x)])) != 1)
+    keep <- apply(df %>% select(ends_with("NM") & starts_with(geog)), 1, function(x) length(unique(x[!is.na(x)])) != 1)
     name_changes <- df[keep,]
 
     df <- full_join(code_changes, name_changes, by = names(df))
   }
+
+  # Finally, select only relevant geographies defined by `geog`
+  df <- df %>%
+    dplyr::select(contains(geog))
 
   # Remove any full row duplicates
   df <- df %>%
@@ -104,6 +116,6 @@ create_lookup <- function(year1, year2, geog, between = TRUE, changes_only = FAL
 
 within_yr_lookup <- function(year){
 
-  return(ukgeog::create_lookup(year1 = year, year2 = year, geog = c("LAD", "UTLA")))
+  return(ukgeog::across_yr_lookup(year1 = year, year2 = year, geog = c("LAD", "UTLA", "LEA")))
 
 }

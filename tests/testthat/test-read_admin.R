@@ -15,7 +15,7 @@ test_that("Bounds of lat/long", {
 })
 
 test_that("Test error messaging", {
-  expect_error(read_admin("NAT", year = 2017), "'year' must be either 2018 or 2019")
+  expect_error(read_admin("NAT", year = 2017), "'year' must be either 2018, 2019, 2020 or 2021")
 })
 
 test_that("There are 314 Local Authority Districts in England in 2020", {

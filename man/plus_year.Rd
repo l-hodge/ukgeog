@@ -4,12 +4,10 @@
 \alias{plus_year}
 \title{Move to the next year}
 \usage{
-plus_year(df, geog, year)
+plus_year(df, year)
 }
 \arguments{
 \item{df}{A data.frame}
-
-\item{geog}{Geographic location identifier, can be mutiple}
 
 \item{year}{Year}
 }
