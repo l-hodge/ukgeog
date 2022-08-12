@@ -59,7 +59,7 @@ read_admin <- function(geog,
 ){
 
   # Stop if not internet connection
-  if (has_internet() == FALSE) stop("Are you connected to the internet?")
+  if (curl::has_internet() == FALSE) stop("Are you connected to the internet?")
 
   # Define Coordinate Reference System
   if (crs != 4326 & crs != 27700){
@@ -94,7 +94,7 @@ read_admin <- function(geog,
     if (geog == "UTLA") {
       url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "Counties_and_Unitary_Authorities", type = type, crs = crs, tag = "UK", num = 0)
     } else if (geog == "LAD"){
-      url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "District", type = type, crs = crs, tag = "UK", num = 0)
+      url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "Local_Authority_Districts", type = type, crs = crs, tag = "UK", num = 0)
     } else if (geog == "GOR"){
       url <- select_url(boundary_type = boundary_type, year = year, month = "December", geog = "Regions", type = type, crs = crs, tag = "EN", num = 0)
       message("Note: Regions only exist for England")
@@ -116,7 +116,7 @@ read_admin <- function(geog,
         }
       }
       if (exists("sf") != TRUE){
-        stop("The shapefile you have selected doesn't seem to exist, sorry!")
+        stop("The shapefile you have requested doesn't seem to exist, sorry!")
       }
     })
 
@@ -133,11 +133,6 @@ read_admin <- function(geog,
                                      country == "S" ~ "Scotland",
                                      country == "W" ~ "Wales",
                                      country == "N" ~ "Northern Ireland"))
-
-    # if (geog == "UTLA" & year == 2019) {
-    #   sf <- sf %>%
-    #         left_join(ukgeog::lea2019lookup, by = c("cd" = "UTLA19CD", "nm" = "UTLA19NM"))
-    # }
 
     # Ensure geometry is in the last column
     sf <- sf %>%
@@ -372,7 +367,7 @@ read_elec <- function(geog,
     }
   }
 
-  if (geog == "WM" & (year < 2018 | year > 2021)) stop("'year' must be 2018, 2019, 2020 or 2021")
+  #if (geog == "WM" & (year < 2018 | year > 2021)) stop("'year' must be 2018, 2019, 2020 or 2021")
   if (geog != "WM" & (year != 2018)) stop("'year' must be 2018")
 
   # Define boundary clipping
