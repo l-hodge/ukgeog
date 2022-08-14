@@ -29,6 +29,7 @@ scraplinks <- function(url) {
 }
 
 #' Select the url to download from
+#'
 #' @param year Year
 #' @param month Month
 #' @param geog Geographical
@@ -42,7 +43,7 @@ scraplinks <- function(url) {
 #' @importFrom rlang .data
 
 select_url <- function(boundary_type, geog, year, month, type, crs, tag, num) {
-  text <- ukgeog::filter_links(boundary_type, geog, year, month, type, tag) %>%
+  text <- filter_links(boundary_type, geog, year, month, type, tag) %>%
     dplyr::select(.data$url)
 
   url <- paste0(
@@ -58,12 +59,20 @@ select_url <- function(boundary_type, geog, year, month, type, crs, tag, num) {
   return(url)
 }
 
+#' Wrapper for scraplinks to scrap ONS Open Geography
+#'
+#' @param year Year
+#' @param month Month
+#' @param geog Geographical
+#' @param type Type
+#' @param boundary_type Boundary Type
+#' @param tag Tag
 #'
 #' @importFrom dplyr "%>%" filter
 #' @importFrom rlang .data
 
 filter_links <- function(boundary_type, geog, year, month, type, tag) {
-  df <- ukgeog::scraplinks(
+  df <- scraplinks(
     paste0(
       "https://ons-inspire.esriuk.com/arcgis/rest/services/",
       boundary_type
@@ -80,6 +89,14 @@ filter_links <- function(boundary_type, geog, year, month, type, tag) {
   return(df)
 }
 
+#' Checks which years are available for a given geography
+#'
+#' @param year Year
+#' @param month Month
+#' @param geog Geographical
+#' @param type Type
+#' @param boundary_type Boundary Type
+#' @param tag Tag
 #'
 #' @importFrom dplyr "%>%" select
 #' @importFrom stringr str_extract
@@ -87,7 +104,7 @@ filter_links <- function(boundary_type, geog, year, month, type, tag) {
 
 check_years <- function(boundary_type, geog, year, month, type, tag) {
 
-  text <- ukgeog::filter_links(boundary_type, geog, year, month, type, tag) %>%
+  text <- filter_links(boundary_type, geog, year, month, type, tag) %>%
     dplyr::select(.data$link)
 
   x <- as.numeric(stringr::str_extract(text$link, "20[0-9]+"))
@@ -101,8 +118,14 @@ check_years <- function(boundary_type, geog, year, month, type, tag) {
 
 }
 
-#' Wrapper
+#' See available shapefiles
 #'
+#' Wrapper for check_years
+#'
+#' @return A dataframe of geographies and years available
+#'
+#' @export
+
 available_sf <- function(){
 
   df <- c()
@@ -113,40 +136,51 @@ available_sf <- function(){
                                    month = ukgeog::metadata[i, "month"],
                                    geog = ukgeog::metadata[i, "geog"],
                                    type = ukgeog::metadata[i, "type"],
-                                   tag = ukgeog::metadata[i, "tag"]))
+                                   tag = ukgeog::metadata[i, "tag"])) %>%
+      dplyr::mutate(geog_short = ukgeog::metadata[i, "geog_short"])
     df <- rbind(df, x)
   }
 
   return(df)
 }
 
-#'
+# Interactively select a shapefile
+#
+# @importFrom utils menu
+#
+# @export
 
-live <- function(){
+# interactive_select <- function(){
+#
+#   x <- menu(ukgeog::metadata[, "geog"],
+#             title="Which geography?")
+#
+#   yr <- check_years(boundary_type = ukgeog::metadata[x, "boundary_type"],
+#                     year = "",
+#                     month = ukgeog::metadata[x, "month"],
+#                     geog = ukgeog::metadata[x, "geog"],
+#                     type = ukgeog::metadata[x, "type"],
+#                     tag = ukgeog::metadata[x, "tag"])$year
+#
+#   y <- menu(yr,
+#             title="Which year?")
+#
+#   c <- c("BGC (recommended)", "BFC", "BFE", "BUC")
+#
+#   z <- menu(c,
+#             title="Which clippling?")
+#
+#   if (ukgeog::metadata[x, "boundary_type"] == "Administrative_Boundaries") {
+#     sf <- read_admin(geog = ukgeog::metadata[x, "geog"],
+#                      year = yr[y],
+#                      type = substr(c[z], 1, 3))
+#   }
+#
+#   return(sf)
+#
+#   # return(list(ukgeog::metadata[x, "geog"],
+#   #             ukgeog::metadata[x, "boundary_type"],
+#   #             yr[y],
+#   #             substr(c[z], 1, 3)))
+# }
 
-  x <- menu(ukgeog::metadata[, "geog"],
-            title="Which geography?")
-
-  yr <- check_years(boundary_type = ukgeog::metadata[x, "boundary_type"],
-                    year = "",
-                    month = ukgeog::metadata[x, "month"],
-                    geog = ukgeog::metadata[x, "geog"],
-                    type = ukgeog::metadata[x, "type"],
-                    tag = ukgeog::metadata[x, "tag"])$year
-
-  y <- menu(yr,
-            title="Which year?")
-
-  c <- c("BGC (recommended)", "BFC", "BFE", "BUC")
-
-  z <- menu(c,
-            title="Which clippling?")
-
-  return(list(ukgeog::metadata[x, "geog"], yr[y], substr(c[z], 1, 3)))
-}
-
-# read_admin("NAT",
-#            year = as.numeric(yr[y]),
-#            nations = c("E","S","W","N"),
-#            type = substr(c[z], 1, 3),
-#            crs = 4326)

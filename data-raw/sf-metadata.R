@@ -1,8 +1,22 @@
+geog_short <- c("NAT",
+          "LAD",
+          "GOR",
+          "UTLA",
+          "OA",
+          "LSOA",
+          "MSOA",
+          "WM",
+          "EU",
+          "WAC",
+          "WAR",
+          "NUTS1",
+          "NUTS2",
+          "NUTS3")
 geog <- c("Countries",
           "Local_Authority_Districts",
           "Regions",
           "Counties_and_Unitary_Authorities",
-          "Output_Area",
+          "\Output_Area",
           "Lower_Super_Output_Areas",
           "Middle_Super_Output_Areas",
           "Westminster_Parliamentary_Constituencies",
@@ -18,6 +32,6 @@ month = c(rep("DEC|December", 11), rep("January", 3))
 boundary_type = c(rep("Administrative_Boundaries", 4), rep("Census_Boundaries", 3),
                   rep("Electoral_Boundaries", 4), rep("Eurostat_Boundaries", 3))
 
-metadata <- data.frame(geog, boundary_type, type, tag, month)
+metadata <- data.frame(geog_short, geog, boundary_type, type, tag, month)
 
 usethis::use_data(metadata, overwrite = TRUE)

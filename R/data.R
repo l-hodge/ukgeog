@@ -28,3 +28,6 @@
 
 #' Lookup 2020-21
 "lookup_2021"
+
+#' Metadata
+"metadata"
