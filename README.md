@@ -52,7 +52,7 @@ following geographies using the ‘geog’ argument:
 
 | ‘geog’ | Geography                                     | Year                   |
 |:-------|:----------------------------------------------|:-----------------------|
-| UTLA   | Counties_and_Unitary_Authorities              | 2020; 2018; 2019; 2021 |
+| UTLA   | Counties_and_Unitary_Authorities              | 2018; 2019; 2020; 2021 |
 | NAT    | Countries                                     | 2018; 2019; 2020; 2021 |
 | EU     | European_Electoral_Regions                    | 2018                   |
 | LAD    | Local_Authority_Districts                     | 2018; 2019; 2020; 2021 |
@@ -65,7 +65,7 @@ following geographies using the ‘geog’ argument:
 | NUTS3  | NUTS_Level_3                                  | 2015; 2018             |
 | OA     | Output_Area                                   | 2001; 2011             |
 | GOR    | Regions                                       | 2018; 2019; 2020; 2021 |
-| WM     | Westminster_Parliamentary_Constituencies      | 2021; 2018; 2019; 2020 |
+| WM     | Westminster_Parliamentary_Constituencies      | 2018; 2019; 2020; 2021 |
 
 ### Other functions
 
