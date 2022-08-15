@@ -11,3 +11,4 @@
 ^README\.Rmd$
 ^data-raw$
 shapefiles/
+^LICENSE\.md$

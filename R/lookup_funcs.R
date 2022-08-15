@@ -109,7 +109,7 @@ across_yr_lookup <- function(year1, year2, geog = c("LAD", "UTLA", "LEA"), betwe
 }
 
 #' Create a within year lookup
-#' Simple wrapper for `create_lookup`
+#' Simple wrapper for `across_yr_lookup`
 #'
 #' @param year Year
 #'

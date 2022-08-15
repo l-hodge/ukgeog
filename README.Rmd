@@ -45,10 +45,11 @@ library(ukgeog)
 library(dplyr)
 ```
 
-```{r, include = TRUE, eval = TRUE}
+```{r, results = "asis", eval = TRUE, echo=FALSE}
 available_sf() %>%
-    dplyr::group_by(geog, geog_short)%>%
-    dplyr::summarize(year = stringr::str_c(year, collapse = "; ")) %>% 
+    dplyr::group_by(geog, geog_short) %>%
+    dplyr::arrange(year) %>% 
+    dplyr::summarize(year = stringr::str_c(year, collapse = "; "), .groups = "drop") %>% 
     dplyr::select("'geog'" = geog_short, "Geography" = geog, "Year" = year) %>% 
     knitr::kable()
 ```

@@ -47,29 +47,41 @@ sf <- read_admin("NAT")
 
 ### Read in sf
 
-| Function      | Geographies available                                                                                                           | Years available                   |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| `read_census` | Countries, Regions (England Only), Upper Tier Local Authorities, Local Authority Districts                                      | 2018, 2019 (& 2020 for LADs ONLY) |
-| `read_admin`  | Output Area (OA), Lower Super Output Area (LSOA), Middle Super Output Area (MSOA)                                               | 2001 & 2011                       |
-| `read_elec`   | Westminster parliamentary Constituencies, European Electoral Regions, Welsh Parliament Constituencies, Welsh Parliament Regions | 2018                              |
-| `read_nuts`   | Eurostat NUTS Levels 1, 2 & 3                                                                                                   | 2015 & 2018                       |
+The `read_sf` function can be used to download boundaries for the
+following geographies using the ‘geog’ argument:
+
+| ‘geog’ | Geography                                     | Year                   |
+|:-------|:----------------------------------------------|:-----------------------|
+| UTLA   | Counties_and_Unitary_Authorities              | 2020; 2018; 2019; 2021 |
+| NAT    | Countries                                     | 2018; 2019; 2020; 2021 |
+| EU     | European_Electoral_Regions                    | 2018                   |
+| LAD    | Local_Authority_Districts                     | 2018; 2019; 2020; 2021 |
+| LSOA   | Lower_Super_Output_Areas                      | 2001; 2011             |
+| MSOA   | Middle_Super_Output_Areas                     | 2001; 2011             |
+| WAC    | National_Assembly_for_Wales_Constituencies    | 2018                   |
+| WAR    | National_Assembly_for_Wales_Electoral_Regions | 2018                   |
+| NUTS1  | NUTS_Level_1                                  | 2015; 2018             |
+| NUTS2  | NUTS_Level_2                                  | 2015; 2018             |
+| NUTS3  | NUTS_Level_3                                  | 2015; 2018             |
+| OA     | Output_Area                                   | 2001; 2011             |
+| GOR    | Regions                                       | 2018; 2019; 2020; 2021 |
+| WM     | Westminster_Parliamentary_Constituencies      | 2021; 2018; 2019; 2020 |
 
 ### Other functions
 
 | Function           | Description                                          | Years available |
-| ------------------ | ---------------------------------------------------- | --------------- |
-| `lea2019lookup`    | Upper Tier Local Authorities                         | 2019            |
+|--------------------|------------------------------------------------------|-----------------|
 | `convert_lnglat`   | Convert Eastings/Northings to Latitude/Longitude     | \-              |
-| `create_lookup`    | Create geographical lookup across years              | 2011-2019       |
-| `within_yr_lookup` | Create a within year lookup between LAD’s and UTLA’s | 2011-2019       |
+| `across_yr_lookup` | Create geographical lookup across years              | 2011-2021       |
+| `within_yr_lookup` | Create a within year lookup between LAD’s and UTLA’s | 2011-2021       |
 
 ## Vignettes
 
-  - [Creating Choropleth Maps with
+-   [Creating Choropleth Maps with
     `ukgeog`](https://l-hodge.github.io/ukgeog/articles/maps.html)
-  - [Local Authority Boundary
+-   [Local Authority Boundary
     Changes](https://l-hodge.github.io/ukgeog/articles/boundary-changes.html)
-  - [ONS Hierarchy of UK Statistical
+-   [ONS Hierarchy of UK Statistical
     Geographies](https://l-hodge.github.io/ukgeog/articles/ons-hierarchy.html)
 
 ## Credits

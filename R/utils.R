@@ -144,43 +144,37 @@ available_sf <- function(){
   return(df)
 }
 
-# Interactively select a shapefile
-#
-# @importFrom utils menu
-#
-# @export
+#' Interactively select a shapefile
+#'
+#' @importFrom utils menu
+#'
+#' @export
 
-# interactive_select <- function(){
-#
-#   x <- menu(ukgeog::metadata[, "geog"],
-#             title="Which geography?")
-#
-#   yr <- check_years(boundary_type = ukgeog::metadata[x, "boundary_type"],
-#                     year = "",
-#                     month = ukgeog::metadata[x, "month"],
-#                     geog = ukgeog::metadata[x, "geog"],
-#                     type = ukgeog::metadata[x, "type"],
-#                     tag = ukgeog::metadata[x, "tag"])$year
-#
-#   y <- menu(yr,
-#             title="Which year?")
-#
-#   c <- c("BGC (recommended)", "BFC", "BFE", "BUC")
-#
-#   z <- menu(c,
-#             title="Which clippling?")
-#
-#   if (ukgeog::metadata[x, "boundary_type"] == "Administrative_Boundaries") {
-#     sf <- read_admin(geog = ukgeog::metadata[x, "geog"],
-#                      year = yr[y],
-#                      type = substr(c[z], 1, 3))
-#   }
-#
-#   return(sf)
-#
-#   # return(list(ukgeog::metadata[x, "geog"],
-#   #             ukgeog::metadata[x, "boundary_type"],
-#   #             yr[y],
-#   #             substr(c[z], 1, 3)))
-# }
+select_sf <- function(){
+
+  x <- menu(ukgeog::metadata[, "geog"],
+            title="Which geography?")
+
+  yr <- check_years(boundary_type = ukgeog::metadata[x, "boundary_type"],
+                    year = "",
+                    month = ukgeog::metadata[x, "month"],
+                    geog = ukgeog::metadata[x, "geog"],
+                    type = ukgeog::metadata[x, "type"],
+                    tag = ukgeog::metadata[x, "tag"])$year
+
+  y <- menu(yr,
+            title="Which year?")
+
+  c <- c("BGC (recommended)", "BFC", "BFE", "BUC")
+
+  z <- menu(c,
+            title="Which clippling?")
+
+  sf <- read_sf(geog = ukgeog::metadata[x, "geog_short"],
+                year = yr[y],
+                type = substr(c[z], 1, 3))
+
+  return(sf)
+
+}
 

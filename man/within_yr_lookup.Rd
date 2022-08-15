@@ -3,7 +3,7 @@
 \name{within_yr_lookup}
 \alias{within_yr_lookup}
 \title{Create a within year lookup
-Simple wrapper for `create_lookup`}
+Simple wrapper for `across_yr_lookup`}
 \usage{
 within_yr_lookup(year)
 }
@@ -12,5 +12,5 @@ within_yr_lookup(year)
 }
 \description{
 Create a within year lookup
-Simple wrapper for `create_lookup`
+Simple wrapper for `across_yr_lookup`
 }
