@@ -23,7 +23,7 @@ First we need to read in a spatial dataset as a simple feature (`sf`), here we c
 ```{r getsf, eval = TRUE}
 library(ukgeog)
 
-sf <- read_admin("NAT")
+sf <- read_sf("NAT", year = 2021)
 ```
 
 Note: ` crs = 4326 ` (the default) provides the most compatibility with other functions.

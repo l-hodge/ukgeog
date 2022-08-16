@@ -3,13 +3,15 @@
 \docType{data}
 \name{BASE_2011}
 \alias{BASE_2011}
-\title{2011 Lookup between LAD & UTLA}
+\title{2011 Lookup between LAD, UTLA and LEA}
 \format{
-A `data.frame` with 4 variables:
+A `data.frame` with 6 variables:
 \code{LAD11CD},
 \code{LAD11NM},
-\code{UTLA11CD} and
-\code{UTLA11NM}
+\code{UTLA11CD},
+\code{UTLA11NM},
+\code{LEA11CD} and
+\code{LEA11NM}
 }
 \usage{
 BASE_2011

@@ -1,0 +1,10 @@
+# A tibble: 3 x 3
+  `Old LA Code` `New LA Code` `LA Name`  
+          <dbl> <chr>         <chr>      
+1           835 E10000009     Dorset     
+2           836 E06000029     Poole      
+3           837 E06000028     Bournemouth
+
+   UTLA19CD LEA19CD                            UTLA19NM
+1 E06000058     839 Bournemouth, Christchurch and Poole
+2 E06000059     838                              Dorset

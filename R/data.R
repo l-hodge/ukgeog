@@ -1,38 +1,33 @@
-#' LEA Lookup
-#'
-#' LEAs have 3-digit codes that map to 9-digit ONS UTLA codes.
-#'
-#' @format A data frame with 3 variables:
-#' \code{UTLA19CD},
-#' \code{LEA19CD} and
-#' \code{UTLA19NM}
-"lea2019lookup"
-
-#' 2011 Lookup between LAD & UTLA
+#' 2011 Lookup between LAD, UTLA and LEA
 #'
 #' Used as a base dataset
 #'
-#' @format A `data.frame` with 4 variables:
+#' @format A `data.frame` with 6 variables:
 #' \code{LAD11CD},
 #' \code{LAD11NM},
-#' \code{UTLA11CD} and
-#' \code{UTLA11NM}
+#' \code{UTLA11CD},
+#' \code{UTLA11NM},
+#' \code{LEA11CD} and
+#' \code{LEA11NM}
 "BASE_2011"
 
-#' LAD lookup 2011-12
-"LAD_1112"
+#' Lookup 2011-12
+"lookup_1112"
 
-#' LAD lookup 2012-13
-"LAD_1213"
+#' Lookup 2012-13
+"lookup_1213"
 
-#' LAD lookup 2017-18
-"LAD_1718"
+#' Lookup 2017-18
+"lookup_1718"
 
-#' LAD lookup 2018-19
-"LAD_1819"
+#' Lookup 2018-19
+"lookup_1819"
 
-#' LAD lookup 2019-20
-"LAD_1920"
+#' Lookup 2019-20
+"lookup_1920"
 
-#' UTLA lookup 2019-20
-"UTLA_1920"
+#' Lookup 2020-21
+"lookup_2021"
+
+#' Metadata
+"metadata"

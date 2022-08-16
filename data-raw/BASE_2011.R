@@ -2,6 +2,7 @@
 
 library(dplyr)
 library(sf)
+library(readxl)
 
 url <- "https://opendata.arcgis.com/datasets/e6f40847dfb04d3da01adda23dc0d334_0.geojson"
 
@@ -49,5 +50,12 @@ BASE_2011 <-  joined %>%
          UTLA11NM = ifelse(substr(LAD11CD,1,3) != "E07", LAD11NM, UTLA11NM))
 
 summary(as.vector(is.na(BASE_2011)))
+
+LEA_2011 <- read_excel("data-raw/Copy of nlac-2011.xls")
+
+BASE_2011 <- left_join(BASE_2011, LEA_2011, by = c("UTLA11CD" = "New LA Code")) %>%
+  rename("LEA11CD" = "Old LA Code") %>%
+  mutate(LEA11NM = UTLA11NM) %>%
+  select(-"LA Name")
 
 usethis::use_data(BASE_2011, overwrite = TRUE)
