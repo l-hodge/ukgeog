@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Function To Aid Manipulating UK Geographies • ukgeog</title>
+<title>Download and Manipulate UK Geographies • ukgeog</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Function To Aid Manipulating UK Geographies">
+<script src="pkgdown.js"></script><meta property="og:title" content="Download and Manipulate UK Geographies">
 <meta property="og:description" content="Fetch UK geogrphical boundaries from the ONS Open Geography portal.
     Create useful lookups across geogrphical levels and across years.
     Some disparate functions.">
@@ -21,6 +21,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -33,23 +35,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ukgeog</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -72,8 +68,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/l-hodge/ukgeog/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/l-hodge/ukgeog/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -89,82 +85,133 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="ukgeog-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#ukgeog-" class="anchor"></a>ukgeog <a href="https://l-hodge.github.io/ukgeog/"><img src="reference/figures/ukgeog_logo.png" align="right" height="139"></a>
+<div class="section level1">
+<div class="page-header"><h1 id="ukgeog-">ukgeog <a href="https://l-hodge.github.io/ukgeog/" class="external-link"><img src="reference/figures/ukgeog_logo.png" align="right" height="139"></a>
+<a class="anchor" aria-label="anchor" href="#ukgeog-"></a>
 </h1></div>
 <!-- badges: start -->
 
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p><code>ukgeog</code> is a simple package to facilitate the easy download of official spatial data sets of the UK. It includes a wide range of geospatial data, provided as <a href="https://r-spatial.github.io/sf/articles/sf1.html">simple feature <code>sf</code> objects</a> (like shapefiles but better). Making it easy to make <a href="https://en.wikipedia.org/wiki/Choropleth_map">Choropleth Maps</a> with <code>base R</code>, as well as with popular packages such as <a href="https://ggplot2.tidyverse.org/"><code>ggplot2</code></a> and <a href="https://rstudio.github.io/leaflet/"><code>leaflet</code></a>.</p>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p><code>ukgeog</code> is a simple package to facilitate the easy download of official spatial data sets of the UK. It includes a wide range of geospatial data, provided as <a href="https://r-spatial.github.io/sf/articles/sf1.html" class="external-link">simple feature <code>sf</code> objects</a> (like shapefiles but better). Making it easy to make <a href="https://en.wikipedia.org/wiki/Choropleth_map" class="external-link">Choropleth Maps</a> with <code>base R</code>, as well as with popular packages such as <a href="https://ggplot2.tidyverse.org/" class="external-link"><code>ggplot2</code></a> and <a href="https://rstudio.github.io/leaflet/" class="external-link"><code>leaflet</code></a>.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"l-hodge/ukgeog"</span><span class="op">)</span></pre></div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"l-hodge/ukgeog"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="basic-usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#basic-usage" class="anchor"></a>Basic Usage</h2>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://l-hodge.github.io/ukgeog/">ukgeog</a></span><span class="op">)</span>
-
-<span class="co"># Read in simple feature data frame of the countries that make up the UK </span>
-<span class="va">sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_admin.html">read_admin</a></span><span class="op">(</span><span class="st">"NAT"</span><span class="op">)</span></pre></div>
+<div class="section level2">
+<h2 id="basic-usage">Basic Usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://l-hodge.github.io/ukgeog/" class="external-link">ukgeog</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Read in simple feature data frame of the countries that make up the UK </span></span>
+<span><span class="va">sf</span> <span class="op">&lt;-</span> <span class="fu">read_admin</span><span class="op">(</span><span class="st">"NAT"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="available-datasets" class="section level2">
-<h2 class="hasAnchor">
-<a href="#available-datasets" class="anchor"></a>Available datasets</h2>
-<div id="read-in-sf" class="section level3">
-<h3 class="hasAnchor">
-<a href="#read-in-sf" class="anchor"></a>Read in sf</h3>
+<div class="section level2">
+<h2 id="available-datasets">Available datasets<a class="anchor" aria-label="anchor" href="#available-datasets"></a>
+</h2>
+<div class="section level3">
+<h3 id="read-in-sf">Read in sf<a class="anchor" aria-label="anchor" href="#read-in-sf"></a>
+</h3>
+<p>The <code>read_sf</code> function can be used to download boundaries for the following geographies using the ‘geog’ argument:</p>
 <table class="table">
 <colgroup>
-<col width="7%">
-<col width="73%">
-<col width="19%">
+<col width="10%">
+<col width="59%">
+<col width="30%">
 </colgroup>
 <thead><tr class="header">
-<th>Function</th>
-<th>Geographies available</th>
-<th>Years available</th>
+<th align="left">‘geog’</th>
+<th align="left">Geography</th>
+<th align="left">Year</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td><code>read_census</code></td>
-<td>Countries, Regions (England Only), Upper Tier Local Authorities, Local Authority Districts</td>
-<td>2018, 2019 (&amp; 2020 for LADs ONLY)</td>
+<td align="left">UTLA</td>
+<td align="left">Counties_and_Unitary_Authorities</td>
+<td align="left">2018; 2019; 2020; 2021</td>
 </tr>
 <tr class="even">
-<td><code>read_admin</code></td>
-<td>Output Area (OA), Lower Super Output Area (LSOA), Middle Super Output Area (MSOA)</td>
-<td>2001 &amp; 2011</td>
+<td align="left">NAT</td>
+<td align="left">Countries</td>
+<td align="left">2018; 2019; 2020; 2021</td>
 </tr>
 <tr class="odd">
-<td><code>read_elec</code></td>
-<td>Westminster parliamentary Constituencies, European Electoral Regions, Welsh Parliament Constituencies, Welsh Parliament Regions</td>
-<td>2018</td>
+<td align="left">EU</td>
+<td align="left">European_Electoral_Regions</td>
+<td align="left">2018</td>
 </tr>
 <tr class="even">
-<td><code>read_nuts</code></td>
-<td>Eurostat NUTS Levels 1, 2 &amp; 3</td>
-<td>2015 &amp; 2018</td>
+<td align="left">LAD</td>
+<td align="left">Local_Authority_Districts</td>
+<td align="left">2018; 2019; 2020; 2021</td>
+</tr>
+<tr class="odd">
+<td align="left">LSOA</td>
+<td align="left">Lower_Super_Output_Areas</td>
+<td align="left">2001; 2011</td>
+</tr>
+<tr class="even">
+<td align="left">MSOA</td>
+<td align="left">Middle_Super_Output_Areas</td>
+<td align="left">2001; 2011</td>
+</tr>
+<tr class="odd">
+<td align="left">WAC</td>
+<td align="left">National_Assembly_for_Wales_Constituencies</td>
+<td align="left">2018</td>
+</tr>
+<tr class="even">
+<td align="left">WAR</td>
+<td align="left">National_Assembly_for_Wales_Electoral_Regions</td>
+<td align="left">2018</td>
+</tr>
+<tr class="odd">
+<td align="left">NUTS1</td>
+<td align="left">NUTS_Level_1</td>
+<td align="left">2015; 2018</td>
+</tr>
+<tr class="even">
+<td align="left">NUTS2</td>
+<td align="left">NUTS_Level_2</td>
+<td align="left">2015; 2018</td>
+</tr>
+<tr class="odd">
+<td align="left">NUTS3</td>
+<td align="left">NUTS_Level_3</td>
+<td align="left">2015; 2018</td>
+</tr>
+<tr class="even">
+<td align="left">OA</td>
+<td align="left">Output_Area</td>
+<td align="left">2001; 2011</td>
+</tr>
+<tr class="odd">
+<td align="left">GOR</td>
+<td align="left">Regions</td>
+<td align="left">2018; 2019; 2020; 2021</td>
+</tr>
+<tr class="even">
+<td align="left">WM</td>
+<td align="left">Westminster_Parliamentary_Constituencies</td>
+<td align="left">2018; 2019; 2020; 2021</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="other-functions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#other-functions" class="anchor"></a>Other functions</h3>
+<div class="section level3">
+<h3 id="other-functions">Other functions<a class="anchor" aria-label="anchor" href="#other-functions"></a>
+</h3>
 <table class="table">
 <colgroup>
 <col width="21%">
-<col width="61%">
-<col width="17%">
+<col width="59%">
+<col width="18%">
 </colgroup>
 <thead><tr class="header">
 <th>Function</th>
@@ -173,88 +220,94 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td><code>lea2019lookup</code></td>
-<td>Upper Tier Local Authorities</td>
-<td>2019</td>
-</tr>
-<tr class="even">
 <td><code>convert_lnglat</code></td>
 <td>Convert Eastings/Northings to Latitude/Longitude</td>
 <td>-</td>
 </tr>
-<tr class="odd">
-<td><code>create_lookup</code></td>
-<td>Create geographical lookup across years</td>
-<td>2011-2019</td>
-</tr>
 <tr class="even">
+<td><code>across_yr_lookup</code></td>
+<td>Create geographical lookup across years</td>
+<td>2011-2021</td>
+</tr>
+<tr class="odd">
 <td><code>within_yr_lookup</code></td>
 <td>Create a within year lookup between LAD’s and UTLA’s</td>
-<td>2011-2019</td>
+<td>2011-2021</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="vignettes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#vignettes" class="anchor"></a>Vignettes</h2>
+<div class="section level2">
+<h2 id="vignettes">Vignettes<a class="anchor" aria-label="anchor" href="#vignettes"></a>
+</h2>
 <ul>
-<li><a href="https://l-hodge.github.io/ukgeog/articles/maps.html">Creating Choropleth Maps with <code>ukgeog</code></a></li>
-<li><a href="https://l-hodge.github.io/ukgeog/articles/boundary-changes.html">Local Authority Boundary Changes</a></li>
-<li><a href="https://l-hodge.github.io/ukgeog/articles/ons-hierarchy.html">ONS Hierarchy of UK Statistical Geographies</a></li>
+<li><a href="https://l-hodge.github.io/ukgeog/articles/maps.html" class="external-link">Creating Choropleth Maps with <code>ukgeog</code></a></li>
+<li><a href="https://l-hodge.github.io/ukgeog/articles/boundary-changes.html" class="external-link">Local Authority Boundary Changes</a></li>
+<li><a href="https://l-hodge.github.io/ukgeog/articles/ons-hierarchy.html" class="external-link">ONS Hierarchy of UK Statistical Geographies</a></li>
 </ul>
 </div>
-<div id="credits" class="section level2">
-<h2 class="hasAnchor">
-<a href="#credits" class="anchor"></a>Credits</h2>
-<p>Original shapefiles are created by the Office for National Statistics (ONS) and are available from the <a href="http://geoportal.statistics.gov.uk/">Open Geography Portal</a></p>
+<div class="section level2">
+<h2 id="credits">Credits<a class="anchor" aria-label="anchor" href="#credits"></a>
+</h2>
+<p>Original shapefiles are created by the Office for National Statistics (ONS) and are available from the <a href="http://geoportal.statistics.gov.uk/" class="external-link">Open Geography Portal</a></p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/l-hodge/ukgeog/">https://​github.com/​l-hodge/​ukgeog/​</a>
-</li>
+<li><a href="https://github.com/l-hodge/ukgeog/" class="external-link">Browse source code</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing ukgeog</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Louis Hodge <br><small class="roles"> Maintainer </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/l-hodge/ukgeog"><img src="https://travis-ci.org/l-hodge/ukgeog.svg?branch=master" alt="Travis build status"></a></li>
-<li><a href="https://codecov.io/gh/l-hodge/ukgeog?branch=master"><img src="https://codecov.io/gh/l-hodge/ukgeog/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/l-hodge/ukgeog/actions"><img src="https://github.com/l-hodge/ukgeog/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://travis-ci.org/l-hodge/ukgeog" class="external-link"><img src="https://travis-ci.org/l-hodge/ukgeog.svg?branch=master" alt="Travis build status"></a></li>
+<li><a href="https://codecov.io/gh/l-hodge/ukgeog?branch=master" class="external-link"><img src="https://codecov.io/gh/l-hodge/ukgeog/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/l-hodge/ukgeog/actions" class="external-link"><img src="https://github.com/l-hodge/ukgeog/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Louis Hodge.</p>
+  <p></p>
+<p>Developed by Louis Hodge.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -262,6 +315,8 @@
 
   
 
+
+  
 
   </body>
 </html>
