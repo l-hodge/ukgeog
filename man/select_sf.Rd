@@ -2,10 +2,13 @@
 % Please edit documentation in R/utils.R
 \name{select_sf}
 \alias{select_sf}
-\title{Interactively select a shapefile}
+\title{Interactively select a boundary file to download}
 \usage{
 select_sf()
 }
+\value{
+A simple feature \code{sf} object containing the interactively selected boundaries.
+}
 \description{
-Interactively select a shapefile
+Interactively select a boundary file to download
 }

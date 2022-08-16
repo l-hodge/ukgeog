@@ -2,13 +2,13 @@
 % Please edit documentation in R/utils.R
 \name{available_sf}
 \alias{available_sf}
-\title{See available shapefiles}
+\title{See available boundary files}
 \usage{
 available_sf()
 }
 \value{
-A dataframe of geographies and years available
+A data.frame of geographies and years available
 }
 \description{
-Wrapper for check_years
+See available boundary files
 }

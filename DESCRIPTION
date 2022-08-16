@@ -1,6 +1,6 @@
 Package: ukgeog
 Type: Package
-Title: Function To Aid Manipulating UK Geographies
+Title: Download and Manipulate UK Geographies
 Version: 1.0.0
 Author: Louis Hodge
 Maintainer: Louis Hodge <louishodge@hotmail.co.uk>

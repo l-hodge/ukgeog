@@ -10,7 +10,7 @@
 #' @importFrom xml2 read_html
 #' @importFrom rvest html_nodes html_attr html_text
 
-scraplinks <- function(url) {
+scrape_links <- function(url) {
 
   # Create an html document from the url
   webpage <- xml2::read_html(url)
@@ -59,7 +59,7 @@ select_url <- function(boundary_type, geog, year, month, type, crs, tag, num) {
   return(url)
 }
 
-#' Wrapper for scraplinks to scrap ONS Open Geography
+#' Wrapper for scrape_links to scrape ONS Open Geography
 #'
 #' @param year Year
 #' @param month Month
@@ -72,7 +72,7 @@ select_url <- function(boundary_type, geog, year, month, type, crs, tag, num) {
 #' @importFrom rlang .data
 
 filter_links <- function(boundary_type, geog, year, month, type, tag) {
-  df <- scraplinks(
+  df <- scrape_links(
     paste0(
       "https://ons-inspire.esriuk.com/arcgis/rest/services/",
       boundary_type
@@ -118,11 +118,11 @@ check_years <- function(boundary_type, geog, year, month, type, tag) {
 
 }
 
-#' See available shapefiles
+#' See available boundary files
 #'
-#' Wrapper for check_years
+#' @return A data.frame of geographies and years available
 #'
-#' @return A dataframe of geographies and years available
+#' @importFrom dplyr "%>%" mutate
 #'
 #' @export
 
@@ -144,7 +144,9 @@ available_sf <- function(){
   return(df)
 }
 
-#' Interactively select a shapefile
+#' Interactively select a boundary file to download
+#'
+#' @return A simple feature \code{sf} object containing the interactively selected boundaries.
 #'
 #' @importFrom utils menu
 #'
@@ -152,8 +154,8 @@ available_sf <- function(){
 
 select_sf <- function(){
 
-  x <- menu(ukgeog::metadata[, "geog"],
-            title="Which geography?")
+  x <- utils::menu(ukgeog::metadata[, "geog"],
+            title = "Which geography?")
 
   yr <- check_years(boundary_type = ukgeog::metadata[x, "boundary_type"],
                     year = "",
@@ -162,13 +164,13 @@ select_sf <- function(){
                     type = ukgeog::metadata[x, "type"],
                     tag = ukgeog::metadata[x, "tag"])$year
 
-  y <- menu(yr,
-            title="Which year?")
+  y <- utils::menu(yr,
+            title = "Which year?")
 
   c <- c("BGC (recommended)", "BFC", "BFE", "BUC")
 
-  z <- menu(c,
-            title="Which clippling?")
+  z <- utils::menu(c,
+            title = "Which clippling?")
 
   sf <- read_sf(geog = ukgeog::metadata[x, "geog_short"],
                 year = yr[y],

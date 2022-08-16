@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{filter_links}
 \alias{filter_links}
-\title{Wrapper for scraplinks to scrap ONS Open Geography}
+\title{Wrapper for scrape_links to scrape ONS Open Geography}
 \usage{
 filter_links(boundary_type, geog, year, month, type, tag)
 }
@@ -20,5 +20,5 @@ filter_links(boundary_type, geog, year, month, type, tag)
 \item{tag}{Tag}
 }
 \description{
-Wrapper for scraplinks to scrap ONS Open Geography
+Wrapper for scrape_links to scrape ONS Open Geography
 }

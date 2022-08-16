@@ -71,6 +71,7 @@
 #'
 #' @import lifecycle
 #' @import dplyr
+#' @import rgdal
 #' @importFrom tidyselect any_of
 #' @importFrom sf st_read st_write
 #' @importFrom stringr str_sub
