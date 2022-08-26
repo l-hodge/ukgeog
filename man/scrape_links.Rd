@@ -4,13 +4,15 @@
 \alias{scrape_links}
 \title{Extract link texts and urls from a web page}
 \usage{
-scrape_links(url)
+scrape_links(url, stringsAsFactors = FALSE)
 }
 \arguments{
-\item{url}{character an url}
+\item{url}{character: an url}
+
+\item{stringsAsFactors}{logical: should character vectors be converted to factors in output data.frame?}
 }
 \value{
-a data frame of link text and urls
+a data.frame of link text and urls
 }
 \description{
 Simple function based on [Gist by Paul Rougieux](https://gist.github.com/paulrougieux/e1ee769577b40cd9ed9db7f75e9a2cc2)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/lookup_funcs.R
 \name{plus_year}
 \alias{plus_year}
-\title{Move to the next year}
+\title{Add another year to the lookup}
 \usage{
 plus_year(df, year)
 }
@@ -12,5 +12,5 @@ plus_year(df, year)
 \item{year}{Year}
 }
 \description{
-Move to the next year
+Add another year to the lookup
 }

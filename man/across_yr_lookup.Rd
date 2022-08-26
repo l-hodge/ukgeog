@@ -2,8 +2,7 @@
 % Please edit documentation in R/lookup_funcs.R
 \name{across_yr_lookup}
 \alias{across_yr_lookup}
-\title{Create a lookup across years
-Wrapper for `plus_year`}
+\title{Create a lookup across years}
 \usage{
 across_yr_lookup(
   year1,
@@ -25,6 +24,5 @@ across_yr_lookup(
 \item{changes_only}{Just keep changes}
 }
 \description{
-Create a lookup across years
-Wrapper for `plus_year`
+This is a wrapper for `plus_year`
 }

@@ -2,15 +2,16 @@
 % Please edit documentation in R/lookup_funcs.R
 \name{within_yr_lookup}
 \alias{within_yr_lookup}
-\title{Create a within year lookup
-Simple wrapper for `across_yr_lookup`}
+\title{Create a within year lookup}
 \usage{
 within_yr_lookup(year)
 }
 \arguments{
 \item{year}{Year}
 }
+\value{
+A lookup of Local Authority Districts (LADs), Upper Tier Local Authorities (UTLAs) and Local Education Authorities (LEAs)
+}
 \description{
-Create a within year lookup
-Simple wrapper for `across_yr_lookup`
+Simple wrapper for `across_yr_lookup` to look within a given year
 }
