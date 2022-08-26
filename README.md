@@ -1,12 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ukgeog <a href='https://l-hodge.github.io/ukgeog/'><img src="man/figures/ukgeog_logo.png" align="right" height="139">
+# ukgeog <a href='https://l-hodge.github.io/ukgeog/'><img src="man/figures/ukgeog_logo.png" align="right" height="139" style="height: 139px">
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.org/l-hodge/ukgeog.svg?branch=master)](https://travis-ci.org/l-hodge/ukgeog)
 [![Codecov test
 coverage](https://codecov.io/gh/l-hodge/ukgeog/branch/master/graph/badge.svg)](https://codecov.io/gh/l-hodge/ukgeog?branch=master)
 [![R build
@@ -34,21 +32,15 @@ well as with popular packages such as
 remotes::install_github("l-hodge/ukgeog")
 ```
 
-## Basic Usage
+## Functions to download UK boundaries from the ONS
 
-``` r
-library(ukgeog)
+-   `available_sf` returns a list of available boundaries
 
-# Read in simple feature data frame of the countries that make up the UK 
-sf <- read_admin("NAT")
-```
+-   `select_sf` can be used to interactively select a set of boundaries
+    to download
 
-## Available datasets
-
-### Read in sf
-
-The `read_sf` function can be used to download boundaries for the
-following geographies using the ‘geog’ argument:
+-   `read_sf` can be used to download boundaries for the following
+    geographies using the ‘geog’ and ‘year’ arguments:
 
 | ‘geog’ | Geography                                     | Year                   |
 |:-------|:----------------------------------------------|:-----------------------|
@@ -67,12 +59,21 @@ following geographies using the ‘geog’ argument:
 | GOR    | Regions                                       | 2018; 2019; 2020; 2021 |
 | WM     | Westminster_Parliamentary_Constituencies      | 2018; 2019; 2020; 2021 |
 
-### Other functions
+### Basic Usage
+
+``` r
+library(ukgeog)
+
+# Read in simple feature data frame of the countries that make up the UK 
+sf <- read_sf("NAT")
+```
+
+## Other functions
 
 | Function           | Description                                          | Years available |
 |--------------------|------------------------------------------------------|-----------------|
 | `convert_lnglat`   | Convert Eastings/Northings to Latitude/Longitude     | \-              |
-| `across_yr_lookup` | Create geographical lookup across years              | 2011-2021       |
+| `across_yr_lookup` | Create a geographical lookup across time             | 2011-2021       |
 | `within_yr_lookup` | Create a within year lookup between LAD’s and UTLA’s | 2011-2021       |
 
 ## Vignettes
