@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Codecov test
-coverage](https://codecov.io/gh/l-hodge/ukgeog/branch/master/graph/badge.svg)](https://codecov.io/gh/l-hodge/ukgeog?branch=master)
+coverage](https://codecov.io/gh/l-hodge/ukgeog/branch/main/graph/badge.svg)](https://app.codecov.io/gh/l-hodge/ukgeog/branch/main)
 [![R build
 status](https://github.com/l-hodge/ukgeog/workflows/R-CMD-check/badge.svg)](https://github.com/l-hodge/ukgeog/actions)
 [![Lifecycle:
@@ -25,6 +25,9 @@ well as with popular packages such as
 [`ggplot2`](https://ggplot2.tidyverse.org/) and
 [`leaflet`](https://rstudio.github.io/leaflet/).
 
+Other functions are provided to create UK Local Authority (LA) lookups,
+across time and between lower and upper tiers.
+
 ## Installation
 
 ``` r
@@ -32,7 +35,7 @@ well as with popular packages such as
 remotes::install_github("l-hodge/ukgeog")
 ```
 
-## Functions to download UK boundaries from the ONS
+## Downloading UK boundaries from the ONS
 
 -   `available_sf` returns a list of available boundaries
 
@@ -44,37 +47,40 @@ remotes::install_github("l-hodge/ukgeog")
 
 | ‘geog’ | Geography                                     | Year                   |
 |:-------|:----------------------------------------------|:-----------------------|
-| UTLA   | Counties_and_Unitary_Authorities              | 2018; 2019; 2020; 2021 |
+| UTLA   | Counties and Unitary Authorities              | 2018; 2019; 2020; 2021 |
 | NAT    | Countries                                     | 2018; 2019; 2020; 2021 |
-| EU     | European_Electoral_Regions                    | 2018                   |
-| LAD    | Local_Authority_Districts                     | 2018; 2019; 2020; 2021 |
-| LSOA   | Lower_Super_Output_Areas                      | 2001; 2011             |
-| MSOA   | Middle_Super_Output_Areas                     | 2001; 2011             |
-| WAC    | National_Assembly_for_Wales_Constituencies    | 2018                   |
-| WAR    | National_Assembly_for_Wales_Electoral_Regions | 2018                   |
-| NUTS1  | NUTS_Level_1                                  | 2015; 2018             |
-| NUTS2  | NUTS_Level_2                                  | 2015; 2018             |
-| NUTS3  | NUTS_Level_3                                  | 2015; 2018             |
-| OA     | Output_Area                                   | 2001; 2011             |
+| EU     | European Electoral Regions                    | 2018                   |
+| LAD    | Local Authority Districts                     | 2018; 2019; 2020; 2021 |
+| LSOA   | Lower Super Output Areas                      | 2001; 2011             |
+| MSOA   | Middle Super Output Areas                     | 2001; 2011             |
+| WAC    | National Assembly for Wales Constituencies    | 2018                   |
+| WAR    | National Assembly for Wales Electoral Regions | 2018                   |
+| NUTS1  | NUTS Level 1                                  | 2015; 2018             |
+| NUTS2  | NUTS Level 2                                  | 2015; 2018             |
+| NUTS3  | NUTS Level 3                                  | 2015; 2018             |
+| OA     | Output Area                                   | 2001; 2011             |
 | GOR    | Regions                                       | 2018; 2019; 2020; 2021 |
-| WM     | Westminster_Parliamentary_Constituencies      | 2018; 2019; 2020; 2021 |
+| WM     | Westminster Parliamentary Constituencies      | 2018; 2019; 2020; 2021 |
 
 ### Basic Usage
 
 ``` r
 library(ukgeog)
 
-# Read in simple feature data frame of the countries that make up the UK 
-sf <- read_sf("NAT")
+# Read in simple feature of the countries that make up the UK 
+sf <- read_sf("NAT", year = 2021)
 ```
+
+## Creating UK Local Authority lookups (2011-2021)
+
+-   `across_yr_lookup` creates lookups across time to account for
+    boundary changes
+-   `within_yr_lookup` creates within year lookups between LAD’s and
+    UTLA’s
 
 ## Other functions
 
-| Function           | Description                                          | Years available |
-|--------------------|------------------------------------------------------|-----------------|
-| `convert_lnglat`   | Convert Eastings/Northings to Latitude/Longitude     | \-              |
-| `across_yr_lookup` | Create a geographical lookup across time             | 2011-2021       |
-| `within_yr_lookup` | Create a within year lookup between LAD’s and UTLA’s | 2011-2021       |
+-   `convert_lnglat` converts Eastings/Northings to Latitude/Longitude
 
 ## Vignettes
 
@@ -89,4 +95,4 @@ sf <- read_sf("NAT")
 
 Original shapefiles are created by the Office for National Statistics
 (ONS) and are available from the [Open Geography
-Portal](http://geoportal.statistics.gov.uk/)
+Portal](http://geoportal.statistics.gov.uk/).

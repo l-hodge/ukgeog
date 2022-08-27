@@ -166,7 +166,8 @@ available_sf <- function() {
       tag = ukgeog::metadata[i, "tag"]
     )) %>%
       dplyr::mutate(geog_short = ukgeog::metadata[i, "geog_short"])
-    df <- rbind(df, x)
+    df <- rbind(df, x) %>%
+      dplyr::mutate(geog = stringr::str_replace_all(geog, "_", " "))
   }
 
   return(df)
@@ -177,12 +178,14 @@ available_sf <- function() {
 #' @return A simple feature \code{sf} object containing the interactively selected boundaries.
 #'
 #' @importFrom utils menu
+#' @importFrom stringr str_replace_all
 #'
 #' @export
 
 select_sf <- function() {
 
-  x <- utils::menu(ukgeog::metadata[, "geog"],
+  x <- utils::menu(
+    stringr::str_replace_all(ukgeog::metadata[, "geog"], "_", " "),
     title = "Which geography?"
   )
 

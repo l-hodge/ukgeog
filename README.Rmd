@@ -4,11 +4,10 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-
 # ukgeog <a href='https://l-hodge.github.io/ukgeog/'><img src="man/figures/ukgeog_logo.png" align="right" height="139" style="height: 139px">
 
 <!-- badges: start -->
-  [![Codecov test coverage](https://codecov.io/gh/l-hodge/ukgeog/branch/master/graph/badge.svg)](https://codecov.io/gh/l-hodge/ukgeog?branch=master)
+  [![Codecov test coverage](https://codecov.io/gh/l-hodge/ukgeog/branch/main/graph/badge.svg)](https://app.codecov.io/gh/l-hodge/ukgeog/branch/main)
   [![R build status](https://github.com/l-hodge/ukgeog/workflows/R-CMD-check/badge.svg)](https://github.com/l-hodge/ukgeog/actions)
   [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
@@ -16,6 +15,8 @@ output: github_document
 ## Overview
 
 `ukgeog` is a simple package to facilitate the easy download of official spatial data sets of the UK. It includes a wide range of geospatial data, provided as [simple feature `sf` objects](https://r-spatial.github.io/sf/articles/sf1.html) (like shapefiles but better). Making it easy to make [Choropleth Maps](https://en.wikipedia.org/wiki/Choropleth_map) with `base R`, as well as with popular packages such as [`ggplot2`](https://ggplot2.tidyverse.org/) and [`leaflet`](https://rstudio.github.io/leaflet/).
+
+Other functions are provided to create UK Local Authority (LA) lookups, across time and between lower and upper tiers.  
 
 ## Installation
 
@@ -25,7 +26,7 @@ remotes::install_github("l-hodge/ukgeog")
 ```
 
 
-## Functions to download UK boundaries from the ONS
+## Downloading UK boundaries from the ONS
 
 - `available_sf` returns a list of available boundaries
 
@@ -36,14 +37,15 @@ remotes::install_github("l-hodge/ukgeog")
 ```{r, include = FALSE, eval = TRUE}
 library(ukgeog)
 library(dplyr)
+library(stringr)
 ```
 
-```{r, results = "asis", eval = TRUE, echo=FALSE}
+```{r, results = "asis", eval = TRUE, echo = FALSE}
 available_sf() %>%
     dplyr::group_by(geog, geog_short) %>%
     dplyr::arrange(year) %>% 
     dplyr::summarize(year = stringr::str_c(year, collapse = "; "), .groups = "drop") %>% 
-    dplyr::select("'geog'" = geog_short, "Geography" = geog, "Year" = year) %>% 
+    dplyr::select("'geog'" = geog_short, "Geography" = geog, "Year" = year) %>%
     knitr::kable()
 ```
 
@@ -52,18 +54,19 @@ available_sf() %>%
 ```{r, include = TRUE, eval = FALSE}
 library(ukgeog)
 
-# Read in simple feature data frame of the countries that make up the UK 
-sf <- read_sf("NAT")
+# Read in simple feature of the countries that make up the UK 
+sf <- read_sf("NAT", year = 2021)
 
 ```
 
+## Creating UK Local Authority lookups (2011-2021) 
+
+- `across_yr_lookup` creates lookups across time to account for boundary changes
+- `within_yr_lookup` creates within year lookups between LAD's and UTLA's
+
 ## Other functions
 
-|Function|Description|Years available|
-|-----|-----|-----|
-|`convert_lnglat`| Convert Eastings/Northings to Latitude/Longitude| - |
-|`across_yr_lookup`| Create a geographical lookup across time| 2011-2021 |
-|`within_yr_lookup`| Create a within year lookup between LAD's and UTLA's| 2011-2021 |
+- `convert_lnglat` converts Eastings/Northings to Latitude/Longitude
 
 ## Vignettes
 
@@ -73,4 +76,4 @@ sf <- read_sf("NAT")
 
 ## Credits
 
-Original shapefiles are created by the Office for National Statistics (ONS) and are available from the [Open Geography Portal](http://geoportal.statistics.gov.uk/)
+Original shapefiles are created by the Office for National Statistics (ONS) and are available from the [Open Geography Portal](http://geoportal.statistics.gov.uk/).
