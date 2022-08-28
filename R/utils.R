@@ -150,6 +150,7 @@ check_years <- function(boundary_type,
 #' @return A data.frame of geographies and years available
 #'
 #' @importFrom dplyr "%>%" mutate
+#' @importFrom rlang .data
 #'
 #' @export
 
@@ -167,7 +168,7 @@ available_sf <- function() {
     )) %>%
       dplyr::mutate(geog_short = ukgeog::metadata[i, "geog_short"])
     df <- rbind(df, x) %>%
-      dplyr::mutate(geog = stringr::str_replace_all(geog, "_", " "))
+      dplyr::mutate(geog = stringr::str_replace_all(.data$geog, "_", " "))
   }
 
   return(df)
