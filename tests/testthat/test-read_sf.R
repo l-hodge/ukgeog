@@ -81,3 +81,11 @@ test_that("NUTS3", {
   expect_lt(sf::st_bbox(x)$ymax, 60.9)
   expect_lt(sf::st_bbox(x)$xmax, 1.8)
 })
+
+test_that("Namespace clashes resolve", {
+
+sf <- read_sf(geog = "NAT", year = 2021)
+sf2 <- read_sf(geog = "GOR", year = 2021)
+expect_false(identical(sf, sf2))
+
+})

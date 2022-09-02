@@ -154,7 +154,7 @@ read_sf <- function(geog,
     # Read in shapefile
     suppressWarnings({
       for(i in 1:length(url)){
-        if (exists("sf") != TRUE){
+        if (rlang::env_has(nms = "sf") != TRUE){
           try(
             sf <- st_read(url[i], quiet = TRUE) %>%
               select(-tidyselect::any_of(c("objectd"))),
@@ -162,7 +162,7 @@ read_sf <- function(geog,
           )
         }
       }
-      if (exists("sf") != TRUE){
+      if (rlang::env_has(nms = "sf") != TRUE){
         stop("The shapefile you have requested doesn't seem to exist, sorry!")
       }
     })
