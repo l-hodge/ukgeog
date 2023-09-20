@@ -42,32 +42,31 @@ scrape_links <- function(url,
 #' @param month Month
 #' @param geog Geographical
 #' @param type Type
-#' @param boundary_type Boundary Type
 #' @param tag Tag
 #'
 #' @importFrom dplyr "%>%" filter
 #' @importFrom rlang .data
 
-filter_links <- function(boundary_type,
-                         geog,
+filter_links <- function(geog,
                          year,
                          month,
                          type,
                          tag) {
 
   df <- scrape_links(
-    paste0(
-      "https://ons-inspire.esriuk.com/arcgis/rest/services/",
-      boundary_type
-    )
+    # paste0(
+    #   "https://ons-inspire.esriuk.com/arcgis/rest/services/",
+    #   boundary_type
+    # )
+    "https://services1.arcgis.com/ESMARspQHYMw9BZ9/ArcGIS/rest/services"
   ) %>%
     dplyr::filter(
       grepl(year, .data$link),
       grepl(geog, .data$link),
       grepl(month, .data$link),
       grepl(type, .data$link),
-      grepl(tag, .data$link),
-      grepl("MapServer", .data$url)
+      grepl(tag, .data$link)#,
+      #grepl("MapServer", .data$url)
     )
 
   return(df)
@@ -80,15 +79,13 @@ filter_links <- function(boundary_type,
 #' @param geog Geographical
 #' @param type Type
 #' @param crs CRS
-#' @param boundary_type Boundary Type
 #' @param tag Tag
 #' @param num Number
 #'
 #' @importFrom dplyr "%>%" select
 #' @importFrom rlang .data
 
-select_url <- function(boundary_type,
-                       geog,
+select_url <- function(geog,
                        year,
                        month,
                        type,
@@ -96,11 +93,11 @@ select_url <- function(boundary_type,
                        tag,
                        num) {
 
-  text <- filter_links(boundary_type, geog, year, month, type, tag) %>%
+  text <- filter_links(geog, year, month, type, tag) %>%
     dplyr::select(.data$url)
 
   url <- paste0(
-    "https://ons-inspire.esriuk.com",
+    "https://services1.arcgis.com",
     text$url,
     "/",
     num,
@@ -118,21 +115,21 @@ select_url <- function(boundary_type,
 #' @param month Month
 #' @param geog Geographical
 #' @param type Type
-#' @param boundary_type Boundary Type
 #' @param tag Tag
 #'
 #' @importFrom dplyr "%>%" select
 #' @importFrom stringr str_extract
 #' @importFrom rlang .data
 
-check_years <- function(boundary_type,
-                        geog,
+check_years <- function(
+    boundary_type,
+    geog,
                         year,
                         month,
                         type,
                         tag) {
 
-  text <- filter_links(boundary_type, geog, year, month, type, tag) %>%
+  text <- filter_links(geog, year, month, type, tag) %>%
     dplyr::select(.data$link)
 
   x <- as.numeric(stringr::str_extract(text$link, "20[0-9]+"))

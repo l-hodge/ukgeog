@@ -149,7 +149,7 @@ read_sf <- function(geog,
       type = ""
     }
 
-    url <- select_url(boundary_type = boundary_type, year = year, month = month, geog = geog, type = type, crs = crs, tag = tag, num = num)
+    url <- select_url(year = year, month = month, geog = geog, type = type, crs = crs, tag = tag, num = num)
 
     # Read in shapefile
     suppressWarnings({
@@ -157,7 +157,8 @@ read_sf <- function(geog,
         if (rlang::env_has(nms = "sf") != TRUE){
           try(
             sf <- st_read(url[i], quiet = TRUE) %>%
-              select(-tidyselect::any_of(c("objectd"))),
+              janitor::clean_names() |>
+              select(-tidyselect::any_of(c("objectid"))),
             silent = TRUE
           )
         }
@@ -168,8 +169,10 @@ read_sf <- function(geog,
     })
 
     # Renaming
-    names(sf) <- c(str_sub(names(sf)[1:2], start= -2),
-                   names(sf)[3:length(names(sf))])
+    names(sf) <-
+      c(str_sub(names(sf)[1:2], start = -2),
+        names(sf)[3:length(names(sf))])
+
 
     # Apply country filtering
     if (boundary_type == "Eurostat_Boundaries") {
