@@ -1,9 +1,9 @@
-pandoc: '2.18'
-pkgdown: 2.0.6
+pandoc: 2.19.2
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   boundary-changes: boundary-changes.html
   maps: maps.html
   ons-hierarchy: ons-hierarchy.html
-last_built: 2022-08-27T14:23Z
+last_built: 2024-09-20T08:59Z
 

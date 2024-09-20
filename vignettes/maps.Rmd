@@ -2,7 +2,7 @@
 title: "Using `ukgeog` to draw choropleth maps"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{get_sf}
+  %\VignetteIndexEntry{Using `ukgeog` to draw choropleth maps}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

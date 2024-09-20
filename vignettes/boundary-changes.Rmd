@@ -25,7 +25,7 @@ Source: [ONS](https://www.ons.gov.uk/file?uri=%2Fpeoplepopulationandcommunity%2F
 
 # 2013
 
-In April 2013 the local authority codes for Northumberland, East Hertfordshire, Stevenage and Gateshead were changed.
+In April 2013 the local authority codes for `Northumberland`, `East Hertfordshire`, `Stevenage` and `Gateshead` were changed.
 
 ```{r, echo=FALSE}
 knitr::kable(ukgeog::lookup_1213)
@@ -43,7 +43,13 @@ knitr::kable(ukgeog::lookup_1718)
 
 # 2019
 
-In April 2019, Suffolk and Bournemouth, Poole and Dorset....
+In April 2019:
+
+- The county of `Dorset` and its six districts were abolished, along with the unitary authorities of `Poole` and `Bournemouth`, with two new unitary authorities created in their place - `Bournemouth, Christchurch and Poole`, and `Dorset`.
+
+- In the county of `Somerset`, the districts of `Taunton Deane` and `West Somerset` were merged to create the district of `Somerset West and Taunton`.
+
+- In the county `Suffolk`, the districts of `Forest Heath` and `St Edmundsbury` were merged to create the district of `West Suffolk`, and the districts of `Suffolk Coastal` and `Waveney` were merged to create the district of `East Suffolk`.
 
 ```{r, echo=FALSE}
 knitr::kable(ukgeog::lookup_1819)
@@ -53,7 +59,7 @@ For a pictorial representation see [this wikipedia entry](https://en.wikipedia.o
 
 # 2020
 
-In April 2020, the County of Buckinghamshire and its lower tier districts became one unitary authority.
+In April 2020, the county of `Buckinghamshire`  became one unitary authority.
 
 ```{r, echo=FALSE}
 knitr::kable(ukgeog::lookup_1920)
@@ -63,7 +69,7 @@ For a pictorial representation see [this wikipedia entry](https://en.wikipedia.o
 
 # 2021
 
-In April 2021, the two-tier county of Northamptonshire, containing the districts of Corby, East Northamptonshire, Kettering, Wellingborough, Daventry, Northampton and South Northamptonshire was abolished and replaced by with two new unitary authorities - North and West Northamptonshire.
+In April 2021, the two-tier county of `Northamptonshire`, and its lower tier districts were abolished and replaced with two new unitary authorities - `North Northamptonshire` and `West Northamptonshire`.
 
 
 ```{r, echo=FALSE}
@@ -71,3 +77,19 @@ knitr::kable(ukgeog::lookup_2021)
 ```
 
 For a pictorial representation see [this wikipedia entry](https://en.wikipedia.org/wiki/2019%E2%80%932023_structural_changes_to_local_government_in_England#Changes_in_2021)
+
+# 2023
+
+In April 2023:
+
+- The two-tier county of `Cumbria`, and its lower tier districts were abolished and replaced with two new unitary authorities - `Cumberland` and `Westmorland and Furness`.
+
+- The two-tier county of `North Yorkshire`, and its lower tier districts were abolished and replaced with a new unitary authority - `North Yorkshire`.
+
+- The two-tier county of `Somerset`, and its lower tier districts were abolished and replaced with a new unitary authority - `Somerset`.
+
+```{r, echo=FALSE}
+knitr::kable(ukgeog::lookup_2223)
+```
+
+For a pictorial representation see [this wikipedia entry](https://en.wikipedia.org/wiki/2019%E2%80%932023_structural_changes_to_local_government_in_England#Changes_in_2023)

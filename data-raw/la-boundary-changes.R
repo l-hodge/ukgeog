@@ -74,6 +74,28 @@
                          LEA19NM = c(rep("Suffolk", 4)),
 
                          stringsAsFactors = FALSE)
+
+  # Somerset
+
+  some1819 <- data.frame(LAD18CD = c("E07000190", "E07000191"),
+                         LAD18NM = c("Taunton Deane", "West Somerset"),
+
+                         UTLA18CD = c(rep("E10000027", 2)),
+                         UTLA18NM = c(rep("Somerset", 2)),
+
+                         LEA18CD = c(rep(933, 2)),
+                         LEA18NM = c(rep("Somerset", 2)),
+
+                         LAD19CD = c(rep("E07000246", 2)),
+                         LAD19NM = c(rep("Somerset West and Taunton", 2)),
+
+                         UTLA19CD = c(rep("E10000027", 2)),
+                         UTLA19NM = c(rep("Somerset", 2)),
+
+                         LEA19CD = c(rep(933, 2)),
+                         LEA19NM = c(rep("Somerset", 2)),
+
+                         stringsAsFactors = FALSE)
   # Dorset
 
   dors1819 <- data.frame(LAD18CD = c("E06000028", "E06000029", "E07000048", "E07000049", "E07000050", "E07000051", "E07000052", "E07000053"),
@@ -98,7 +120,7 @@
 
   # Full
 
-  lookup_1819 <- rbind(suff1819, dors1819)
+  lookup_1819 <- rbind(suff1819, some1819, dors1819)
 
   usethis::use_data(lookup_1819, overwrite = TRUE)
 
@@ -148,3 +170,78 @@
                             stringsAsFactors = FALSE)
 
   usethis::use_data(lookup_2021, overwrite = TRUE)
+
+# 2023 ----
+
+ # Cumbria
+
+  cumbr2223 <- data.frame(LAD20CD = c("E07000026", "E07000027", "E07000028", "E07000029", "E07000030", "E07000031"),
+                            LAD20NM = c("Allerdale", "Carlisle", "Copeland",
+                                        "Barrow-in-Furness", "Eden", "South Lakeland"),
+
+                            UTLA20CD = c(rep("E10000006", 6)),
+                            UTLA20NM = c(rep("Cumbria", 6)),
+
+                            LEA20CD = c(rep(909, 6)),
+                            LEA20NM = c(rep("Cumbria", 6)),
+
+                            LAD21CD = c(rep("E06000063", 3), rep("E06000064", 3)),
+                            LAD21NM = c(rep("Cumberland", 3), rep("Westmorland and Furness", 3)),
+
+                            UTLA21CD = c(rep("E06000063", 3), rep("E06000064", 3)),
+                            UTLA21NM = c(rep("Cumberland", 3), rep("Westmorland and Furness", 3)),
+
+                            LEA21CD = c(rep(942, 3), rep(943, 3)),
+                            LEA21NM = c(rep("Cumberland", 3), rep("Westmorland and Furness", 3)),
+
+                            stringsAsFactors = FALSE)
+
+
+# North Yorkshire
+
+  norso2223 <- data.frame(LAD20CD = c("E07000163", "E07000164", "E07000165", "E07000166", "E07000167", "E07000168", "E07000169"),
+                            LAD20NM = c("Craven", "Hambleton", "Harrogate", "Richmondshire", "Ryedale", "Scarborough", "Selby"),
+
+                            UTLA20CD = c(rep("E10000023", 7)),
+                            UTLA20NM = c(rep("North Yorkshire", 7)),
+
+                            LEA20CD = c(rep(815, 7)),
+                            LEA20NM = c(rep("North Yorkshire", 7)),
+
+                            LAD21CD = c(rep("E06000065", 7)),
+                            LAD21NM = c(rep("North Yorkshire", 7)),
+
+                            UTLA21CD = c(rep("E06000065", 7)),
+                            UTLA21NM = c(rep("North Yorkshire", 7)),
+
+                            LEA21CD = c(rep(815, 7)),
+                            LEA21NM = c(rep("North Yorkshire", 7)),
+
+                            stringsAsFactors = FALSE)
+
+# Somerset
+
+  somer2223 <- data.frame(LAD20CD = c("E07000187", "E07000188", "E07000246", "E07000189"),
+                            LAD20NM = c("Mendip", "Sedgemoor", "Somerset West and Taunton", "South Somerset"),
+
+                            UTLA20CD = c(rep("E10000027", 4)),
+                            UTLA20NM = c(rep("Somerset", 4)),
+
+                            LEA20CD = c(rep(933, 4)),
+                            LEA20NM = c(rep("Somerset", 4)),
+
+                            LAD21CD = c(rep("E06000066", 4)),
+                            LAD21NM = c(rep("Somerset", 4)),
+
+                            UTLA21CD = c(rep("E06000066", 4)),
+                            UTLA21NM = c(rep("Somerset", 4)),
+
+                            LEA21CD = c(rep(933, 4)),
+                            LEA21NM = c(rep("Somerset", 4)),
+
+                            stringsAsFactors = FALSE)
+
+  # Full
+  lookup_2223 <- rbind(cumbr2223, norso2223, somer2223)
+
+  usethis::use_data(lookup_2223, overwrite = TRUE)
