@@ -76,7 +76,7 @@ plus_year <- function(df, year) {
 #'
 #' @param year1 Start year
 #' @param year2 End year
-#' @param geog A geographic location identifier
+#' @param geog A geographic location identifier, e.g., "LAD", "UTLA" or "LEA"
 #' @param between If `TRUE` (default) then includes years between `year1` and `year2`, else if `FALSE` then just keep `year1` and `year2`
 #' @param changes_only Just keep changes
 #'
@@ -86,9 +86,12 @@ plus_year <- function(df, year) {
 
 across_yr_lookup <- function(year1,
                              year2,
-                             geog = c("LAD", "UTLA", "LEA"),
+                             geog = "LAD",
                              between = TRUE,
                              changes_only = FALSE) {
+
+  if (year1 < 2011) {stop("The first year must be 2011 or later")}
+  if (length(geog) != 1) {stop("The `geog` argument should be a single character string")}
 
   # Start with 2011 data
   df <- ukgeog::BASE_2011
@@ -100,12 +103,12 @@ across_yr_lookup <- function(year1,
 
   # Whether to retain in-between years or not
   if (between != TRUE) {
-    df <- df %>%
+    df <- df |>
       dplyr::select(
         dplyr::contains(substr(c(year1, year2), 3, 4))
       )
   } else {
-    df <- df %>%
+    df <- df |>
       dplyr::select(
         dplyr::contains(substr(year1:year2, 3, 4))
       )
@@ -114,7 +117,7 @@ across_yr_lookup <- function(year1,
   # Only keep rows where changes in codes or names have occurred
   if (changes_only == TRUE) {
     keep <- apply(
-      df %>%
+      df |>
         dplyr::select(
           dplyr::ends_with("CD") & dplyr::starts_with(geog)
         ),
@@ -124,7 +127,7 @@ across_yr_lookup <- function(year1,
     code_changes <- df[keep, ]
 
     keep <- apply(
-      df %>%
+      df |>
         dplyr::select(
           dplyr::ends_with("NM") & dplyr::starts_with(geog)
         ),
